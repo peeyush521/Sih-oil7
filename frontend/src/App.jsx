@@ -230,15 +230,52 @@ function App() {
               </div>
               
               <div style={{ marginTop: 'auto', paddingTop: 16, borderTop: '1px solid var(--border)' }}>
-                <button className="btn safe" style={{ width: '100%', padding: '12px', fontSize: '0.9rem', letterSpacing: '1px' }} onClick={() => simulateIntervention('resolve_action')} disabled={!currentState}>
-                  [ MARK ACTION COMPLETE ]
-                </button>
+                <div style={{ display: 'flex', gap: '8px' }}>
+                  <button className="btn secondary" style={{ flex: 1, padding: '12px', fontSize: '0.8rem', letterSpacing: '1px' }} onClick={() => simulateIntervention('delay')} disabled={!currentState}>
+                    [ DELAY ACTION ]
+                  </button>
+                  <button className="btn safe" style={{ flex: 1, padding: '12px', fontSize: '0.8rem', letterSpacing: '1px' }} onClick={() => simulateIntervention('resolve_action')} disabled={!currentState}>
+                    [ MARK COMPLETE ]
+                  </button>
+                </div>
                 {simResults !== "Select an intervention to see predicted risk trajectory." && (
                   <div style={{ marginTop: 12, textAlign: 'center', background: 'var(--bg-surface2)', padding: '8px', borderRadius: '4px' }}>
                     {simResults}
                   </div>
                 )}
               </div>
+            </div>
+            </div>
+          </div>
+
+          {/* Latest Signal & AI Reasoning */}
+          <div className="panel surface-panel col-span-2">
+            <div className="panel-header">
+              <h3>LATEST PROCESSED SIGNAL</h3>
+            </div>
+            <div className="panel-body">
+              {currentState ? (
+                <>
+                  <div style={{ marginBottom: 16, fontSize: '0.95rem' }}>"{currentState.report.text}"</div>
+                  <div>
+                    <span className="tag" style={{ background: 'rgba(255,255,255,0.1)', borderColor: 'var(--border)' }}>🏷️ {currentState.report_class}</span>
+                    {currentState.extracted_entities.equipment.map(e => <span key={e} className="tag equipment">⚙️ {e}</span>)}
+                    {currentState.extracted_entities.hazards.map(e => <span key={e} className="tag hazard">⚠️ {e}</span>)}
+                    {currentState.extracted_entities.locations.map(e => <span key={e} className="tag location">📍 {e}</span>)}
+                  </div>
+                </>
+              ) : <div className="empty-state">Waiting for next report...</div>}
+            </div>
+          </div>
+
+          <div className="panel surface-panel">
+            <div className="panel-header">
+              <h3>✨ AI REASONING</h3>
+            </div>
+            <div className="panel-body" style={{ background: 'rgba(34, 211, 238, 0.05)', borderLeft: '3px solid var(--primary)', overflowY: 'auto' }}>
+              {currentState ? (
+                <div dangerouslySetInnerHTML={{ __html: currentState.llm_explanation.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>') }} style={{ fontSize: '0.85rem', lineHeight: '1.5' }} />
+              ) : <div className="empty-state">Waiting for AI...</div>}
             </div>
           </div>
 
@@ -370,6 +407,25 @@ function App() {
                 ]}
                 cy={(cy) => { setCy(cy); }}
               />
+            </div>
+          </div>
+
+          {/* Incident Timeline */}
+          <div className="panel surface-panel col-span-3" style={{ height: 300, overflowY: 'auto' }} id="incident-timeline">
+            <div className="panel-header">
+              <h3>INCIDENT TIMELINE</h3>
+            </div>
+            <div className="panel-body">
+              {stateData && stateData.reports.length > 0 ? (
+                <div className="timeline">
+                  {stateData.reports.slice().reverse().map(r => (
+                    <div key={r.report.id} className={`timeline-item ${r.is_precursor ? 'precursor' : ''}`}>
+                      <div className="timeline-date">{new Date(r.report.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })} - {r.report.id}</div>
+                      <div style={{ fontSize: '0.9rem' }}>{r.report.text}</div>
+                    </div>
+                  ))}
+                </div>
+              ) : <div className="empty-state">Timeline empty</div>}
             </div>
           </div>
 
