@@ -406,7 +406,7 @@ function App() {
           </div>
 
           {/* Precursor Chain (Graph) */}
-          <div className="panel surface-panel col-span-3" id="precursor-chain-panel" style={{ height: 400 }}>
+          <div className="panel surface-panel col-span-2" id="precursor-chain-panel" style={{ height: 400 }}>
             <div className="panel-header">
               <h3>PRECURSOR CHAIN (TEMPORAL GRAPH)</h3>
             </div>
@@ -453,7 +453,7 @@ function App() {
           </div>
 
           {/* Incident Timeline */}
-          <div className="panel surface-panel col-span-3" style={{ height: 300, overflowY: 'auto' }} id="incident-timeline">
+          <div className="panel surface-panel" style={{ height: 400, overflowY: 'auto' }} id="incident-timeline">
             <div className="panel-header">
               <h3>INCIDENT TIMELINE</h3>
             </div>

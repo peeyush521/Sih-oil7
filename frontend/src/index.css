@@ -369,8 +369,8 @@ body {
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background: var(--accent);
-  box-shadow: 0 0 8px var(--accent-glow);
+  background: var(--primary);
+  box-shadow: 0 0 8px var(--primary-glow);
 }
 .timeline-item.precursor {
   border-color: rgba(239, 68, 68, 0.3);
