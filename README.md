@@ -37,7 +37,7 @@ We validated our Temporal Graph against standard industry approaches using an au
 * **Backend:** Python, FastAPI (Headless REST API)
 * **AI & NLP:** `spaCy`, `SentenceTransformers`, `scikit-learn`
 * **Graph Engine:** `NetworkX`
-* **Frontend:** React, Vite, CSS Modules (Glassmorphism UI)
+* **Frontend:** React, Vite, CSS (Industrial Command Center UI)
 * **Visualizations:** `Cytoscape.js`
 
 ---
@@ -54,18 +54,26 @@ pip install -r requirements.txt
 python -m spacy download en_core_web_sm
 ```
 
-### 2. Start the Server
-The system is designed to serve both the headless API and the compiled React frontend directly from a single Uvicorn instance for a seamless demo experience.
+### 2. Start the Backend Server
+Start the headless FastAPI engine (handles NLP, Risk Assessment, and Graph building).
 ```bash
 python -m uvicorn main:app --host 127.0.0.1 --port 8000
 ```
 
-### 3. Run the Presentation Flow
-1. Open your browser to `http://127.0.0.1:8000/`.
-2. Click **Load Next Real Report** sequentially.
-3. Watch as the risk score evolves from *Normal (21)* ➡️ *Warning (43)* ➡️ *Elevated (68)* ➡️ **SIF Precursor (89)**.
-4. Review the generated **"Why Did Risk Change?"** panel.
-5. Click **Mark Corrective Action Complete** in the simulator to prove closed-loop risk mitigation.
+### 3. Start the Frontend Command Center
+In a new terminal window, start the Vite development server for the UI.
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+### 4. Run the Presentation Flow
+1. Open your browser to `http://localhost:5173/`.
+2. Click **[ ＋ LOAD NEXT REPORT ]** sequentially to step through the 13-report dataset.
+3. Watch the Risk Trajectory graph dynamically plot the risk escalation over time.
+4. Review the generated **"WHY NOW?"** evidence panel to see the exact risk multipliers of the latest report.
+5. Click **[ MARK COMPLETE ]** in the simulator to prove closed-loop risk mitigation.
 
 ---
 
