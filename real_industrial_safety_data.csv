@@ -1,0 +1,5 @@
+Data,Countries,Local,Industry Sector,Accident Level,Potential Accident Level,Genre,Employee or Third Party,Critical Risk,Description,Corrective Action,Action Status
+2024-08-01 09:00:00,Country_01,Local_03,Mining,I,II,Male,Employee,Slip/Fall,Pump P-104 has minor hydraulic leakage. Area cleaned.,Monitor pump,Closed
+2024-08-04 14:30:00,Country_01,Local_03,Mining,II,III,Male,Third Party,Slip/Fall,Maintenance issue reported on P-104. Seal appears degraded and leaking fluid.,Replace seal,Open
+2024-08-07 11:15:00,Country_01,Local_03,Mining,II,IV,Female,Employee,Slip/Fall,Worker reports slippery surface near P-104. Oil spreading across main walkway.,Clean spill and barricade,Open
+2024-08-10 16:45:00,Country_01,Local_03,Mining,III,V,Male,Employee,Slip/Fall,Worker nearly slips and falls heavily near P-104 due to massive hydraulic oil pool.,Emergency shutdown and full seal replacement,Open

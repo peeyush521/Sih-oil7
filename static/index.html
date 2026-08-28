@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Safety Precursor Intelligence</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.26.0/cytoscape.min.js"></script>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <span class="logo-icon">🛡️</span>
+                <h1>SIF Intelligence</h1>
+            </div>
+            <nav class="nav-menu">
+                <a href="#" class="nav-item active">Command Center</a>
+                <a href="#" class="nav-item">Risk Investigation</a>
+                <a href="#" class="nav-item">Timeline</a>
+            </nav>
+            <div class="demo-controls">
+                <h3>Historical Dataset Replay</h3>
+                <button id="process-next-btn" class="btn primary">Load Next Real Report</button>
+                <button id="reset-btn" class="btn secondary">Reset Timeline</button>
+            </div>
+            
+            <div class="demo-controls" style="margin-top: 16px; border-top: none; padding-top: 0;">
+                <h3>Custom Input</h3>
+                <textarea id="custom-report-text" rows="4" placeholder="Type a custom safety report..." style="width: 100%; padding: 12px; border-radius: 8px; background: rgba(0,0,0,0.2); border: 1px solid var(--border); color: #fff; font-family: inherit; margin-bottom: 12px; resize: vertical;"></textarea>
+                <button id="submit-custom-btn" class="btn primary">Analyze Custom Report</button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="topbar">
+                <h2>Command Center</h2>
+                <div class="status-indicator">
+                    <span class="pulse"></span> System Active
+                </div>
+            </header>
+            
+            <div id="alert-container"></div>
+
+            <div class="dashboard-grid">
+                <!-- Stats Row -->
+                <div class="stat-card">
+                    <h3>Total Reports</h3>
+                    <div class="stat-value" id="stat-total">0</div>
+                </div>
+                <div class="stat-card warning">
+                    <h3>Emerging Precursors</h3>
+                    <div class="stat-value" id="stat-precursors">0</div>
+                </div>
+                <div class="stat-card critical">
+                    <h3>Unresolved Actions</h3>
+                    <div class="stat-value" id="stat-unresolved">0</div>
+                </div>
+
+                <!-- Latest Report Panel -->
+                <div class="panel col-span-2">
+                    <div class="panel-header">
+                        <h3>Latest Processed Signal</h3>
+                    </div>
+                    <div class="panel-body" id="latest-report-container">
+                        <div class="empty-state">Waiting for next report...</div>
+                    </div>
+                </div>
+
+                <!-- LLM Explanation Panel -->
+                <div class="panel">
+                    <div class="panel-header" style="display: flex; gap: 8px; align-items: center;">
+                        <span style="color: var(--accent);">✨</span>
+                        <h3>AI Reasoning</h3>
+                    </div>
+                    <div class="panel-body" id="llm-explanation-container" style="line-height: 1.6; font-size: 0.95rem; overflow-y: auto; max-height: 250px;">
+                        <div class="empty-state">Waiting for AI...</div>
+                    </div>
+                </div>
+
+                <!-- Risk Assessment Panel -->
+                <div class="panel col-span-3">
+                    <div class="panel-header">
+                        <h3>Deterministic Risk Assessment</h3>
+                        <div id="sif-category-badge" style="display:none; padding: 4px 8px; border-radius: 4px; background: rgba(255, 100, 100, 0.2); border: 1px solid rgba(255,100,100,0.5); font-size: 0.8rem; font-weight: 600; color: #ff6b6b;">SIF: None</div>
+                    </div>
+                    <div class="panel-body" id="risk-assessment-container" style="display: flex; gap: 20px;">
+                        <div class="empty-state">No risk data available</div>
+                    </div>
+                </div>
+
+                <!-- Knowledge Graph -->
+                <div class="panel col-span-3">
+                    <div class="panel-header">
+                        <h3>Temporal Safety Graph</h3>
+                    </div>
+                    <div class="panel-body" style="height: 400px; padding: 0;">
+                        <div id="cy" style="width: 100%; height: 100%;"></div>
+                    </div>
+                </div>
+
+                <!-- Incident Timeline (Full Width) -->
+                <div class="panel col-span-3">
+                    <div class="panel-header">
+                        <h3>Incident Timeline</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="timeline" id="incident-timeline">
+                            <div class="empty-state">Timeline empty</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Intervention Simulator (Full Width) -->
+                <div class="panel col-span-3">
+                    <div class="panel-header">
+                        <h3>Intervention Impact Simulation</h3>
+                    </div>
+                    <div class="panel-body simulator-body">
+                        <div class="simulator-actions">
+                            <button class="btn sim-btn" data-action="delay">Delay Action</button>
+                            <button class="btn sim-btn primary" data-action="resolve_action">Mark Corrective Action Complete</button>
+                        </div>
+                        <div class="simulator-results" id="sim-results">
+                            Select an intervention to see predicted risk trajectory.
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+    
+    <script src="app.js"></script>
+</body>
+</html>

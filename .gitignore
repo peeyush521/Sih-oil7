@@ -1,0 +1,15 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.env
+.venv
+frontend/node_modules/
+frontend/dist/
+frontend/.npm/
+*.csv
+!real_industrial_safety_data.csv
+.DS_Store
