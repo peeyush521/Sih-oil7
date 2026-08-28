@@ -245,6 +245,7 @@ function App() {
                 )}
               </div>
             </div>
+          </div>
 
           {/* Latest Signal & AI Reasoning */}
           <div className="panel surface-panel col-span-2">
