@@ -123,9 +123,9 @@ function App() {
         
         <div className="nav-menu">
           <a href="#" className={`nav-item ${activeTab === 'Dashboard' ? 'active' : ''}`} onClick={(e) => handleNavClick(e, 'Dashboard', null)}>🛡 Overview</a>
-          <a href="#" className={`nav-item ${activeTab === 'Reports' ? 'active' : ''}`} onClick={(e) => handleNavClick(e, 'Reports', null)}>📄 Reports</a>
-          <a href="#" className={`nav-item ${activeTab === 'Precursors' ? 'active' : ''}`} onClick={(e) => handleNavClick(e, 'Precursors', null)}>🚨 Precursors</a>
-          <a href="#" className={`nav-item ${activeTab === 'Event Graph' ? 'active' : ''}`} onClick={(e) => handleNavClick(e, 'Event Graph', null)}>🕸 Event Graph</a>
+          <a href="#" className={`nav-item ${activeTab === 'Reports' ? 'active' : ''}`} onClick={(e) => handleNavClick(e, 'Reports', 'incident-timeline')}>📄 Reports</a>
+          <a href="#" className={`nav-item ${activeTab === 'Precursors' ? 'active' : ''}`} onClick={(e) => handleNavClick(e, 'Precursors', 'precursor-chain-panel')}>🚨 Precursors</a>
+          <a href="#" className={`nav-item ${activeTab === 'Event Graph' ? 'active' : ''}`} onClick={(e) => handleNavClick(e, 'Event Graph', 'precursor-chain-panel')}>🕸 Event Graph</a>
         </div>
         
         <div style={{ marginTop: 'auto', display: 'flex', flexDirection: 'column', gap: '10px' }}>
@@ -363,7 +363,7 @@ function App() {
           </div>
 
           {/* Precursor Chain (Graph) */}
-          <div className="panel surface-panel col-span-3">
+          <div className="panel surface-panel col-span-3" id="precursor-chain-panel">
             <div className="panel-header">
               <h3>PRECURSOR CHAIN (TEMPORAL GRAPH)</h3>
             </div>
@@ -375,30 +375,30 @@ function App() {
                   {
                     selector: 'node',
                     style: {
-                      'background-color': '#22D3EE',
+                      'background-color': '#3b82f6',
                       'label': 'data(label)',
-                      'color': '#F8FAFC',
+                      'color': '#fff',
                       'text-valign': 'center',
                       'text-outline-width': 2,
-                      'text-outline-color': '#0D1B2A',
-                      'font-size': '12px'
+                      'text-outline-color': '#0f172a',
+                      'font-size': '10px'
                     }
                   },
-                  { selector: 'node[type="Incident"]', style: { 'background-color': '#EF4444', 'shape': 'rectangle' } },
-                  { selector: 'node[type="Equipment"]', style: { 'background-color': '#22D3EE', 'shape': 'hexagon' } },
-                  { selector: 'node[type="Location"]', style: { 'background-color': '#22C55E', 'shape': 'diamond' } },
-                  { selector: 'node[type="Hazard"]', style: { 'background-color': '#F59E0B', 'shape': 'triangle' } },
+                  { selector: 'node[type="Incident"]', style: { 'background-color': '#ef4444', 'shape': 'rectangle' } },
+                  { selector: 'node[type="Equipment"]', style: { 'background-color': '#3b82f6', 'shape': 'hexagon' } },
+                  { selector: 'node[type="Location"]', style: { 'background-color': '#10b981', 'shape': 'diamond' } },
+                  { selector: 'node[type="Hazard"]', style: { 'background-color': '#f59e0b', 'shape': 'triangle' } },
                   {
                     selector: 'edge',
                     style: {
                       'width': 2,
-                      'line-color': '#20354A',
-                      'target-arrow-color': '#20354A',
+                      'line-color': 'rgba(255,255,255,0.2)',
+                      'target-arrow-color': 'rgba(255,255,255,0.2)',
                       'target-arrow-shape': 'triangle',
                       'curve-style': 'bezier',
                       'label': 'data(label)',
-                      'font-size': '10px',
-                      'color': '#94A3B8',
+                      'font-size': '8px',
+                      'color': '#94a3b8',
                       'text-rotation': 'autorotate',
                       'text-margin-y': -10
                     }
