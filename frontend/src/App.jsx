@@ -363,11 +363,11 @@ function App() {
           </div>
 
           {/* Precursor Chain (Graph) */}
-          <div className="panel surface-panel col-span-3" id="precursor-chain-panel">
+          <div className="panel surface-panel col-span-3" id="precursor-chain-panel" style={{ height: 400 }}>
             <div className="panel-header">
               <h3>PRECURSOR CHAIN (TEMPORAL GRAPH)</h3>
             </div>
-            <div className="panel-body" style={{ height: 300, padding: 0 }}>
+            <div className="panel-body" style={{ padding: 0 }}>
               <CytoscapeComponent 
                 elements={graphElements} 
                 style={{ width: '100%', height: '100%' }}
