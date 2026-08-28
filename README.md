@@ -20,6 +20,15 @@ Our system connects the dots. Instead of waiting for a catastrophic failure, our
 
 ---
 
+## 🕸️ The Precursor Chain (Temporal Graph)
+This is the visual "brain" of our intelligence logic. While legacy systems treat safety reports as isolated documents in a database, our Precursor Chain maps the relational web of the entire facility in real-time to connect the dots.
+
+* **Contextual AI (Nodes):** Raw text is shattered into structured entities: Incidents (Red), Equipment (Blue), Locations (Green), and Hazards (Yellow).
+* **Hidden Connections (Edges):** If someone slips on Monday and an inspector reports a pressure drop on Thursday, the graph visually draws lines linking both independent events to the exact same equipment node (e.g., `PUMP_104`).
+* **Precursor Detection:** As you load reports, the temporal graph grows. When a specific node accumulates a high density of hazard connections in a short timeframe, the system identifies that cluster as a **Precursor Chain**—a mathematically proven pathway indicating a major accident is imminent.
+
+---
+
 ## 📊 Scientific Benchmark Results
 We validated our Temporal Graph against standard industry approaches using an automated sequence generator testing 500+ synthetic incident escalations.
 
@@ -76,10 +85,10 @@ npm run dev
 
 ### 5. Run the Presentation Flow
 1. Open your browser to `http://localhost:5173/`.
-2. Click **[ ＋ LOAD NEXT REPORT ]** sequentially to step through the 13-report dataset.
+2. Click **[ ＋ Load next report ]** sequentially to step through the 13-report dataset.
 3. Watch the Risk Trajectory graph dynamically plot the risk escalation over time.
-4. Review the generated **"WHY NOW?"** evidence panel to see the exact risk multipliers of the latest report.
-5. Click **[ MARK COMPLETE ]** in the simulator to prove closed-loop risk mitigation.
+4. Review the generated **"Why Now?"** evidence panel to see the exact risk multipliers of the latest report.
+5. Click **[ ✓ Mark complete ]** in the simulator to prove closed-loop risk mitigation.
 
 ---
 
