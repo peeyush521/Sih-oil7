@@ -44,7 +44,13 @@ We validated our Temporal Graph against standard industry approaches using an au
 
 ## 🚀 How to Run the Demo Locally
 
-### 1. Install Dependencies
+### 1. Clone the Repository
+```bash
+git clone https://github.com/peeyush521/Sih-oil7.git
+cd Sih-oil7
+```
+
+### 2. Install Dependencies
 Ensure you have Python 3.9+ and Node.js installed.
 ```bash
 # Install Python backend dependencies
@@ -54,13 +60,13 @@ pip install -r requirements.txt
 python -m spacy download en_core_web_sm
 ```
 
-### 2. Start the Backend Server
+### 3. Start the Backend Server
 Start the headless FastAPI engine (handles NLP, Risk Assessment, and Graph building).
 ```bash
 python -m uvicorn main:app --host 127.0.0.1 --port 8000
 ```
 
-### 3. Start the Frontend Command Center
+### 4. Start the Frontend Command Center
 In a new terminal window, start the Vite development server for the UI.
 ```bash
 cd frontend
@@ -68,7 +74,7 @@ npm install
 npm run dev
 ```
 
-### 4. Run the Presentation Flow
+### 5. Run the Presentation Flow
 1. Open your browser to `http://localhost:5173/`.
 2. Click **[ ＋ LOAD NEXT REPORT ]** sequentially to step through the 13-report dataset.
 3. Watch the Risk Trajectory graph dynamically plot the risk escalation over time.
