@@ -1,5 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import CytoscapeComponent from 'react-cytoscapejs';
+
+const Typewriter = ({ text }) => {
+  const [content, setContent] = useState('');
+  useEffect(() => {
+    setContent('');
+    let i = 0;
+    const cleanText = text.replace(/\*\*(.*?)\*\*/g, '$1'); // Strip markdown
+    const timer = setInterval(() => {
+      setContent(cleanText.slice(0, i));
+      i++;
+      if (i > cleanText.length) clearInterval(timer);
+    }, 15);
+    return () => clearInterval(timer);
+  }, [text]);
+  return <div style={{ fontSize: '0.85rem', lineHeight: '1.5', fontFamily: 'monospace' }}>{content}<span style={{ animation: 'blink 1s step-end infinite' }}>█</span></div>;
+}
 
 function App() {
   const [stateData, setStateData] = useState(null);
@@ -9,6 +25,33 @@ function App() {
   const [simResults, setSimResults] = useState("Select an intervention to see predicted risk trajectory.");
   const [cy, setCy] = useState(null);
   const [activeTab, setActiveTab] = useState('Dashboard');
+
+  const playAlarm = () => {
+    try {
+      const ctx = new (window.AudioContext || window.webkitAudioContext)();
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.type = 'square';
+      osc.frequency.setValueAtTime(880, ctx.currentTime); 
+      osc.frequency.setValueAtTime(660, ctx.currentTime + 0.2); 
+      
+      gain.gain.setValueAtTime(0.05, ctx.currentTime);
+      gain.gain.linearRampToValueAtTime(0, ctx.currentTime + 0.4);
+      
+      osc.start(ctx.currentTime);
+      osc.stop(ctx.currentTime + 0.4);
+    } catch(e) {}
+  };
+
+  useEffect(() => {
+    if (currentState?.is_precursor) {
+      playAlarm();
+      const interval = setInterval(playAlarm, 2000);
+      return () => clearInterval(interval);
+    }
+  }, [currentState?.is_precursor]);
 
   const handleNavClick = (e, tabName, targetId) => {
     e.preventDefault();
@@ -139,7 +182,7 @@ function App() {
       </div>
 
       {/* Main Content */}
-      <div className="main-content">
+      <div className={`main-content ${currentState?.is_precursor ? 'critical-alarm-active' : ''}`}>
         <div className="topbar">
           <h2>Command Center</h2>
           <div style={{ display: 'flex', gap: 16 }}>
@@ -273,7 +316,7 @@ function App() {
             </div>
             <div className="panel-body" style={{ background: 'rgba(34, 211, 238, 0.05)', borderLeft: '3px solid var(--primary)', overflowY: 'auto' }}>
               {currentState ? (
-                <div dangerouslySetInnerHTML={{ __html: currentState.llm_explanation.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>') }} style={{ fontSize: '0.85rem', lineHeight: '1.5' }} />
+                <Typewriter text={currentState.llm_explanation} />
               ) : <div className="empty-state">Waiting for AI...</div>}
             </div>
           </div>
