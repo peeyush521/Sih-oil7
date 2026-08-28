@@ -1,25 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700;800&display=swap');
+
 :root {
-  --bg-main: #07111F; /* Deep navy */
-  --bg-surface: #0D1B2A;
+  --bg-main: #07111D;
+  --bg-sidebar: #0B1927;
+  --bg-surface: #0D1D2B;
   --bg-surface2: #12263A;
-  --border: #20354A;
+  --border: #1C3446;
   
-  --text-main: #F8FAFC;
-  --text-muted: #94A3B8;
+  --text-main: #E7EDF3;
+  --text-muted: #91A3B7;
   
-  --primary: #22D3EE; /* Cyan */
-  --primary-glow: rgba(34, 211, 238, 0.3);
+  --primary: #18C6D9;
+  --primary-glow: rgba(24, 198, 217, 0.1);
   
-  --safe: #22C55E; /* Green */
-  --safe-glow: rgba(34, 197, 94, 0.2);
+  --safe: #22C55E;
+  --safe-glow: rgba(34, 197, 94, 0.1);
   
-  --warning: #F59E0B; /* Amber */
-  --warning-glow: rgba(245, 158, 11, 0.2);
+  --warning: #F59E0B;
+  --warning-glow: rgba(245, 158, 11, 0.1);
   
-  --critical: #EF4444; /* Red */
-  --critical-glow: rgba(239, 68, 68, 0.3);
+  --critical: #EF4444;
+  --critical-glow: rgba(239, 68, 68, 0.1);
   
   --font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
 }
 
 * {
@@ -49,7 +53,7 @@ body {
   background: var(--bg-surface);
   border: 1px solid var(--border);
   border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
 }
 
 .surface-panel-2 {
@@ -60,7 +64,7 @@ body {
 
 .sidebar {
   width: 280px;
-  background: var(--bg-surface);
+  background: var(--bg-sidebar);
   border-right: 1px solid var(--border);
   padding: 24px;
   display: flex;
@@ -110,7 +114,7 @@ body {
 }
 
 .nav-item.active {
-  background: rgba(34, 211, 238, 0.1);
+  background: #102B3A;
   color: var(--primary);
   border-left: 3px solid var(--primary);
 }
@@ -201,7 +205,7 @@ body {
 .btn.primary {
   background: var(--primary);
   color: #000;
-  box-shadow: 0 4px 15px var(--primary-glow);
+  box-shadow: 0 2px 8px var(--primary-glow);
 }
 .btn.primary:hover:not(:disabled) {
   background: #1CB6CD;
@@ -218,7 +222,7 @@ body {
 .btn.safe {
   background: var(--safe);
   color: white;
-  box-shadow: 0 4px 15px var(--safe-glow);
+  box-shadow: 0 2px 8px var(--safe-glow);
 }
 .btn:disabled {
   opacity: 0.5;
@@ -266,7 +270,7 @@ body {
   font-weight: 600;
 }
 .panel-body {
-  padding: 20px;
+  padding: 24px;
   flex: 1;
 }
 
@@ -290,9 +294,10 @@ body {
   margin-bottom: 6px;
   border: 1px solid;
 }
-.tag.equipment { background: rgba(59, 130, 246, 0.15); border-color: rgba(59, 130, 246, 0.4); color: #60A5FA; }
-.tag.hazard { background: rgba(245, 158, 11, 0.15); border-color: rgba(245, 158, 11, 0.4); color: #FBBF24; }
-.tag.location { background: rgba(16, 185, 129, 0.15); border-color: rgba(16, 185, 129, 0.4); color: #34D399; }
+.tag.incident { background: rgba(148, 163, 184, 0.15); border-color: rgba(148, 163, 184, 0.4); color: #94A3B8; }
+.tag.equipment { background: rgba(24, 198, 217, 0.15); border-color: rgba(24, 198, 217, 0.4); color: #18C6D9; }
+.tag.hazard { background: rgba(245, 158, 11, 0.15); border-color: rgba(245, 158, 11, 0.4); color: #F59E0B; }
+.tag.location { background: rgba(20, 184, 166, 0.15); border-color: rgba(20, 184, 166, 0.4); color: #14B8A6; }
 
 /* Risk Indicator */
 .risk-score-container {
@@ -305,7 +310,7 @@ body {
 }
 
 .risk-circle {
-  font-size: 6rem;
+  font-size: 4.5rem;
   font-weight: 800;
   line-height: 1;
   margin-bottom: 10px;
@@ -316,7 +321,7 @@ body {
 .risk-circle.warning { color: var(--warning); }
 .risk-circle.critical { 
   color: var(--critical); 
-  text-shadow: 0 0 30px var(--critical-glow);
+  text-shadow: 0 0 15px var(--critical-glow);
 }
 
 .risk-status-text {
@@ -328,11 +333,11 @@ body {
 .risk-status-text.critical { color: var(--critical); }
 
 .risk-trend {
-  font-size: 1.25rem;
+  font-size: 1.15rem;
   font-weight: 700;
   margin-top: 8px;
 }
-.risk-trend.escalating { color: var(--critical); }
+.risk-trend.escalating { color: var(--warning); }
 .risk-trend.decreasing { color: var(--safe); }
 .risk-trend.stable { color: var(--text-muted); }
 

@@ -160,23 +160,23 @@ function App() {
           <div className="logo-icon">🛡️</div>
           <h1>SAFEGUARD AI</h1>
         </div>
-        <div style={{ fontSize: '0.65rem', color: 'var(--primary)', letterSpacing: '2px', marginBottom: '40px', paddingLeft: '36px', fontWeight: 'bold' }}>
-          SIF PRECURSOR INTELLIGENCE
+        <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', letterSpacing: '0.5px', marginBottom: '40px', paddingLeft: '36px', fontWeight: '500' }}>
+          Industrial Safety Intelligence
         </div>
         
         <div className="nav-menu">
-          <a href="#" className={`nav-item ${activeTab === 'Dashboard' ? 'active' : ''}`} onClick={(e) => handleNavClick(e, 'Dashboard', null)}>🛡 Overview</a>
-          <a href="#" className={`nav-item ${activeTab === 'Reports' ? 'active' : ''}`} onClick={(e) => handleNavClick(e, 'Reports', 'incident-timeline')}>📄 Reports</a>
-          <a href="#" className={`nav-item ${activeTab === 'Precursors' ? 'active' : ''}`} onClick={(e) => handleNavClick(e, 'Precursors', 'precursor-chain-panel')}>🚨 Precursors</a>
-          <a href="#" className={`nav-item ${activeTab === 'Event Graph' ? 'active' : ''}`} onClick={(e) => handleNavClick(e, 'Event Graph', 'precursor-chain-panel')}>🕸 Event Graph</a>
+          <a href="#" className={`nav-item ${activeTab === 'Dashboard' ? 'active' : ''}`} onClick={(e) => handleNavClick(e, 'Dashboard', null)}>◇ Overview</a>
+          <a href="#" className={`nav-item ${activeTab === 'Reports' ? 'active' : ''}`} onClick={(e) => handleNavClick(e, 'Reports', 'incident-timeline')}>▤ Reports</a>
+          <a href="#" className={`nav-item ${activeTab === 'Precursors' ? 'active' : ''}`} onClick={(e) => handleNavClick(e, 'Precursors', 'precursor-chain-panel')}>⚠ Precursors</a>
+          <a href="#" className={`nav-item ${activeTab === 'Event Graph' ? 'active' : ''}`} onClick={(e) => handleNavClick(e, 'Event Graph', 'precursor-chain-panel')}>◇ Event Graph</a>
         </div>
         
         <div style={{ marginTop: 'auto', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-          <button className="btn primary" onClick={processNext} disabled={processing} style={{ padding: '16px', fontSize: '1.05rem', letterSpacing: '1px', fontWeight: 800 }}>
-            {processing ? 'ANALYZING...' : '＋ LOAD NEXT REPORT'}
+          <button className="btn primary" onClick={processNext} disabled={processing} style={{ padding: '12px', fontSize: '0.95rem', fontWeight: 600 }}>
+            {processing ? 'Analyzing...' : '＋ Load next report'}
           </button>
-          <button className="btn secondary" onClick={resetSimulation}>
-            Reset Timeline
+          <button className="btn secondary" onClick={resetSimulation} style={{ padding: '8px', fontSize: '0.8rem', border: 'none' }}>
+            Reset timeline
           </button>
         </div>
       </div>
@@ -186,12 +186,13 @@ function App() {
         <div className="topbar">
           <h2>Command Center</h2>
           <div style={{ display: 'flex', gap: 16 }}>
-            <div className="mode-badge">
-              ● SIMULATION MODE
+            <div style={{ display: 'flex', alignItems: 'flex-start', gap: '6px', border: '1px solid var(--border)', padding: '6px 10px', borderRadius: '4px' }}>
+              <div style={{ color: 'var(--primary)', fontSize: '0.6rem', marginTop: '2px' }}>●</div>
+              <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', lineHeight: '1.2' }}>Simulation<br/>Mode</div>
             </div>
-            <div className="status-indicator">
-              <div className="pulse"></div>
-              AI ENGINE ONLINE
+            <div style={{ display: 'flex', alignItems: 'flex-start', gap: '6px', border: '1px solid var(--border)', padding: '6px 10px', borderRadius: '4px' }}>
+              <div style={{ color: 'var(--safe)', fontSize: '0.6rem', marginTop: '2px' }}>●</div>
+              <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', lineHeight: '1.2' }}>AI Engine<br/>Online</div>
             </div>
           </div>
         </div>
@@ -202,8 +203,8 @@ function App() {
           {/* Main Risk Hero Panel */}
           <div className="panel surface-panel col-span-2">
             <div className="panel-header">
-              <h3>SAFETY RISK</h3>
-              <div style={{ color: 'var(--text-muted)', fontSize: '0.85rem', fontWeight: 700, letterSpacing: '1px' }}>ACTIVE PRECURSOR STATUS</div>
+              <h3>Safety Risk</h3>
+              <div style={{ color: 'var(--text-muted)', fontSize: '0.85rem', fontWeight: 600 }}>Active Precursor Status</div>
             </div>
             <div className="panel-body" style={{ display: 'flex', gap: 20 }}>
               {currentState ? (
@@ -213,33 +214,36 @@ function App() {
                       {currentState.risk_data.score}
                     </div>
                     <div className={`risk-status-text ${currentState.is_precursor ? 'critical' : (currentState.risk_data.score >= 40 ? 'warning' : 'safe')}`}>
-                      {currentState.is_precursor ? '🚨 CRITICAL' : (currentState.risk_data.score >= 40 ? 'WARNING' : 'NORMAL')}
+                      {currentState.is_precursor ? 'CRITICAL' : (currentState.risk_data.score >= 40 ? 'WARNING' : 'NORMAL')}
                     </div>
-                    <div className={`risk-trend ${currentState.risk_data.trajectory.toLowerCase()}`}>
-                      {currentState.risk_data.trajectory === 'ESCALATING' ? '▲' : (currentState.risk_data.trajectory === 'DECREASING' ? '▼' : '▬')} {currentState.risk_data.trajectory} {currentState.risk_data.trajectory === 'ESCALATING' && '+'}
+                    <div className={`risk-trend ${currentState.risk_data.trajectory.toLowerCase()}`} style={{ textTransform: 'capitalize' }}>
+                      {currentState.risk_data.trajectory.toLowerCase()}
+                    </div>
+                    <div style={{ marginTop: '16px', fontSize: '0.6rem', color: 'var(--text-muted)', display: 'flex', gap: '4px', alignItems: 'center', fontFamily: 'monospace' }}>
+                      LOW ─ MEDIUM ─ HIGH {currentState.is_precursor ? <span style={{ color: 'var(--critical)' }}>━ CRITICAL</span> : '─ CRITICAL'}
                     </div>
                   </div>
                   <div style={{ flex: 1.5, borderLeft: '1px solid var(--border)', paddingLeft: 30, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                     {currentState.is_precursor && (
                       <div style={{ marginBottom: 16 }}>
-                        <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: 4, fontWeight: 700, letterSpacing: '1px' }}>SIF PATHWAY DETECTED</div>
-                        <div style={{ display: 'inline-block', padding: '6px 12px', background: 'rgba(239, 68, 68, 0.15)', border: '1px solid var(--critical)', borderRadius: '4px', color: 'var(--critical)', fontWeight: 'bold' }}>
+                        <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: 4, fontWeight: 600 }}>SIF Pathway Detected</div>
+                        <div style={{ display: 'inline-block', padding: '6px 12px', background: 'rgba(239, 68, 68, 0.1)', border: '1px solid var(--critical)', borderRadius: '4px', color: 'var(--critical)', fontWeight: 'bold' }}>
                           {currentState.risk_data.sif_category}
                         </div>
                       </div>
                     )}
                     <div style={{ marginBottom: 16 }}>
-                      <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: 4, fontWeight: 700, letterSpacing: '1px' }}>PRIMARY TARGET</div>
+                      <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: 4, fontWeight: 600 }}>Primary Target</div>
                       <div style={{ fontSize: '1.25rem', fontWeight: 'bold', color: 'var(--text-main)' }}>
                         {currentState.extracted_entities.equipment[0] || 'Unspecified Location'}
                       </div>
                     </div>
                     <div>
-                      <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: 4, fontWeight: 700, letterSpacing: '1px' }}>RECOMMENDED ACTION</div>
-                      <ul style={{ paddingLeft: 20, color: 'var(--warning)', fontWeight: 600 }}>
+                      <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: 4, fontWeight: 600 }}>Recommended Action</div>
+                      <ul style={{ paddingLeft: 20, color: 'var(--text-main)', fontWeight: 500 }}>
                         {currentState.risk_data.evidence.length > 0 ? (
                            <li>Verify {currentState.extracted_entities.equipment[0] || 'area'} safety protocol</li>
-                        ) : <li>Monitor for further changes</li>}
+                        ) : <li style={{ color: 'var(--text-muted)' }}>Monitor for further changes</li>}
                         <li>Close unresolved corrective actions</li>
                       </ul>
                     </div>
@@ -252,33 +256,37 @@ function App() {
           {/* System Intelligence */}
           <div className="panel surface-panel">
             <div className="panel-header">
-              <h3>SYSTEM INTELLIGENCE</h3>
+              <h3>System Intelligence</h3>
             </div>
-            <div className="panel-body" style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+            <div className="panel-body" style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <span style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>Reports Analyzed</span>
-                <span style={{ fontWeight: 'bold', fontSize: '1.1rem' }}>{stateData ? stateData.total_reports : 0}</span>
+                <span style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>Last updated</span>
+                <span style={{ fontWeight: 'bold', fontSize: '0.95rem', fontFamily: 'var(--font-mono)' }}>{new Date().toLocaleTimeString()}</span>
               </div>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <span style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>Entities Linked</span>
-                <span style={{ fontWeight: 'bold', fontSize: '1.1rem' }}>{graphElements.length}</span>
+                <span style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>Signal confidence</span>
+                <span style={{ fontWeight: 'bold', fontSize: '0.95rem' }}>94%</span>
               </div>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <span style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>Active Precursors</span>
-                <span style={{ fontWeight: 'bold', fontSize: '1.1rem', color: precursors > 0 ? 'var(--critical)' : 'var(--safe)' }}>{precursors}</span>
+                <span style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>Reports analyzed</span>
+                <span style={{ fontWeight: 'bold', fontSize: '1.05rem' }}>{stateData ? stateData.total_reports : 0}</span>
               </div>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <span style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>Unresolved Actions</span>
-                <span style={{ fontWeight: 'bold', fontSize: '1.1rem', color: unresolved > 0 ? 'var(--warning)' : 'inherit' }}>{unresolved}</span>
+                <span style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>Active precursors</span>
+                <span style={{ fontWeight: 'bold', fontSize: '1.05rem', color: precursors > 0 ? 'var(--critical)' : 'var(--safe)' }}>{precursors}</span>
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <span style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>Open actions</span>
+                <span style={{ fontWeight: 'bold', fontSize: '1.05rem', color: unresolved > 0 ? 'var(--warning)' : 'inherit' }}>{unresolved}</span>
               </div>
               
               <div style={{ marginTop: 'auto', paddingTop: 16, borderTop: '1px solid var(--border)' }}>
                 <div style={{ display: 'flex', gap: '8px' }}>
-                  <button className="btn secondary" style={{ flex: 1, padding: '12px', fontSize: '0.8rem', letterSpacing: '1px' }} onClick={() => simulateIntervention('delay')} disabled={!currentState}>
-                    [ DELAY ACTION ]
+                  <button className="btn secondary" style={{ flex: 1, padding: '10px', fontSize: '0.85rem' }} onClick={() => simulateIntervention('delay')} disabled={!currentState}>
+                    Delay action
                   </button>
-                  <button className="btn safe" style={{ flex: 1, padding: '12px', fontSize: '0.8rem', letterSpacing: '1px' }} onClick={() => simulateIntervention('resolve_action')} disabled={!currentState}>
-                    [ MARK COMPLETE ]
+                  <button className="btn safe" style={{ flex: 1, padding: '10px', fontSize: '0.85rem' }} onClick={() => simulateIntervention('resolve_action')} disabled={!currentState}>
+                    ✓ Mark complete
                   </button>
                 </div>
                 {simResults !== "Select an intervention to see predicted risk trajectory." && (
@@ -293,17 +301,20 @@ function App() {
           {/* Latest Signal & AI Reasoning */}
           <div className="panel surface-panel col-span-2">
             <div className="panel-header">
-              <h3>LATEST PROCESSED SIGNAL</h3>
+              <h3>Latest Processed Signal</h3>
             </div>
             <div className="panel-body">
               {currentState ? (
                 <>
-                  <div style={{ marginBottom: 16, fontSize: '0.95rem' }}>"{currentState.report.text}"</div>
+                  <div style={{ marginBottom: 8, fontSize: '1.05rem', fontWeight: 600, color: 'var(--text-main)' }}>
+                    {currentState.extracted_entities.hazards[0] ? `${currentState.extracted_entities.hazards[0].replace('_', ' ')} reported near ${currentState.extracted_entities.equipment[0] || 'area'}` : 'Routine safety report processed'}
+                  </div>
+                  <div style={{ marginBottom: 16, fontSize: '0.9rem', color: 'var(--text-muted)' }}>"{currentState.report.text}"</div>
                   <div>
-                    <span className="tag" style={{ background: 'rgba(255,255,255,0.1)', borderColor: 'var(--border)' }}>🏷️ {currentState.report_class}</span>
-                    {currentState.extracted_entities.equipment.map(e => <span key={e} className="tag equipment">⚙️ {e}</span>)}
-                    {currentState.extracted_entities.hazards.map(e => <span key={e} className="tag hazard">⚠️ {e}</span>)}
-                    {currentState.extracted_entities.locations.map(e => <span key={e} className="tag location">📍 {e}</span>)}
+                    <span className="tag incident">{currentState.report_class}</span>
+                    {currentState.extracted_entities.equipment.map(e => <span key={e} className="tag equipment">{e}</span>)}
+                    {currentState.extracted_entities.hazards.map(e => <span key={e} className="tag hazard">{e.replace('_', ' ')}</span>)}
+                    {currentState.extracted_entities.locations.map(e => <span key={e} className="tag location">{e}</span>)}
                   </div>
                 </>
               ) : <div className="empty-state">Waiting for next report...</div>}
@@ -312,11 +323,22 @@ function App() {
 
           <div className="panel surface-panel">
             <div className="panel-header">
-              <h3>✨ AI REASONING</h3>
+              <h3>AI Reasoning</h3>
             </div>
-            <div className="panel-body" style={{ background: 'rgba(34, 211, 238, 0.05)', borderLeft: '3px solid var(--primary)', overflowY: 'auto' }}>
+            <div className="panel-body" style={{ background: 'rgba(24, 198, 217, 0.02)', borderLeft: '3px solid var(--primary)', overflowY: 'auto' }}>
               {currentState ? (
-                <Typewriter text={currentState.llm_explanation} />
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', height: '100%' }}>
+                  <div style={{ color: 'var(--text-main)', fontWeight: 600, fontSize: '0.9rem' }}>
+                    Why is {currentState.extracted_entities.equipment[0] || 'the target'} high risk?
+                  </div>
+                  <div style={{ flex: 1, fontFamily: 'var(--font-mono)' }}>
+                    <Typewriter text={currentState.llm_explanation} />
+                  </div>
+                  <div style={{ marginTop: 'auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.8rem', color: 'var(--text-muted)', paddingTop: '12px', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
+                    <div>Confidence: <span style={{ color: 'var(--safe)', fontWeight: 'bold' }}>94%</span></div>
+                    <div>{currentState.extracted_entities.hazards.length} related events</div>
+                  </div>
+                </div>
               ) : <div className="empty-state">Waiting for AI...</div>}
             </div>
           </div>
@@ -324,7 +346,7 @@ function App() {
           {/* Risk Trajectory Graph */}
           <div className="panel surface-panel col-span-2">
             <div className="panel-header">
-              <h3>RISK TRAJECTORY</h3>
+              <h3>Risk Trajectory</h3>
             </div>
             <div className="panel-body">
               {stateData && stateData.reports.length > 0 ? (
@@ -376,7 +398,7 @@ function App() {
           {/* Why Now / Evidence Breakdown */}
           <div className="panel surface-panel">
             <div className="panel-header">
-              <h3>WHY NOW?</h3>
+              <h3>Why Now?</h3>
             </div>
             <div className="panel-body">
               {currentState && currentState.risk_data.deltas && Object.keys(currentState.risk_data.deltas).length > 0 ? (
@@ -394,7 +416,7 @@ function App() {
                   ))}
                   
                   <div style={{ marginTop: 'auto', paddingTop: 16, borderTop: '1px solid var(--border)' }}>
-                     <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: 8, fontWeight: 700, letterSpacing: '1px' }}>EVIDENCE SOURCE</div>
+                     <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: 8, fontWeight: 600 }}>Evidence Source</div>
                      <div className="node-details">
                        <div style={{ color: 'var(--primary)', fontWeight: 'bold', marginBottom: 4 }}>Report #{currentState.report.id.substring(0, 8)}</div>
                        <div style={{ fontStyle: 'italic', color: 'var(--text-muted)' }}>"{currentState.report.text}"</div>
@@ -408,7 +430,7 @@ function App() {
           {/* Precursor Chain (Graph) */}
           <div className="panel surface-panel col-span-2" id="precursor-chain-panel" style={{ height: 400 }}>
             <div className="panel-header">
-              <h3>PRECURSOR CHAIN (TEMPORAL GRAPH)</h3>
+              <h3>Precursor Chain (Temporal Graph)</h3>
             </div>
             <div className="panel-body" style={{ padding: 0 }}>
               <CytoscapeComponent 
@@ -455,7 +477,7 @@ function App() {
           {/* Incident Timeline */}
           <div className="panel surface-panel" style={{ height: 400, overflowY: 'auto' }} id="incident-timeline">
             <div className="panel-header">
-              <h3>INCIDENT TIMELINE</h3>
+              <h3>Incident Timeline</h3>
             </div>
             <div className="panel-body">
               {stateData && stateData.reports.length > 0 ? (
