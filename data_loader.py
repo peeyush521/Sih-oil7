@@ -14,67 +14,66 @@ def generate_ihm_stefanini_mock_dataset(file_path="real_industrial_safety_data.c
     sectors = ["Mining", "Metals", "Others"]
     genres = ["Male", "Female"]
     emp_types = ["Employee", "Third Party", "Third Party (Remote)"]
-    # For the SIH 1-minute demo, we want EXACTLY the 4 reports that show the perfect escalation
-    # without making the presenter click through 90 random noise reports first.
+    import random
+    from datetime import datetime, timedelta
     
-    records = [
-        {
-            "Data": "2024-08-01 09:00:00",
-            "Countries": "Country_01",
-            "Local": "Local_03",
-            "Industry Sector": "Mining",
-            "Accident Level": "I",
-            "Potential Accident Level": "II",
-            "Genre": "Male",
-            "Employee or Third Party": "Employee",
-            "Critical Risk": "Slip/Fall",
-            "Description": "Pump P-104 has minor hydraulic leakage. Area cleaned.",
-            "Corrective Action": "Monitor pump",
-            "Action Status": "Closed"
-        },
-        {
-            "Data": "2024-08-04 14:30:00",
-            "Countries": "Country_01",
-            "Local": "Local_03",
-            "Industry Sector": "Mining",
-            "Accident Level": "II",
-            "Potential Accident Level": "III",
-            "Genre": "Male",
-            "Employee or Third Party": "Third Party",
-            "Critical Risk": "Slip/Fall",
-            "Description": "Maintenance issue reported on P-104. Seal appears degraded and leaking fluid.",
-            "Corrective Action": "Replace seal",
-            "Action Status": "Open"
-        },
-        {
-            "Data": "2024-08-07 11:15:00",
-            "Countries": "Country_01",
-            "Local": "Local_03",
-            "Industry Sector": "Mining",
-            "Accident Level": "II",
-            "Potential Accident Level": "IV",
-            "Genre": "Female",
-            "Employee or Third Party": "Employee",
-            "Critical Risk": "Slip/Fall",
-            "Description": "Worker reports slippery surface near P-104. Oil spreading across main walkway.",
-            "Corrective Action": "Clean spill and barricade",
-            "Action Status": "Open"
-        },
-        {
-            "Data": "2024-08-10 16:45:00",
-            "Countries": "Country_01",
-            "Local": "Local_03",
-            "Industry Sector": "Mining",
-            "Accident Level": "III",
-            "Potential Accident Level": "V",
-            "Genre": "Male",
-            "Employee or Third Party": "Employee",
-            "Critical Risk": "Slip/Fall",
-            "Description": "Worker nearly slips and falls heavily near P-104 due to massive hydraulic oil pool.",
-            "Corrective Action": "Emergency shutdown and full seal replacement",
-            "Action Status": "Open"
-        }
+    # We will generate a structured timeline that slowly escalates a precursor signal
+    # intermixed with random realistic noise to prove the system filters noise.
+    
+    records = []
+    
+    # Authentic baseline noise and the escalating pattern interspersed
+    raw_sequence = [
+        {"type": "noise", "risk": "Cut", "desc": "Worker suffered minor paper cut in admin office. Bandage applied."},
+        {"type": "noise", "risk": "Fall", "desc": "Tripped over loose cable in server room. No injury."},
+        {"type": "pattern", "risk": "Slip/Fall", "desc": "Pump P-104 has minor hydraulic leakage. Area cleaned.", "action": "Monitor pump", "status": "Closed"},
+        {"type": "noise", "risk": "Chemical Spill", "desc": "Small cleaning chemical spill in cafeteria. Mopped up immediately."},
+        {"type": "noise", "risk": "Manual Tools", "desc": "Dropped wrench on foot. Steel toe boots prevented injury."},
+        {"type": "pattern", "risk": "Slip/Fall", "desc": "Maintenance issue reported on P-104. Seal appears degraded and leaking fluid.", "action": "Replace seal", "status": "Open"},
+        {"type": "noise", "risk": "Electrical Shock", "desc": "Static shock from ungrounded metal railing. Maintenance notified."},
+        {"type": "noise", "risk": "Cut", "desc": "Minor scrape on arm from protruding nail on pallet."},
+        {"type": "pattern", "risk": "Slip/Fall", "desc": "Worker reports slippery surface near P-104. Oil spreading across main walkway.", "action": "Clean spill and barricade", "status": "Open"},
+        {"type": "noise", "risk": "Crush", "desc": "Finger pinched in heavy door. First aid applied."},
+        {"type": "pattern", "risk": "Slip/Fall", "desc": "Worker nearly slips and falls heavily near P-104 due to massive hydraulic oil pool.", "action": "Emergency shutdown and full seal replacement", "status": "Open"},
+        {"type": "noise", "risk": "Manual Tools", "desc": "Hammer handle splintered during use. Tool discarded."},
+        {"type": "noise", "risk": "Fall", "desc": "Slipped on ice in parking lot outside facility. Minor bruising."}
     ]
+    
+    current_date = datetime(2024, 8, 1, 9, 0, 0)
+    
+    for item in raw_sequence:
+        current_date += timedelta(hours=random.randint(12, 48))
+        
+        if item["type"] == "pattern":
+            records.append({
+                "Data": current_date.strftime("%Y-%m-%d %H:%M:%S"),
+                "Countries": "Country_01",
+                "Local": "Local_03",
+                "Industry Sector": "Mining",
+                "Accident Level": "II" if item["status"] == "Open" else "I",
+                "Potential Accident Level": "IV",
+                "Genre": "Male",
+                "Employee or Third Party": "Employee",
+                "Critical Risk": item["risk"],
+                "Description": item["desc"],
+                "Corrective Action": item["action"],
+                "Action Status": item["status"]
+            })
+        else:
+            records.append({
+                "Data": current_date.strftime("%Y-%m-%d %H:%M:%S"),
+                "Countries": random.choice(["Country_01", "Country_02"]),
+                "Local": random.choice(["Local_01", "Local_02", "Local_04", "Local_05"]),
+                "Industry Sector": "Mining",
+                "Accident Level": "I",
+                "Potential Accident Level": "II",
+                "Genre": random.choice(["Male", "Female"]),
+                "Employee or Third Party": "Third Party",
+                "Critical Risk": item["risk"],
+                "Description": item["desc"],
+                "Corrective Action": "None required",
+                "Action Status": "Closed"
+            })
     
     df = pd.DataFrame(records)
     df.to_csv(file_path, index=False)
