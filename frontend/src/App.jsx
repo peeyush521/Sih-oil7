@@ -14,7 +14,7 @@ const Typewriter = ({ text }) => {
     }, 15);
     return () => clearInterval(timer);
   }, [text]);
-  return <div style={{ fontSize: '0.85rem', lineHeight: '1.5', fontFamily: 'monospace' }}>{content}<span style={{ animation: 'blink 1s step-end infinite' }}>█</span></div>;
+  return <div style={{ fontSize: '0.8rem', lineHeight: '1.6', fontFamily: 'monospace' }}>{content}<span style={{ animation: 'blink 1s step-end infinite', opacity: 0.5 }}>|</span></div>;
 }
 
 function App() {
@@ -219,8 +219,16 @@ function App() {
                     <div className={`risk-trend ${currentState.risk_data.trajectory.toLowerCase()}`} style={{ textTransform: 'capitalize' }}>
                       {currentState.risk_data.trajectory.toLowerCase()}
                     </div>
-                    <div style={{ marginTop: '16px', fontSize: '0.6rem', color: 'var(--text-muted)', display: 'flex', gap: '4px', alignItems: 'center', fontFamily: 'monospace' }}>
-                      LOW ─ MEDIUM ─ HIGH {currentState.is_precursor ? <span style={{ color: 'var(--critical)' }}>━ CRITICAL</span> : '─ CRITICAL'}
+                    <div style={{ position: 'relative', width: '100%', height: '24px', marginTop: '16px' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.65rem', color: 'var(--text-muted)', fontWeight: 600 }}>
+                        <span>LOW</span>
+                        <span>MEDIUM</span>
+                        <span>HIGH</span>
+                        <span style={{ color: currentState.is_precursor ? 'var(--critical)' : 'inherit' }}>CRITICAL</span>
+                      </div>
+                      <div style={{ position: 'relative', height: '2px', background: 'var(--border)', marginTop: '8px' }}>
+                         <div style={{ position: 'absolute', top: '-4px', left: `${currentState.risk_data.score}%`, width: '10px', height: '10px', background: currentState.is_precursor ? 'var(--critical)' : (currentState.risk_data.score >= 40 ? 'var(--warning)' : 'var(--safe)'), borderRadius: '50%', transform: 'translateX(-50%)', transition: 'left 0.5s ease, background 0.5s ease' }}></div>
+                      </div>
                     </div>
                   </div>
                   <div style={{ flex: 1.5, borderLeft: '1px solid var(--border)', paddingLeft: 30, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
@@ -329,7 +337,7 @@ function App() {
               {currentState ? (
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', height: '100%' }}>
                   <div style={{ color: 'var(--text-main)', fontWeight: 600, fontSize: '0.9rem' }}>
-                    Why is {currentState.extracted_entities.equipment[0] || 'the target'} high risk?
+                    Why is {currentState.extracted_entities.equipment[0] || 'this event'} considered high risk?
                   </div>
                   <div style={{ flex: 1, fontFamily: 'var(--font-mono)' }}>
                     <Typewriter text={currentState.llm_explanation} />
