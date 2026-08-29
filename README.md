@@ -392,3 +392,41 @@ cd sif-auth
 Built for Smart India Hackathon 2026 — Oil India Limited.
 
 *Designed for safety. Engineered for impact.* 🇮🇳
+
+---
+
+## ☁️ Deploy to Render (Free Hosting)
+
+### One-Click Deploy
+
+1. Push your code to GitHub (already done)
+2. Go to [render.com](https://render.com) → Sign up (free)
+3. Click **New +** → **Web Service**
+4. Connect your GitHub repo: `peeyush521/Sih-oil7`
+5. Render auto-detects `render.yaml` — click **Deploy**
+6. Wait 5-10 minutes for build to complete
+7. You get a live URL like: `https://safeguard-ai.onrender.com`
+
+### Mobile Demo
+
+Once deployed, **anyone can open the link on their phone**:
+- Sidebar disappears on mobile
+- Bottom tab bar appears (Dashboard, Reports, Analytics, Graph)
+- "Type Report" button opens slide-up modal
+- Chatbot works on mobile
+- No app install needed — just tap the link
+
+### Environment Variables
+
+In Render dashboard → Environment tab:
+- Add `GEMINI_API_KEY` = your API key
+
+### Free Tier Limits
+
+| Limit | Value |
+|---|---|
+| Sleeps after | 15 min of inactivity |
+| First request after sleep | ~30-50 seconds (cold start) |
+| Monthly hours | 750 hours free |
+
+**Tip for demo:** Keep the tab open before judges arrive so it doesn't sleep.
