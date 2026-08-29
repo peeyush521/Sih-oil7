@@ -376,6 +376,8 @@ function App() {
   const [alertDismissed, setAlertDismissed] = useState(false);
   const [analytics, setAnalytics] = useState(null);
   const [alarmActive, setAlarmActive] = useState(false);
+  const [showMobileInput, setShowMobileInput] = useState(false);
+  const [showMobileMenu, setShowMobileMenu] = useState(false);
 
   const playAlarm = useAlarmSound();
 
@@ -976,6 +978,68 @@ function App() {
       </div>
       {/* Chat Widget */}
       <ChatWidget />
+
+      {/* ── Mobile Bottom Tab Bar ──────────────────── */}
+      <div className="mobile-tab-bar">
+        <div className="mobile-tab-bar-inner">
+          {['Dashboard', 'Reports', 'Analytics', 'Event Graph'].map(tab => (
+            <div
+              key={tab}
+              className={`mobile-tab-item ${activeTab === tab ? 'active' : ''}`}
+              onClick={() => {
+                setActiveTab(tab);
+                if (tab === 'Analytics') loadAnalytics();
+              }}
+            >
+              <span className="mobile-tab-icon">
+                {tab === 'Dashboard' && '◇'}
+                {tab === 'Reports' && '▤'}
+                {tab === 'Analytics' && '📊'}
+                {tab === 'Event Graph' && '⬡'}
+              </span>
+              <span>{tab === 'Event Graph' ? 'Graph' : tab}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* ── Mobile Action Bar ──────────────────────── */}
+      <div className="mobile-action-bar">
+        <button className="btn primary" onClick={processNext} disabled={processing}>
+          {processing ? '...' : '＋ Load Report'}
+        </button>
+        <button className="btn secondary" onClick={() => setShowMobileInput(true)}>
+          ✏️ Type Report
+        </button>
+      </div>
+
+      {/* ── Mobile Custom Input Modal ───────────────── */}
+      {showMobileInput && (
+        <div className="mobile-input-overlay" onClick={() => setShowMobileInput(false)}>
+          <div className="mobile-input-modal" onClick={e => e.stopPropagation()}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
+              <h3 style={{ fontSize: '1rem' }}>✏️ Type Safety Report</h3>
+              <button onClick={() => setShowMobileInput(false)} style={{ background: 'none', border: 'none', color: 'var(--text-muted)', fontSize: '1.2rem', cursor: 'pointer' }}>✕</button>
+            </div>
+            <textarea
+              className="mobile-custom-input"
+              value={customText}
+              onChange={(e) => setCustomText(e.target.value)}
+              placeholder='Describe the safety incident...'
+              rows={5}
+              style={{ width: '100%', padding: 12, borderRadius: 8, background: 'rgba(0,0,0,0.3)', border: '1px solid var(--border)', color: 'var(--text-main)', fontFamily: 'inherit', fontSize: '0.9rem', resize: 'vertical', marginBottom: 12 }}
+            />
+            <button
+              className="btn primary"
+              onClick={() => { submitCustomReport(); setShowMobileInput(false); }}
+              disabled={submitting || !customText.trim()}
+              style={{ width: '100%', padding: 12 }}
+            >
+              {submitting ? 'Analyzing...' : '🔍 Analyze Report'}
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
