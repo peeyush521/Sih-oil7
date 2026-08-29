@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException, UploadFile, File
+from fastapi import FastAPI, HTTPException, UploadFile, File, Depends
 
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -48,6 +48,7 @@ from data_loader import load_industrial_dataset
 from mongo_persistence import save_reports, load_reports, save_audit_log, get_audit_logs
 
 from alerts import send_precursor_alert
+from auth import signup, login, get_me, get_current_user, SignupRequest, LoginRequest
 
 
 
@@ -840,6 +841,19 @@ def get_benchmark():
     }
 
 
+
+# --- Auth endpoints ---
+@app.post("/api/auth/signup")
+async def auth_signup(req: SignupRequest):
+    return await signup(req)
+
+@app.post("/api/auth/login")
+async def auth_login(req: LoginRequest):
+    return await login(req)
+
+@app.get("/api/auth/me")
+async def auth_me(user=Depends(get_current_user)):
+    return {"user": user}
 
 # --- Chat endpoint ---
 from pydantic import BaseModel as PydanticBaseModel

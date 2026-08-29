@@ -4,7 +4,6 @@ ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, T
 
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import Auth from './Auth';
-import { supabase } from './supabase';
 import { MapContainer, TileLayer, CircleMarker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import CytoscapeComponent from 'react-cytoscapejs';
@@ -385,20 +384,31 @@ function App() {
 
   const playAlarm = useAlarmSound();
 
-  // Check Supabase session on mount
+  // Check FastAPI auth session on mount
   useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setUser(session?.user ?? null);
+    const token = localStorage.getItem('safeguard_token');
+    const savedUser = localStorage.getItem('safeguard_user');
+    if (token && savedUser) {
+      // Verify token is still valid
+      fetch('/api/auth/me', {
+        headers: { 'Authorization': 'Bearer ' + token }
+      }).then(res => {
+        if (res.ok) {
+          setUser(JSON.parse(savedUser));
+        } else {
+          localStorage.removeItem('safeguard_token');
+          localStorage.removeItem('safeguard_user');
+        }
+        setAuthLoading(false);
+      }).catch(() => setAuthLoading(false));
+    } else {
       setAuthLoading(false);
-    });
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user ?? null);
-    });
-    return () => subscription.unsubscribe();
+    }
   }, []);
 
-  const handleLogout = async () => {
-    await supabase.auth.signOut();
+  const handleLogout = () => {
+    localStorage.removeItem('safeguard_token');
+    localStorage.removeItem('safeguard_user');
     setUser(null);
   };
 
