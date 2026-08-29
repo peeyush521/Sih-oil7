@@ -3,6 +3,8 @@ import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, Filler);
 
 import React, { useState, useEffect, useRef, useCallback } from 'react';
+import Auth from './Auth';
+import { supabase } from './supabase';
 import { MapContainer, TileLayer, CircleMarker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import CytoscapeComponent from 'react-cytoscapejs';
@@ -378,8 +380,27 @@ function App() {
   const [alarmActive, setAlarmActive] = useState(false);
   const [showMobileInput, setShowMobileInput] = useState(false);
   const [showMobileMenu, setShowMobileMenu] = useState(false);
+  const [user, setUser] = useState(null);
+  const [authLoading, setAuthLoading] = useState(true);
 
   const playAlarm = useAlarmSound();
+
+  // Check Supabase session on mount
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setUser(session?.user ?? null);
+      setAuthLoading(false);
+    });
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null);
+    });
+    return () => subscription.unsubscribe();
+  }, []);
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    setUser(null);
+  };
 
   // Alarm: play sound + flash when precursor detected
   useEffect(() => {
@@ -508,6 +529,22 @@ function App() {
     });
   }
 
+  // Auth guard
+  if (authLoading) {
+    return (
+      <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--bg-main)' }}>
+        <div style={{ textAlign: 'center' }}>
+          <div style={{ fontSize: 48, marginBottom: 16, animation: 'pulsing 2s infinite' }}>🛡️</div>
+          <div style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>Loading SAFEGUARD AI...</div>
+        </div>
+      </div>
+    );
+  }
+
+  if (!user) {
+    return <Auth onAuth={(u) => setUser(u)} />;
+  }
+
   return (
     <div className="app-container">
       {/* ── Sidebar ─────────────────────────────────────── */}
@@ -527,7 +564,23 @@ function App() {
           <a href="#" className={`nav-item ${activeTab === 'Event Graph' ? 'active' : ''}`} onClick={(e) => handleNavClick(e, 'Event Graph', 'precursor-chain-panel')}>◇ Event Graph</a>
         </div>
 
-        <div style={{ marginTop: 'auto', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+        {/* User Info */}
+        <div style={{ marginTop: 'auto', paddingTop: 12, borderTop: '1px solid var(--border)', marginBottom: 12 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
+            <div style={{ width: 32, height: 32, borderRadius: 16, background: 'var(--primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.8rem', fontWeight: 700, color: '#000' }}>
+              {user.email?.charAt(0).toUpperCase() || '?'}
+            </div>
+            <div style={{ flex: 1, overflow: 'hidden' }}>
+              <div style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-main)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{user.email}</div>
+              <div style={{ fontSize: '0.65rem', color: 'var(--text-muted)' }}>Signed in</div>
+            </div>
+          </div>
+          <button onClick={handleLogout} className="btn secondary" style={{ width: '100%', padding: '6px', fontSize: '0.7rem', border: '1px solid rgba(239,68,68,0.3)', color: 'var(--critical)' }}>
+            Sign Out
+          </button>
+        </div>
+
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
           <button className="btn primary" onClick={processNext} disabled={processing} style={{ padding: '12px', fontSize: '0.95rem', fontWeight: 600 }}>
             {processing ? 'Analyzing...' : '＋ Load next report'}
           </button>
@@ -1010,6 +1063,9 @@ function App() {
         </button>
         <button className="btn secondary" onClick={() => setShowMobileInput(true)}>
           ✏️ Type Report
+        </button>
+        <button onClick={handleLogout} style={{ background: 'none', border: '1px solid rgba(239,68,68,0.3)', color: 'var(--critical)', padding: '6px 10px', borderRadius: 8, fontSize: '0.7rem', cursor: 'pointer', fontWeight: 600 }}>
+          Sign Out
         </button>
       </div>
 
