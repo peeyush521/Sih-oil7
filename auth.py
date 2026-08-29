@@ -2,56 +2,71 @@
 JWT Authentication for SAFEGUARD AI
 - Email/password signup & login
 - JWT token generation & verification
-- MongoDB user store
+- SQLite user store (persists across restarts)
 - Password hashing with bcrypt
 """
 import os
+import sqlite3
 import datetime
 from typing import Optional
 from fastapi import Depends, HTTPException, status
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel
 import bcrypt
 from jose import JWTError, jwt
-from motor.motor_asyncio import AsyncIOMotorClient
 
 # ── Config ──────────────────────────────────────────────────
 JWT_SECRET = os.environ.get("JWT_SECRET", "safeguard-ai-secret-key-change-in-production-2024")
 JWT_ALGORITHM = "HS256"
 JWT_EXPIRY_HOURS = 72
-
-MONGO_URI = os.environ.get("MONGO_URI", "mongodb://localhost:27017")
-DB_NAME = "safeguard_ai"
+DB_PATH = os.path.join(os.path.dirname(__file__), "users.db")
 
 # ── Password Hashing ────────────────────────────────────────
 def hash_password(password: str) -> str:
-    return bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
+    return bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt()).decode("utf-8")
 
 def verify_password(password: str, hashed: str) -> bool:
-    return bcrypt.checkpw(password.encode('utf-8'), hashed.encode('utf-8'))
+    return bcrypt.checkpw(password.encode("utf-8"), hashed.encode("utf-8"))
 
 # ── Security ────────────────────────────────────────────────
 security = HTTPBearer()
 
-# ── MongoDB ─────────────────────────────────────────────────
-_client: Optional[AsyncIOMotorClient] = None
-_db = None
+# ── SQLite Setup ────────────────────────────────────────────
+def init_db():
+    conn = sqlite3.connect(DB_PATH)
+    conn.execute("""
+        CREATE TABLE IF NOT EXISTS users (
+            email TEXT PRIMARY KEY,
+            hashed_password TEXT NOT NULL,
+            role TEXT NOT NULL DEFAULT 'worker',
+            created_at TEXT NOT NULL
+        )
+    """)
+    conn.commit()
+    conn.close()
+    print(f"[auth] SQLite database ready at {DB_PATH}")
 
-async def get_db():
-    global _client, _db
-    if _db is None:
-        try:
-            _client = AsyncIOMotorClient(MONGO_URI, serverSelectionTimeoutMS=3000)
-            await _client.admin.command("ping")
-            _db = _client[DB_NAME]
-            print("[auth] Connected to MongoDB")
-        except Exception as e:
-            print(f"[auth] MongoDB unavailable ({e}), using in-memory user store")
-            _db = None
-    return _db
+init_db()
 
-# ── In-Memory Fallback ──────────────────────────────────────
-_users_store = {}  # email -> {email, hashed_password, role, created_at}
+def get_user(email: str) -> Optional[dict]:
+    conn = sqlite3.connect(DB_PATH)
+    conn.row_factory = sqlite3.Row
+    row = conn.execute("SELECT * FROM users WHERE email = ?", (email.lower().strip(),)).fetchone()
+    conn.close()
+    if row:
+        return dict(row)
+    return None
+
+def create_user(email: str, hashed_password: str, role: str) -> dict:
+    created_at = datetime.datetime.utcnow().isoformat()
+    conn = sqlite3.connect(DB_PATH)
+    conn.execute(
+        "INSERT INTO users (email, hashed_password, role, created_at) VALUES (?, ?, ?, ?)",
+        (email.lower().strip(), hashed_password, role, created_at)
+    )
+    conn.commit()
+    conn.close()
+    return {"email": email.lower().strip(), "role": role, "created_at": created_at}
 
 # ── Models ──────────────────────────────────────────────────
 class SignupRequest(BaseModel):
@@ -99,28 +114,14 @@ async def signup(req: SignupRequest):
     """Register a new user."""
     if len(req.password) < 6:
         raise HTTPException(status_code=400, detail="Password must be at least 6 characters")
-    
-    db = await get_db()
+
+    existing = get_user(req.email)
+    if existing:
+        raise HTTPException(status_code=400, detail="Email already registered")
+
     hashed = hash_password(req.password)
-    user_data = {
-        "email": req.email.lower().strip(),
-        "hashed_password": hashed,
-        "role": req.role,
-        "created_at": datetime.datetime.utcnow().isoformat(),
-    }
-    
-    if db is not None:
-        # MongoDB
-        existing = await db.users.find_one({"email": user_data["email"]})
-        if existing:
-            raise HTTPException(status_code=400, detail="Email already registered")
-        await db.users.insert_one(user_data)
-    else:
-        # In-memory fallback
-        if user_data["email"] in _users_store:
-            raise HTTPException(status_code=400, detail="Email already registered")
-        _users_store[user_data["email"]] = user_data
-    
+    user_data = create_user(req.email, hashed, req.role)
+
     token = create_token(user_data["email"], user_data["role"])
     return {
         "token": token,
@@ -133,19 +134,11 @@ async def signup(req: SignupRequest):
 
 async def login(req: LoginRequest):
     """Login with email and password."""
-    email = req.email.lower().strip()
-    
-    db = await get_db()
-    user = None
-    
-    if db is not None:
-        user = await db.users.find_one({"email": email})
-    else:
-        user = _users_store.get(email)
-    
+    user = get_user(req.email)
+
     if not user or not verify_password(req.password, user["hashed_password"]):
         raise HTTPException(status_code=401, detail="Invalid email or password")
-    
+
     token = create_token(user["email"], user["role"])
     return {
         "token": token,
