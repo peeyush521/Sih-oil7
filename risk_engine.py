@@ -28,7 +28,10 @@ def calculate_risk(report_id: str, current_report: dict, related_reports: list):
         prev_severity = related_reports[0]["severity"]
         if base_severity > prev_severity:
             points_severity_trend = 15
-            evidence_log.append("Severity increasing")
+            # NOTE: this string must stay in sync with the substring llm_engine.py
+            # checks for ("Severity increased"). It previously said "increasing"
+            # which meant the LLM explanation could never detect this signal.
+            evidence_log.append("Severity increased from previous report")
             deltas["Severity Trend"] = points_severity_trend
             
         # Semantic Similarity
@@ -65,15 +68,19 @@ def calculate_risk(report_id: str, current_report: dict, related_reports: list):
         deltas["Location Recurrence"] = points_location
         
     # SIF Pathway Severity
+    # NOTE: nlp_engine.py always normalizes hazards to UPPERCASE before storing
+    # them (e.g. "pressure" -> "PRESSURE"), so these comparisons must be against
+    # the normalized uppercase forms, not lowercase demo strings. The lowercase
+    # versions here previously meant "Energy Release" could never be detected.
     hazards = current_report["entities"].get("hazards", [])
     sif_category = "None"
-    if any(h in ["OIL_LEAK", "spill", "leak"] for h in hazards):
+    if any(h in ["OIL_LEAK", "GAS_LEAK", "BLOWOUT", "H2S_EXPOSURE"] for h in hazards):
         sif_category = "Loss of Control"
         points_sif = 10
-    elif any(h in ["SLIP_HAZARD", "fall", "trip"] for h in hazards):
+    elif any(h in ["SLIP_HAZARD", "CONFINED_SPACE", "CHEMICAL_EXPOSURE"] for h in hazards):
         sif_category = "Exposure"
         points_sif = 10
-    elif any(h in ["pressure", "vibration", "electrical", "fire"] for h in hazards):
+    elif any(h in ["PRESSURE", "VIBRATION", "ELECTRICAL", "FIRE", "CRANE_HAZARD", "STRUCTURAL"] for h in hazards):
         sif_category = "Energy Release"
         points_sif = 15
         

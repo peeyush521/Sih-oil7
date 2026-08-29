@@ -40,6 +40,28 @@ class ProcessResponse(BaseModel):
 class CustomReportRequest(BaseModel):
     text: str
 
+class StatusUpdateRequest(BaseModel):
+    report_id: str
+    status_label: str  # "Delayed" | "In Progress" | "Completed"
+    new_score: int
+    new_trajectory: str
+
+@app.post("/api/update_status")
+def update_status(request: StatusUpdateRequest):
+    """Persists the outcome of an intervention (Delay / In Progress / Mark
+    complete) onto the actual stored report, so it's reflected everywhere
+    (Reports list, Precursors list, sidebar counters) instead of only
+    showing up as a one-off preview that disappears."""
+    for r in all_processed_reports:
+        if r["report"]["id"] == request.report_id:
+            r["report"]["intervention_status"] = request.status_label
+            r["report"]["action_status"] = "Closed" if request.status_label == "Completed" else "Open"
+            r["risk_data"]["score"] = request.new_score
+            r["risk_data"]["trajectory"] = request.new_trajectory
+            r["is_precursor"] = request.new_score >= 70
+            return r
+    raise HTTPException(status_code=404, detail="Report not found")
+
 @app.get("/api/reset")
 def reset_state():
     global dataset_index, all_processed_reports
@@ -86,6 +108,17 @@ def process_next_report():
     # Inject the structured location into the entities so it appears prominently in the Knowledge Graph
     if report["location"] and report["location"] not in extracted_entities["locations"]:
         extracted_entities["locations"].append(report["location"])
+
+    # Override the NLP's crude 1-3 keyword-based severity guess with the REAL
+    # severity from our dataset (1-10 scale) whenever it's available. Without
+    # this, every report's actual reported severity was silently discarded.
+    real_severity = raw_record.get("Severity Raw")
+    if real_severity is not None:
+        try:
+            extracted_entities["severity"] = int(real_severity)
+        except (TypeError, ValueError):
+            pass
+
     embedding = nlp.get_embedding(report["text"])
     
     # Classification
@@ -201,6 +234,8 @@ def simulate_intervention(intervention_type: str):
     
     if intervention_type == "delay":
         return {"risk_score": min(latest_risk + 10, 100), "trajectory": "ESCALATING"}
+    elif intervention_type == "in_progress":
+        return {"risk_score": max(latest_risk - 15, 10), "trajectory": "STABLE"}
     elif intervention_type == "resolve_action":
         return {"risk_score": max(latest_risk - 25, 10), "trajectory": "DECREASING"}
     elif intervention_type == "inspect":

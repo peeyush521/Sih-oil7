@@ -1,0 +1,670 @@
+[
+  {
+    "id": "R001",
+    "date": "2026-01-05",
+    "location": "Duliajan Field Station-3",
+    "equipment": "Wellhead Valve",
+    "text": "Gas leak detected at wellhead valve during routine inspection. H2S smell reported by operator. Valve packing worn out. Area cordoned off. No ignition source found.",
+    "severity": 4,
+    "type": "unsafe-condition"
+  },
+  {
+    "id": "R004",
+    "date": "2026-01-08",
+    "location": "Naharkatiya Rig-12",
+    "equipment": "Drilling Hoist",
+    "text": "Worker slipped on drilling fluid spill near hoist. No injury. Spill not cleaned for 2 hours. Anti-slip mats missing on platform.",
+    "severity": 2,
+    "type": "near-miss"
+  },
+  {
+    "id": "R049",
+    "date": "2026-01-09",
+    "location": "Duliajan Field Station-3",
+    "equipment": "Scaffolding",
+    "text": "Scaffold plank found cracked during pre-use inspection at tank maintenance site. Plank removed and replaced before work commenced. No work interruption.",
+    "severity": 2,
+    "type": "unsafe-condition"
+  },
+  {
+    "id": "R002",
+    "date": "2026-01-12",
+    "location": "Duliajan Field Station-3",
+    "equipment": "Wellhead Valve",
+    "text": "Second gas leak at same wellhead within one week. Pressure gauge reading erratic. Maintenance team replaced packing but leak recurred. Supervisor advised continuous monitoring.",
+    "severity": 5,
+    "type": "unsafe-condition"
+  },
+  {
+    "id": "R037",
+    "date": "2026-01-14",
+    "location": "Panipat Refinery Substation-B",
+    "equipment": "11kV Switchgear",
+    "text": "Electrician received minor shock while operating switchgear panel. Panel earthing found defective. Isolated, LOTO applied, electrical safety audit initiated for entire substation.",
+    "severity": 6,
+    "type": "unsafe-condition",
+    "shift": "day",
+    "root_cause_tag": "electrical-fault"
+  },
+  {
+    "id": "R005",
+    "date": "2026-01-15",
+    "location": "Naharkatiya Rig-12",
+    "equipment": "Drilling Hoist",
+    "text": "Driller fell from platform while operating hoist. Fractured ankle. No safety harness worn. Guard rail damaged and not repaired since last inspection. Same location as previous slip incident.",
+    "severity": 6,
+    "type": "unsafe-act"
+  },
+  {
+    "id": "R003",
+    "date": "2026-01-18",
+    "location": "Duliajan Field Station-3",
+    "equipment": "Wellhead Valve",
+    "text": "Major gas blowout at wellhead. Emergency shutdown activated. Three workers exposed to H2S. One worker hospitalized due to inhalation. Same valve that leaked twice before.",
+    "severity": 9,
+    "type": "unsafe-act"
+  },
+  {
+    "id": "R028",
+    "date": "2026-01-20",
+    "location": "Ankleshwar GGS-4",
+    "equipment": "Sucker Rod Pump",
+    "text": "Unusual vibration noticed in sucker rod pump. Operator reported grinding noise. Pump stopped for inspection. Bearing wear found.",
+    "severity": 3,
+    "type": "near-miss",
+    "shift": "day",
+    "root_cause_tag": "equipment-wear"
+  },
+  {
+    "id": "R006",
+    "date": "2026-01-22",
+    "location": "Naharkatiya Rig-12",
+    "equipment": "Drilling Hoist",
+    "text": "Fatal fall from Rig-12 platform. Worker fell 4 meters during night shift. Head injury. Died before reaching Duliajan hospital. No harness. Same hoist area where previous fall occurred. Guard rail still not repaired.",
+    "severity": 10,
+    "type": "unsafe-act"
+  },
+  {
+    "id": "R029",
+    "date": "2026-01-24",
+    "location": "Ankleshwar GGS-4",
+    "equipment": "Sucker Rod Pump",
+    "text": "Bearing replaced on sucker rod pump as per previous report. Pump running normal since repair. No abnormal vibration in follow-up checks over 4 days.",
+    "severity": 1,
+    "type": "observation",
+    "shift": "day",
+    "root_cause_tag": "maintenance-completed"
+  },
+  {
+    "id": "R065",
+    "date": "2026-01-27",
+    "location": "Jorhat Field Camp-2",
+    "equipment": "Not specified",
+    "text": "worker complain of dizziness near old mud pit area, smell present but no gas alarm triggered, area not tested properly, sent to site clinic as precaution, released same day",
+    "severity": 3,
+    "type": "near-miss"
+  },
+  {
+    "id": "R007",
+    "date": "2026-02-03",
+    "location": "Mumbai High North Platform-B",
+    "equipment": "Blowout Preventer",
+    "text": "BOP annular preventer failed pressure test. Minor seepage observed. Well control maintained by secondary barrier. Maintenance scheduled for next weather window.",
+    "severity": 5,
+    "type": "near-miss"
+  },
+  {
+    "id": "R030",
+    "date": "2026-02-05",
+    "location": "Jorhat Field Camp-2",
+    "equipment": "Diesel Generator",
+    "text": "DG set overheated during load test. Coolant level low. Topped up, ran fine after. No repeat issue reported since.",
+    "severity": 2,
+    "type": "near-miss",
+    "shift": "night"
+  },
+  {
+    "id": "R059",
+    "date": "2026-02-08",
+    "location": "Barauni Refinery FCC Unit",
+    "equipment": "Slide Valve",
+    "text": "Slide valve position indicator showed erratic reading. Recalibrated, normal since. Second such event in 3 months at different valve, unrelated equipment.",
+    "severity": 3,
+    "type": "unsafe-condition"
+  },
+  {
+    "id": "R008",
+    "date": "2026-02-10",
+    "location": "Mumbai High North Platform-B",
+    "equipment": "Blowout Preventer",
+    "text": "BOP test failed again. Same annular preventer. Well shut in. Helicopter evacuation of non-essential personnel. Weather conditions delaying repair crew dispatch.",
+    "severity": 8,
+    "type": "unsafe-condition"
+  },
+  {
+    "id": "R031",
+    "date": "2026-02-11",
+    "location": "Barmer Field MPT-1",
+    "equipment": "Manifold Valve",
+    "text": "Minor oil weep at manifold flange. Tightened bolts. Weep stopped. No leak detected in weekly inspections since.",
+    "severity": 2,
+    "type": "unsafe-condition"
+  },
+  {
+    "id": "R009",
+    "date": "2026-02-14",
+    "location": "Mumbai High North Platform-B",
+    "equipment": "Blowout Preventer",
+    "text": "Uncontrolled gas release from wellhead. BOP failed to seal. Emergency disconnect initiated. Platform evacuated. Coast Guard alerted. Same BOP that failed two previous tests.",
+    "severity": 10,
+    "type": "unsafe-condition"
+  },
+  {
+    "id": "R057",
+    "date": "2026-02-14",
+    "location": "Naharkatiya Rig-12",
+    "equipment": "Drilling Hoist",
+    "text": "Toolbox talk conducted on hoist operation safety following recent incidents. Attendance and sign-off recorded.",
+    "severity": 1,
+    "type": "observation"
+  },
+  {
+    "id": "R060",
+    "date": "2026-02-16",
+    "location": "Barauni Refinery FCC Unit",
+    "equipment": "Slide Valve",
+    "text": "Slide valve stuck momentarily during regeneration cycle, cleared itself before intervention needed. Operators note this as third minor anomaly this month but no clear pattern established by maintenance.",
+    "severity": 4,
+    "type": "unsafe-condition"
+  },
+  {
+    "id": "R038",
+    "date": "2026-02-19",
+    "location": "Duliajan Field Station-3",
+    "equipment": "Junction Box",
+    "text": "Arc flash from damaged junction box during routine maintenance. Technician sustained facial burns, treated at site clinic. Cable insulation found degraded due to moisture ingress.",
+    "severity": 6,
+    "type": "unsafe-condition",
+    "root_cause_tag": "electrical-fault"
+  },
+  {
+    "id": "R061",
+    "date": "2026-02-24",
+    "location": "Barauni Refinery FCC Unit",
+    "equipment": "Slide Valve",
+    "text": "Slide valve position fault caused brief pressure fluctuation, automatically corrected by control system within seconds. No manual intervention required. Root cause traced to a firmware bug in the positioner, patch scheduled.",
+    "severity": 2,
+    "type": "unsafe-condition"
+  },
+  {
+    "id": "R045",
+    "date": "2026-02-27",
+    "location": "Numaligarh Refinery Lab",
+    "equipment": "Chemical Sample Container",
+    "text": "Lab technician splashed with corrosive sample during transfer, PPE gloves worn but faceshield not used. Minor skin irritation on forearm, first aid administered, technician cleared to resume duty.",
+    "severity": 4,
+    "type": "unsafe-act",
+    "root_cause_tag": "ppe-noncompliance"
+  },
+  {
+    "id": "R010",
+    "date": "2026-03-01",
+    "location": "Mathura Refinery CDU-2",
+    "equipment": "Process Furnace",
+    "text": "Furnace burner flameout during startup. Operator relit without purging. Flashback observed. No damage. Procedure violation noted.",
+    "severity": 4,
+    "type": "unsafe-act"
+  },
+  {
+    "id": "R032",
+    "date": "2026-03-02",
+    "location": "Numaligarh Refinery Utility Block",
+    "equipment": "Cooling Tower Fan",
+    "text": "Cooling tower fan belt slipped, unusual noise. Belt tension adjusted same shift. No recurrence in subsequent shift logs.",
+    "severity": 2,
+    "type": "near-miss"
+  },
+  {
+    "id": "R058",
+    "date": "2026-03-05",
+    "location": "Dahej-Vijaipur Pipeline KM-45",
+    "equipment": "Pipeline Valve",
+    "text": "Follow-up patrol post-incident found repaired valve station intact. Marker tape reinstalled. No further gas odor reported.",
+    "severity": 1,
+    "type": "observation"
+  },
+  {
+    "id": "R011",
+    "date": "2026-03-08",
+    "location": "Mathura Refinery CDU-2",
+    "equipment": "Process Furnace",
+    "text": "Fire in furnace convection section. Tube rupture suspected. Fire brigade responded. Unit shutdown. Two contract workers suffered minor burns. Same furnace where flameout occurred one week prior.",
+    "severity": 7,
+    "type": "unsafe-condition"
+  },
+  {
+    "id": "R041",
+    "date": "2026-03-11",
+    "location": "Moran-Duliajan Access Road",
+    "equipment": "Crew Transport Vehicle",
+    "text": "Company vehicle skidded on wet road while transporting night shift crew. No collision, minor embankment contact. Driver and 4 passengers uninjured. Speeding suspected.",
+    "severity": 4,
+    "type": "near-miss",
+    "shift": "night",
+    "root_cause_tag": "human-error"
+  },
+  {
+    "id": "R012",
+    "date": "2026-03-15",
+    "location": "Mathura Refinery CDU-2",
+    "equipment": "Process Furnace",
+    "text": "Major furnace explosion. Convection section collapsed. Four workers severely burned. One fatality. Investigation reveals repeated tube thinning not addressed during turnaround. Same unit. Third incident in 15 days.",
+    "severity": 10,
+    "type": "unsafe-condition"
+  },
+  {
+    "id": "R066",
+    "date": "2026-03-16",
+    "location": "Rig-7 Platform-A",
+    "equipment": "Drilling Hoist",
+    "text": "hoist ok. checked. no issue.",
+    "severity": 1,
+    "type": "observation"
+  },
+  {
+    "id": "R033",
+    "date": "2026-03-20",
+    "location": "Cambay Basin Well CB-19",
+    "equipment": "Wellhead Christmas Tree",
+    "text": "Slight hydrocarbon odor near wellhead. Gas test negative. Inspection found no leak source. Logged for monitoring, closed after 48 hrs with no further readings.",
+    "severity": 2,
+    "type": "near-miss"
+  },
+  {
+    "id": "R050",
+    "date": "2026-03-27",
+    "location": "Mathura Refinery CDU-2",
+    "equipment": "Scaffolding",
+    "text": "Contract worker fell from unsecured scaffold plank while working at height on furnace platform. Fractured wrist. Scaffold had not been tagged after modification by previous shift.",
+    "severity": 6,
+    "type": "unsafe-act",
+    "root_cause_tag": "procedural-violation"
+  },
+  {
+    "id": "R051",
+    "date": "2026-04-02",
+    "location": "Visakh Refinery Tank Farm-3",
+    "equipment": "Fixed Roof Tank",
+    "text": "Routine tank gauging completed. Roof condition satisfactory. No abnormalities noted.",
+    "severity": 1,
+    "type": "observation"
+  },
+  {
+    "id": "R013",
+    "date": "2026-04-05",
+    "location": "Visakh Refinery Tank Farm-3",
+    "equipment": "Floating Roof Tank",
+    "text": "Roof seal fire on crude oil storage tank. Small pool fire on roof. Foam system activated. Fire extinguished in 10 minutes. Seal inspection overdue by 6 months.",
+    "severity": 6,
+    "type": "unsafe-condition"
+  },
+  {
+    "id": "R052",
+    "date": "2026-04-09",
+    "location": "Moran Gathering Station",
+    "equipment": "Fire Extinguisher Station",
+    "text": "Monthly fire extinguisher inspection completed. All units within pressure range, tags updated.",
+    "severity": 1,
+    "type": "observation"
+  },
+  {
+    "id": "R014",
+    "date": "2026-04-12",
+    "location": "Visakh Refinery Tank Farm-3",
+    "equipment": "Floating Roof Tank",
+    "text": "Second fire on same tank roof seal. Larger pool fire this time. Two fire fighters injured. Tank farm partially evacuated. Seal replacement still not scheduled. Same tank as previous fire.",
+    "severity": 8,
+    "type": "unsafe-condition"
+  },
+  {
+    "id": "R067",
+    "date": "2026-04-19",
+    "location": "Pipeline Station-3",
+    "equipment": "Gas Valve",
+    "text": "Follow-up inspection three months after August incident. Valve replaced with new model, pressure stable, no leak signature. Station operating normally, incident closed.",
+    "severity": 1,
+    "type": "observation"
+  },
+  {
+    "id": "R039",
+    "date": "2026-04-22",
+    "location": "Mathura Refinery CDU-2",
+    "equipment": "Storage Vessel Manhole",
+    "text": "Worker entered vessel for cleaning without gas test certificate. Confined space permit not verified by shift supervisor before entry. Worker exited safely on colleague's alert, no exposure symptoms.",
+    "severity": 5,
+    "type": "unsafe-act",
+    "root_cause_tag": "procedural-violation"
+  },
+  {
+    "id": "R046",
+    "date": "2026-04-30",
+    "location": "Jamnagar-Bathinda Pipeline KM-112",
+    "equipment": "Pigging Station",
+    "text": "Worker exposed to crude oil mist while opening pig launcher without full depressurization confirmed. Minor skin contact on hands, washed immediately, no injury reported.",
+    "severity": 3,
+    "type": "unsafe-act"
+  },
+  {
+    "id": "R068",
+    "date": "2026-05-01",
+    "location": "Storage Tank-2",
+    "equipment": "Pressure Gauge",
+    "text": "Replacement gauge from previous overpressure incident performing well after 2 months of monitoring. No anomalies logged.",
+    "severity": 1,
+    "type": "observation"
+  },
+  {
+    "id": "R015",
+    "date": "2026-05-02",
+    "location": "Kochi Refinery Hydrocracker Unit",
+    "equipment": "High Pressure Separator",
+    "text": "Hydrogen leak at flange joint. Gas detection alarm triggered. Tightening attempted. Leak reduced but not stopped. Unit continued running with increased monitoring.",
+    "severity": 5,
+    "type": "unsafe-condition"
+  },
+  {
+    "id": "R053",
+    "date": "2026-05-06",
+    "location": "Kochi Refinery Hydrocracker Unit",
+    "equipment": "PPE Store",
+    "text": "Weekly PPE stock check done. Gloves and goggles restocked. No shortages.",
+    "severity": 1,
+    "type": "observation"
+  },
+  {
+    "id": "R016",
+    "date": "2026-05-09",
+    "location": "Kochi Refinery Hydrocracker Unit",
+    "equipment": "High Pressure Separator",
+    "text": "Major hydrogen explosion at same flange. Blast damaged adjacent piping. Two operators thrown back. One critical injury. Unit emergency shutdown. Same flange that leaked one week ago.",
+    "severity": 10,
+    "type": "unsafe-condition"
+  },
+  {
+    "id": "R062",
+    "date": "2026-05-13",
+    "location": "Ankleshwar GGS-4",
+    "equipment": "Heater Treater",
+    "text": "High temperature alarm on heater treater, severity assessed moderate. Operator reduced firing rate, temperature normalized.",
+    "severity": 5,
+    "type": "unsafe-condition"
+  },
+  {
+    "id": "R040",
+    "date": "2026-05-18",
+    "location": "Kochi Refinery Hydrocracker Unit",
+    "equipment": "Reactor Vessel",
+    "text": "Confined space entry team found oxygen level at 18.5% during pre-entry test, below acceptable threshold. Entry aborted, forced ventilation applied. Re-test cleared after 40 minutes, entry proceeded safely.",
+    "severity": 4,
+    "type": "near-miss"
+  },
+  {
+    "id": "R063",
+    "date": "2026-05-20",
+    "location": "Ankleshwar GGS-4",
+    "equipment": "Heater Treater",
+    "text": "Follow-up check on heater treater after temperature control valve serviced. Running well within limits, no alarms in past week.",
+    "severity": 2,
+    "type": "observation"
+  },
+  {
+    "id": "R047",
+    "date": "2026-05-25",
+    "location": "Narimanam Gathering Station",
+    "equipment": "Manual Valve Wheel",
+    "text": "Worker strained shoulder while manually operating a stiff, corroded gate valve wheel without proper wrench. Reported next day after pain persisted. Valve flagged for actuator upgrade.",
+    "severity": 3,
+    "type": "unsafe-condition",
+    "root_cause_tag": "ergonomic"
+  },
+  {
+    "id": "R042",
+    "date": "2026-06-02",
+    "location": "KG-DWN-98/2 Platform",
+    "equipment": "Personnel Transfer Basket",
+    "text": "Rough sea conditions during crew change. Personnel basket swung heavily during transfer from supply boat. Transfer suspended, resumed after weather improved. No injury.",
+    "severity": 3,
+    "type": "near-miss",
+    "root_cause_tag": "weather"
+  },
+  {
+    "id": "R071",
+    "date": "2026-06-06",
+    "location": "Duliajan Field Station-3",
+    "equipment": "Fire Water Pump",
+    "text": "Weekly fire water pump test showed reduced discharge pressure. Strainer found choked with debris. Cleared, pressure restored to normal range.",
+    "severity": 3,
+    "type": "unsafe-condition"
+  },
+  {
+    "id": "R072",
+    "date": "2026-06-06",
+    "location": "Duliajan Field Station-3",
+    "equipment": "Emergency Shutdown System",
+    "text": "Same day as fire water pump strainer issue: ESD system false trip during unrelated maintenance activity on adjacent panel. Plant briefly shut down as precaution, restarted after verification, no hazard confirmed.",
+    "severity": 4,
+    "type": "unsafe-condition"
+  },
+  {
+    "id": "R017",
+    "date": "2026-06-10",
+    "location": "KG-DWN-98/2 Platform",
+    "equipment": "Crane",
+    "text": "Crane load swing during lifting of BOP stack. Load passed over personnel. No hard hats in zone. No tagline used. Load within capacity but poor rigging practice.",
+    "severity": 3,
+    "type": "near-miss"
+  },
+  {
+    "id": "R048",
+    "date": "2026-06-14",
+    "location": "Cauvery Basin CB-OS-2",
+    "equipment": "Manual Load Handling",
+    "text": "Back strain reported by roustabout after repeated manual lifting of drilling mud sacks without mechanical aid available on site. Light duty assigned for one week.",
+    "severity": 3,
+    "type": "unsafe-condition",
+    "root_cause_tag": "ergonomic"
+  },
+  {
+    "id": "R018",
+    "date": "2026-06-18",
+    "location": "KG-DWN-98/2 Platform",
+    "equipment": "Crane",
+    "text": "Crane wire rope parted during lift. Load dropped to deck. No personnel in drop zone. Rope inspection overdue by 3 months. Same crane involved in previous load swing incident.",
+    "severity": 7,
+    "type": "unsafe-condition"
+  },
+  {
+    "id": "R054",
+    "date": "2026-06-21",
+    "location": "Hazira Gas Terminal",
+    "equipment": "Emergency Muster Point",
+    "text": "Muster point signage inspected during safety walk. One faded sign flagged for replacement. Non-urgent.",
+    "severity": 1,
+    "type": "observation"
+  },
+  {
+    "id": "R034",
+    "date": "2026-06-25",
+    "location": "Hazira Gas Terminal",
+    "equipment": "Compressor Skid",
+    "text": "Compressor tripped on high vibration alarm. Root cause found to be loose foundation bolt. Bolts torqued, vibration within limits on restart. No further trips logged in following month.",
+    "severity": 4,
+    "type": "unsafe-condition"
+  },
+  {
+    "id": "R064",
+    "date": "2026-06-28",
+    "location": "Ankleshwar GGS-4",
+    "equipment": "Heater Treater",
+    "text": "New operator on shift did not follow updated startup checklist for heater treater, caused brief overtemperature excursion again. No damage. Refresher training scheduled for shift crew.",
+    "severity": 4,
+    "type": "unsafe-act"
+  },
+  {
+    "id": "R019",
+    "date": "2026-07-01",
+    "location": "Dahej-Vijaipur Pipeline KM-45",
+    "equipment": "Pipeline Valve",
+    "text": "Pipeline patrol noticed vegetation browning near valve station. Gas detector reading slightly elevated. No confirmed leak. Marker tape missing. Agricultural land nearby.",
+    "severity": 3,
+    "type": "near-miss"
+  },
+  {
+    "id": "R055",
+    "date": "2026-07-03",
+    "location": "LPG Plant Hyderabad",
+    "equipment": "Gas Detector Panel",
+    "text": "Routine calibration of area gas detectors completed. All sensors within tolerance.",
+    "severity": 1,
+    "type": "observation"
+  },
+  {
+    "id": "R020",
+    "date": "2026-07-08",
+    "location": "Dahej-Vijaipur Pipeline KM-45",
+    "equipment": "Pipeline Valve",
+    "text": "Gas leak confirmed at valve station. Pressure drop in pipeline. Nearby village alerted. Emergency valve closure. Same location where vegetation browning was observed one week earlier.",
+    "severity": 8,
+    "type": "unsafe-condition"
+  },
+  {
+    "id": "R069",
+    "date": "2026-07-11",
+    "location": "Rig-12 Platform-C",
+    "equipment": "Crane",
+    "text": "Rigger flagged frayed sling during pre-lift inspection, replaced before use, lift proceeded without incident. Sling age exceeded recommended service life by 4 months.",
+    "severity": 3,
+    "type": "unsafe-condition",
+    "root_cause_tag": "maintenance-gap"
+  },
+  {
+    "id": "R021",
+    "date": "2026-07-15",
+    "location": "Dahej-Vijaipur Pipeline KM-45",
+    "equipment": "Pipeline Valve",
+    "text": "Pipeline rupture at valve station. Gas cloud formed. Ignition from nearby tractor. Fireball. Three villagers injured. One pipeline worker missing. Same valve station. Third incident in 15 days.",
+    "severity": 10,
+    "type": "unsafe-condition"
+  },
+  {
+    "id": "R043",
+    "date": "2026-07-19",
+    "location": "Mumbai High North Platform-B",
+    "equipment": "Helideck",
+    "text": "Helicopter landing aborted due to sudden high wind gust exceeding limits. Pilot went around, landed safely on second attempt. Operations briefly suspended.",
+    "severity": 3,
+    "type": "near-miss",
+    "root_cause_tag": "weather"
+  },
+  {
+    "id": "R035",
+    "date": "2026-07-30",
+    "location": "Paradip Refinery Tank Farm-7",
+    "equipment": "Nitrogen Blanketing System",
+    "text": "N2 pressure dropped below setpoint on crude tank. Backup regulator engaged automatically. Primary regulator serviced. System stable since, no repeat low-pressure event.",
+    "severity": 3,
+    "type": "unsafe-condition"
+  },
+  {
+    "id": "R022",
+    "date": "2026-08-02",
+    "location": "Moran Gathering Station",
+    "equipment": "Separator Vessel",
+    "text": "Pressure safety valve lifted unexpectedly. Pressure spike in separator. Control system alarmed. Manual blowdown performed. PSV inspection overdue.",
+    "severity": 5,
+    "type": "unsafe-condition"
+  },
+  {
+    "id": "R036",
+    "date": "2026-08-05",
+    "location": "Haldia Refinery Loading Bay-2",
+    "equipment": "Tanker Loading Arm",
+    "text": "Loading arm coupling showed minor seepage during tanker filling. Operation paused, gasket replaced. No seepage on next three loading cycles.",
+    "severity": 2,
+    "type": "unsafe-condition"
+  },
+  {
+    "id": "R023",
+    "date": "2026-08-10",
+    "location": "Moran Gathering Station",
+    "equipment": "Separator Vessel",
+    "text": "Separator vessel overpressurized. PSV failed to reseat after lifting. Continuous venting to atmosphere. Area evacuated. Same vessel where PSV lifted one week ago.",
+    "severity": 7,
+    "type": "unsafe-condition"
+  },
+  {
+    "id": "R056",
+    "date": "2026-08-11",
+    "location": "Dahej LNG Terminal",
+    "equipment": "Boil-off Gas Compressor",
+    "text": "Shift log review found no abnormal readings on BOG compressor over past week.",
+    "severity": 1,
+    "type": "observation"
+  },
+  {
+    "id": "R070",
+    "date": "2026-08-15",
+    "location": "Jamnagar-Bathinda Pipeline KM-112",
+    "equipment": "SCADA Terminal",
+    "text": "Cyber-physical anomaly: unexpected remote command received on SCADA terminal to close a mainline valve outside scheduled operations window. Command blocked by operator verification protocol, no valve action taken. Under investigation with IT security.",
+    "severity": 5,
+    "type": "unsafe-condition",
+    "root_cause_tag": "security"
+  },
+  {
+    "id": "R024",
+    "date": "2026-08-18",
+    "location": "Moran Gathering Station",
+    "equipment": "Separator Vessel",
+    "text": "Vessel rupture disc blew. Separator shell cracked. Crude oil and gas release. Fire ignited from electrical panel spark. Two operators severely burned. Same vessel. Third pressure-related incident.",
+    "severity": 10,
+    "type": "unsafe-condition"
+  },
+  {
+    "id": "R044",
+    "date": "2026-08-28",
+    "location": "Uran Plant Gas Processing Unit",
+    "equipment": "Forklift",
+    "text": "Forklift reversed without spotter near pipe rack, nearly struck contract worker walking through unmarked pedestrian zone. No contact made. Pedestrian walkway lines faded and not repainted.",
+    "severity": 4,
+    "type": "near-miss",
+    "root_cause_tag": "procedural-violation"
+  },
+  {
+    "id": "R025",
+    "date": "2026-09-01",
+    "location": "LPG Plant Hyderabad",
+    "equipment": "Filling Carousel",
+    "text": "LPG smell near filling machine. Leak detector not responding. Manual soap test confirmed leak at filling nozzle. Machine stopped. No ignition.",
+    "severity": 4,
+    "type": "unsafe-condition"
+  },
+  {
+    "id": "R026",
+    "date": "2026-09-07",
+    "location": "LPG Plant Hyderabad",
+    "equipment": "Filling Carousel",
+    "text": "Fire in filling shed. LPG leak from same nozzle ignited by static spark. Six cylinders in shed. Sprinkler activated. Two workers with flash burns. Same machine that leaked one week prior.",
+    "severity": 8,
+    "type": "unsafe-condition"
+  },
+  {
+    "id": "R027",
+    "date": "2026-09-14",
+    "location": "LPG Plant Hyderabad",
+    "equipment": "Filling Carousel",
+    "text": "Major LPG tanker explosion during decanting. BLEVE suspected. Blast radius 200 meters. Plant severely damaged. Five fatalities including contract workers. Same filling area. Third incident in 14 days.",
+    "severity": 10,
+    "type": "unsafe-condition"
+  }
+]
