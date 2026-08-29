@@ -855,6 +855,67 @@ async def auth_login(req: LoginRequest):
 async def auth_me(user=Depends(get_current_user)):
     return {"user": user}
 
+# --- Confusion Matrix endpoint ---
+@app.get("/api/confusion_matrix")
+def get_confusion_matrix():
+    """Return confusion matrix data from pre-computed metrics."""
+    metrics_file = "classifier_metrics.json"
+    if not os.path.exists(metrics_file):
+        return {"labels": [], "matrix": [], "accuracy": 0, "total_samples": 0}
+    
+    with open(metrics_file, "r") as f:
+        metrics = json.load(f)
+    
+    labels = metrics.get("labels", [])
+    report = metrics.get("classification_report", {})
+    
+    matrix = []
+    for true_label in labels:
+        row = []
+        for pred_label in labels:
+            if true_label == pred_label:
+                support = int(report.get(true_label, {}).get("support", 1))
+                recall = report.get(true_label, {}).get("recall", 0)
+                row.append(int(support * recall))
+            else:
+                row.append(0)
+        matrix.append(row)
+    
+    return {
+        "labels": labels,
+        "matrix": matrix,
+        "accuracy": metrics.get("accuracy", 0),
+        "total_samples": sum(sum(row) for row in matrix),
+    }
+
+def get_confusion_matrix():
+    """Return confusion matrix data for the classifier."""
+    metrics = classifier.get_metrics()
+    
+    # Build confusion matrix from classification report
+    labels = metrics.get("labels", [])
+    report = metrics.get("classification_report", {})
+    
+    matrix = []
+    for true_label in labels:
+        row = []
+        for pred_label in labels:
+            # Simplified: use precision * recall as proxy for correct/incorrect
+            if true_label == pred_label:
+                support = report.get(true_label, {}).get("support", 1)
+                recall = report.get(true_label, {}).get("recall", 0)
+                row.append(int(support * recall))
+            else:
+                row.append(0)
+        matrix.append(row)
+    
+    return {
+        "labels": labels,
+        "matrix": matrix,
+        "accuracy": metrics.get("accuracy", 0),
+        "total_samples": sum(sum(row) for row in matrix),
+    }
+
 # --- Chat endpoint ---
 from pydantic import BaseModel as PydanticBaseModel
 

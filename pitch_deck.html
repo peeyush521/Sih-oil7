@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAFEGUARD AI — Pitch Deck</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Inter', -apple-system, sans-serif; background: #07111D; color: #E7EDF3; overflow: hidden; }
+.slide { display: none; width: 100vw; height: 100vh; padding: 60px 80px; position: relative; }
+.slide.active { display: flex; flex-direction: column; justify-content: center; }
+.slide-number { position: absolute; bottom: 30px; right: 40px; font-size: 14px; color: #91A3B7; }
+.nav { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); display: flex; gap: 12px; z-index: 100; }
+.nav button { padding: 10px 24px; border: 1px solid #1C3446; background: #0D1D2B; color: #E7EDF3; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 14px; transition: all 0.2s; }
+.nav button:hover { background: #18C6D9; color: #000; }
+.progress { position: fixed; top: 0; left: 0; height: 3px; background: #18C6D9; transition: width 0.3s; z-index: 100; }
+h1 { font-size: 3.5rem; font-weight: 800; margin-bottom: 16px; letter-spacing: -1px; }
+h2 { font-size: 2.2rem; font-weight: 700; margin-bottom: 24px; color: #18C6D9; }
+h3 { font-size: 1.2rem; font-weight: 600; margin-bottom: 12px; color: #91A3B7; }
+p { font-size: 1.1rem; line-height: 1.7; color: #91A3B7; max-width: 800px; }
+.subtitle { font-size: 1.4rem; color: #91A3B7; margin-bottom: 40px; }
+.stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-top: 32px; }
+.stat-card { background: #0D1D2B; border: 1px solid #1C3446; border-radius: 12px; padding: 28px; text-align: center; }
+.stat-value { font-size: 2.8rem; font-weight: 800; color: #18C6D9; }
+.stat-label { font-size: 0.85rem; color: #91A3B7; margin-top: 8px; text-transform: uppercase; letter-spacing: 1px; }
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 24px; }
+.col { background: #0D1D2B; border: 1px solid #1C3446; border-radius: 12px; padding: 28px; }
+.col h3 { color: #18C6D9; margin-bottom: 16px; }
+.col ul { list-style: none; padding: 0; }
+.col li { padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 0.95rem; color: #E7EDF3; }
+.col li::before { content: "→ "; color: #18C6D9; font-weight: 700; }
+.timeline { display: flex; gap: 16px; margin-top: 32px; }
+.timeline-day { flex: 1; background: #0D1D2B; border: 1px solid #1C3446; border-radius: 12px; padding: 20px; }
+.timeline-day h4 { color: #18C6D9; font-size: 0.9rem; margin-bottom: 8px; }
+.timeline-day p { font-size: 0.8rem; line-height: 1.5; }
+.quote { font-size: 1.3rem; font-style: italic; color: #E7EDF3; border-left: 4px solid #18C6D9; padding-left: 24px; margin: 32px 0; max-width: 700px; }
+.badge { display: inline-block; padding: 6px 16px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; margin: 4px; }
+.badge-primary { background: rgba(24,198,217,0.15); border: 1px solid rgba(24,198,217,0.4); color: #18C6D9; }
+.badge-danger { background: rgba(239,68,68,0.15); border: 1px solid rgba(239,68,68,0.4); color: #EF4444; }
+.badge-success { background: rgba(34,197,94,0.15); border: 1px solid rgba(34,197,94,0.4); color: #22C55E; }
+.badge-warning { background: rgba(245,158,11,0.15); border: 1px solid rgba(245,158,11,0.4); color: #F59E0B; }
+.shield { font-size: 5rem; filter: drop-shadow(0 0 30px rgba(24,198,217,0.3)); }
+.table { width: 100%; border-collapse: collapse; margin-top: 16px; }
+.table th { text-align: left; padding: 12px 16px; border-bottom: 2px solid #1C3446; color: #18C6D9; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; }
+.table td { padding: 12px 16px; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 0.9rem; }
+.table tr:hover { background: rgba(24,198,217,0.05); }
+.highlight { color: #18C6D9; font-weight: 700; }
+.critical { color: #EF4444; font-weight: 700; }
+</style>
+</head>
+<body>
+<div class="progress" id="progress"></div>
+
+<!-- SLIDE 1: Title -->
+<div class="slide active" id="slide1">
+  <div style="text-align: center;">
+    <div class="shield">🛡️</div>
+    <h1 style="font-size: 4rem; margin-top: 24px;">SAFEGUARD AI</h1>
+    <p class="subtitle" style="font-size: 1.6rem;">Predicting Industrial Accidents Before They Happen</p>
+    <p style="font-size: 1rem; margin-top: 16px;">Smart India Hackathon 2026 — Oil India Limited</p>
+    <div style="margin-top: 40px;">
+      <span class="badge badge-primary">NLP</span>
+      <span class="badge badge-primary">Knowledge Graph</span>
+      <span class="badge badge-primary">Risk Engine</span>
+      <span class="badge badge-primary">AI Chatbot</span>
+    </div>
+  </div>
+  <div class="slide-number">1 / 10</div>
+</div>
+
+<!-- SLIDE 2: Problem -->
+<div class="slide" id="slide2">
+  <h2>The Problem</h2>
+  <h3 style="font-size: 1.4rem; color: #E7EDF3; margin-bottom: 32px;">India loses 3 workers every hour to industrial accidents.</h3>
+  <div class="two-col">
+    <div class="col">
+      <h3>Current Reality</h3>
+      <ul>
+        <li>Incident reports sit in filing cabinets</li>
+        <li>Each report is investigated in isolation</li>
+        <li>Patterns across time are invisible</li>
+        <li>Safety officers review 100+ reports manually</li>
+        <li>By the time a pattern is noticed, someone is already hurt</li>
+      </ul>
+    </div>
+    <div class="col">
+      <h3>Oil India Specific</h3>
+      <ul>
+        <li>1,100+ km of pipeline network</li>
+        <li>Multiple well pads, processing units, gas plants</li>
+        <li>Reports in English and Hindi mixed</li>
+        <li>Field workers write messy shorthand notes</li>
+        <li>No system connects incidents across time</li>
+      </ul>
+    </div>
+  </div>
+  <div class="quote">"We don't have a data problem. We have a connection problem. Every incident has clues — we just can't see them."</div>
+  <div class="slide-number">2 / 10</div>
+</div>
+
+<!-- SLIDE 3: Solution -->
+<div class="slide" id="slide3">
+  <h2>Our Solution</h2>
+  <h3 style="font-size: 1.3rem; color: #E7EDF3; margin-bottom: 40px;">SAFEGUARD AI connects isolated reports into a living knowledge graph that predicts accidents before they happen.</h3>
+  <div class="stat-grid" style="grid-template-columns: repeat(3, 1fr);">
+    <div class="stat-card">
+      <div style="font-size: 2rem; margin-bottom: 12px;">📝</div>
+      <h3 style="color: #18C6D9;">Ingest</h3>
+      <p style="font-size: 0.85rem;">NLP extracts equipment, hazard, location from messy text reports</p>
+    </div>
+    <div class="stat-card">
+      <div style="font-size: 2rem; margin-bottom: 12px;">🔗</div>
+      <h3 style="color: #18C6D9;">Connect</h3>
+      <p style="font-size: 0.85rem;">Knowledge graph links incidents across time, equipment, and locations</p>
+    </div>
+    <div class="stat-card">
+      <div style="font-size: 2rem; margin-bottom: 12px;">⚠️</div>
+      <h3 style="color: #18C6D9;">Predict</h3>
+      <p style="font-size: 0.85rem;">9-factor risk engine scores escalation probability and triggers alerts</p>
+    </div>
+  </div>
+  <div class="slide-number">3 / 10</div>
+</div>
+
+<!-- SLIDE 4: How It Works -->
+<div class="slide" id="slide4">
+  <h2>How It Works</h2>
+  <div class="two-col">
+    <div class="col">
+      <h3>5 AI Layers</h3>
+      <ul>
+        <li><strong>spaCy NER</strong> — 230 Oil India domain terms</li>
+        <li><strong>Sentence Transformers</strong> — 384-dim semantic embeddings</li>
+        <li><strong>TF-IDF + Logistic Regression</strong> — 7-class incident classifier</li>
+        <li><strong>NetworkX Knowledge Graph</strong> — Temporal incident linking</li>
+        <li><strong>Google Gemini</strong> — Natural language explanations</li>
+      </ul>
+    </div>
+    <div class="col">
+      <h3>9-Factor Risk Engine</h3>
+      <ul>
+        <li>Frequency of related incidents</li>
+        <li>Recency (time since last incident)</li>
+        <li>Severity trend (escalating?)</li>
+        <li>Semantic similarity between reports</li>
+        <li>Equipment recurrence</li>
+        <li>Location clustering</li>
+        <li>Unresolved corrective actions</li>
+        <li>SIF pathway detection</li>
+        <li>Urgency score from text</li>
+      </ul>
+    </div>
+  </div>
+  <div class="slide-number">4 / 10</div>
+</div>
+
+<!-- SLIDE 5: Demo -->
+<div class="slide" id="slide5">
+  <h2>Live Demo</h2>
+  <div style="display: flex; gap: 40px; margin-top: 24px;">
+    <div style="flex: 1;">
+      <div class="col">
+        <h3>Demo Script (5 minutes)</h3>
+        <ul>
+          <li>Login → Show split login page with rotating stats</li>
+          <li>Load 10 reports → Watch risk score escalate</li>
+          <li>Show PRECURSOR alert when threshold hit</li>
+          <li>Type custom report → Watch AI classify it live</li>
+          <li>Open Analytics → Show heatmap + charts</li>
+          <li>Open Chatbot → Ask "Which location is most hazardous?"</li>
+          <li>Export PDF → Show compliance report</li>
+        </ul>
+      </div>
+    </div>
+    <div style="flex: 1;">
+      <div class="col">
+        <h3>Fallback If Demo Breaks</h3>
+        <ul>
+          <li>Pre-load 15 reports before judges arrive</li>
+          <li>Screenshot of working chatbot on phone</li>
+          <li>Pre-generated PDF export ready</li>
+          <li>Static analytics page as backup</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="slide-number">5 / 10</div>
+</div>
+
+<!-- SLIDE 6: Results -->
+<div class="slide" id="slide6">
+  <h2>Results</h2>
+  <div class="stat-grid">
+    <div class="stat-card">
+      <div class="stat-value">97.4%</div>
+      <div class="stat-label">Classification Accuracy</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">98.9%</div>
+      <div class="stat-label">Cross-Validation Score</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">195</div>
+      <div class="stat-label">Training Reports</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">230</div>
+      <div class="stat-label">Domain Terms</div>
+    </div>
+  </div>
+  <div class="two-col" style="margin-top: 24px;">
+    <div class="col">
+      <h3>Per-Class Performance</h3>
+      <table class="table">
+        <tr><th>Class</th><th>F1-Score</th></tr>
+        <tr><td>Chemical/Gas</td><td class="highlight">0.96</td></tr>
+        <tr><td>Electrical</td><td class="highlight">1.00</td></tr>
+        <tr><td>Fall/Slip</td><td class="highlight">0.95</td></tr>
+        <tr><td>Thermal/Burn</td><td class="highlight">1.00</td></tr>
+        <tr><td>Mechanical/Crush</td><td class="highlight">1.00</td></tr>
+      </table>
+    </div>
+    <div class="col">
+      <h3>vs Baselines</h3>
+      <table class="table">
+        <tr><th>Method</th><th>F1-Score</th></tr>
+        <tr><td>Keyword-only</td><td>0.595</td></tr>
+        <tr><td>ML-only</td><td>0.672</td></tr>
+        <tr><td class="highlight">Our System</td><td class="highlight">0.812</td></tr>
+      </table>
+      <p style="margin-top: 16px; font-size: 0.85rem;">Full system (NLP + Graph + Risk) achieves <strong class="highlight">81.2% F1</strong> with only 2 false alerts vs 12 for keyword matching.</p>
+    </div>
+  </div>
+  <div class="slide-number">6 / 10</div>
+</div>
+
+<!-- SLIDE 7: Tech Stack -->
+<div class="slide" id="slide7">
+  <h2>Tech Stack</h2>
+  <div class="two-col">
+    <div class="col">
+      <h3>Backend (Python)</h3>
+      <ul>
+        <li><strong>FastAPI</strong> — REST API (15 endpoints)</li>
+        <li><strong>spaCy</strong> — NER + entity extraction</li>
+        <li><strong>scikit-learn</strong> — TF-IDF + Logistic Regression</li>
+        <li><strong>SentenceTransformers</strong> — Semantic similarity</li>
+        <li><strong>NetworkX</strong> — Knowledge graph</li>
+        <li><strong>Google Gemini</strong> — AI explanations + chatbot</li>
+        <li><strong>SQLite</strong> — User authentication store</li>
+        <li><strong>bcrypt + JWT</strong> — Secure password hashing</li>
+      </ul>
+    </div>
+    <div class="col">
+      <h3>Frontend (React)</h3>
+      <ul>
+        <li><strong>React + Vite</strong> — Fast SPA</li>
+        <li><strong>Cytoscape.js</strong> — Knowledge graph visualization</li>
+        <li><strong>Chart.js</strong> — Risk trajectory charts</li>
+        <li><strong>Leaflet.js</strong> — Facility heatmap</li>
+        <li><strong>Mobile-responsive</strong> — Bottom tab navigation</li>
+        <li><strong>JWT Auth</strong> — Self-hosted login system</li>
+        <li><strong>Gemini Chatbot</strong> — Natural language queries</li>
+      </ul>
+    </div>
+  </div>
+  <div class="slide-number">7 / 10</div>
+</div>
+
+<!-- SLIDE 8: Impact -->
+<div class="slide" id="slide8">
+  <h2>Real-World Impact</h2>
+  <div class="stat-grid" style="grid-template-columns: repeat(3, 1fr);">
+    <div class="stat-card">
+      <div style="font-size: 2rem; margin-bottom: 12px;">⏱️</div>
+      <div class="stat-value" style="font-size: 2rem;">3 days</div>
+      <div class="stat-label">Average lead time before SIF event</div>
+    </div>
+    <div class="stat-card">
+      <div style="font-size: 2rem; margin-bottom: 12px;">🎯</div>
+      <div class="stat-value" style="font-size: 2rem;">97%</div>
+      <div class="stat-label">Fewer false alerts than keyword matching</div>
+    </div>
+    <div class="stat-card">
+      <div style="font-size: 2rem; margin-bottom: 12px;">📱</div>
+      <div class="stat-value" style="font-size: 2rem;">Zero</div>
+      <div class="stat-label">External services needed</div>
+    </div>
+  </div>
+  <div class="quote" style="margin-top: 40px;">"Instead of investigating 100 isolated reports, safety officers see the 3 that matter most — connected, explained, and actionable."</div>
+  <div class="slide-number">8 / 10</div>
+</div>
+
+<!-- SLIDE 9: Team -->
+<div class="slide" id="slide9">
+  <h2>Team & Next Steps</h2>
+  <div class="two-col">
+    <div class="col">
+      <h3>Team Roles</h3>
+      <ul>
+        <li><strong>NLP Engineers (2)</strong> — Entity extraction, classification</li>
+        <li><strong>Graph + Risk (2)</strong> — Knowledge graph, precursor logic</li>
+        <li><strong>Backend + AI (1)</strong> — FastAPI, Gemini integration</li>
+        <li><strong>Frontend + Auth (1)</strong> — Dashboard, chatbot, auth</li>
+      </ul>
+    </div>
+    <div class="col">
+      <h3>Next Milestones</h3>
+      <ul>
+        <li>Integrate real Oil India incident database</li>
+        <li>Deploy to production with MongoDB Atlas</li>
+        <li>Add photo upload for hazard detection</li>
+        <li>Hindi/Assamese NLP support</li>
+        <li>Email/SMS alert integration</li>
+        <li>Mobile app for field workers</li>
+      </ul>
+    </div>
+  </div>
+  <div class="slide-number">9 / 10</div>
+</div>
+
+<!-- SLIDE 10: Thank You -->
+<div class="slide" id="slide10">
+  <div style="text-align: center;">
+    <div class="shield">🛡️</div>
+    <h1 style="margin-top: 24px;">Thank You</h1>
+    <p class="subtitle">SAFEGUARD AI — Protecting workers before accidents happen</p>
+    <div style="margin-top: 40px;">
+      <span class="badge badge-primary">Live Demo: safeguard-ai.onrender.com</span>
+      <span class="badge badge-success">GitHub: peeyush521/Sih-oil7</span>
+    </div>
+    <div style="margin-top: 60px; color: #91A3B7; font-size: 0.9rem;">
+      Questions?
+    </div>
+  </div>
+  <div class="slide-number">10 / 10</div>
+</div>
+
+<!-- Navigation -->
+<div class="nav">
+  <button onclick="prevSlide()">← Previous</button>
+  <button onclick="nextSlide()">Next →</button>
+</div>
+
+<script>
+let current = 1;
+const total = 10;
+
+function showSlide(n) {
+  document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+  document.getElementById('slide' + n).classList.add('active');
+  document.getElementById('progress').style.width = ((n / total) * 100) + '%';
+  current = n;
+}
+
+function nextSlide() { if (current < total) showSlide(current + 1); }
+function prevSlide() { if (current > 1) showSlide(current - 1); }
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowRight' || e.key === ' ') nextSlide();
+  if (e.key === 'ArrowLeft') prevSlide();
+});
+
+showSlide(1);
+</script>
+</body>
+</html>

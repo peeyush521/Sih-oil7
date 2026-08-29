@@ -14,3 +14,11 @@ frontend/.npm/
 *.csv
 !real_industrial_safety_data.csv
 .DS_Store
+
+# Runtime data
+api_state.json
+users.db
+benchmark_data.json
+classifier_metrics.json
+report_data.json
+__pycache__/
