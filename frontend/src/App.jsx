@@ -225,6 +225,71 @@ const ChatWidget = () => {
 };
 
 
+
+/* ── Activity Feed ───────────────────────────────────────── */
+const ActivityFeed = ({ reports }) => {
+  const [feed, setFeed] = useState([])
+  
+  useEffect(() => {
+    if (reports && reports.length > 0) {
+      const latest = reports[reports.length - 1]
+      const newItems = []
+      
+      newItems.push({
+        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        type: 'info',
+        text: `Report ${latest.report.id} loaded`,
+        icon: '🟢',
+      })
+      
+      if (latest.is_precursor) {
+        newItems.push({
+          time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+          type: 'critical',
+          text: `PRECURSOR: ${latest.extracted_entities?.equipment?.[0] || 'Unknown'} — Risk ${latest.risk_data.score}/100`,
+          icon: '🔴',
+        })
+      } else if (latest.risk_data.score >= 40) {
+        newItems.push({
+          time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+          type: 'warning',
+          text: `Risk score: ${latest.risk_data.score}/100 (${latest.risk_data.trajectory})`,
+          icon: '🟡',
+        })
+      }
+      
+      setFeed(prev => [...newItems, ...prev].slice(0, 8))
+    }
+  }, [reports])
+  
+  if (feed.length === 0) return null
+  
+  return (
+    <div className="surface-panel" style={{ marginBottom: 16 }}>
+      <div style={{ padding: '10px 16px', borderBottom: '1px solid var(--border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <h3 style={{ fontSize: '0.8rem', fontWeight: 700, letterSpacing: 1, color: 'var(--text-muted)' }}>LIVE ACTIVITY</h3>
+        <div style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--safe)', animation: 'pulsing 2s infinite' }} />
+      </div>
+      <div style={{ padding: '8px 16px', maxHeight: 140, overflowY: 'auto' }}>
+        {feed.map((item, i) => (
+          <div key={i} className="feed-item" style={{
+            display: 'flex', alignItems: 'center', gap: 10, padding: '6px 0',
+            borderBottom: i < feed.length - 1 ? '1px solid rgba(255,255,255,0.03)' : 'none',
+          }}>
+            <span style={{ fontSize: '0.75rem' }}>{item.icon}</span>
+            <span style={{ fontSize: '0.65rem', color: 'var(--text-muted)', fontFamily: 'var(--font-mono)', minWidth: 45 }}>{item.time}</span>
+            <span style={{
+              fontSize: '0.75rem', fontWeight: item.type === 'critical' ? 700 : 500,
+              color: item.type === 'critical' ? 'var(--critical)' : item.type === 'warning' ? 'var(--warning)' : 'var(--text-main)',
+            }}>{item.text}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+/*
 /* ══════════════════════════════════════════════════════════
    MAIN APP
    ══════════════════════════════════════════════════════════ */
@@ -646,7 +711,10 @@ function App() {
 
         {/* ═══ DASHBOARD TAB ═══ */}
         {activeTab === 'Dashboard' && (
-          <div className="dashboard-grid">
+          <div className="dashboard-grid tab-content">
+            <div className="col-span-3">
+              <ActivityFeed reports={stateData?.reports || []} />
+            </div>
 
             {/* Risk Hero */}
             <div className="panel surface-panel col-span-2">
@@ -850,7 +918,7 @@ function App() {
         
         {/* ═══ REPORTS TAB ═══ */}
         {activeTab === 'Reports' && (
-          <div className="dashboard-grid">
+          <div className="dashboard-grid tab-content">
             <div className="panel surface-panel col-span-3" style={{ overflowY: 'auto', maxHeight: '80vh' }}>
               <div className="panel-header">
                 <h3>All Processed Reports ({stateData ? stateData.total_reports : 0})</h3>
@@ -906,7 +974,7 @@ function App() {
 
                 {/* ═══ EVENT GRAPH TAB ═══ */}
         {activeTab === 'Event Graph' && (
-          <div className="dashboard-grid">
+          <div className="dashboard-grid tab-content">
             <div className="panel surface-panel col-span-3" style={{ height: 500 }}>
               <div className="panel-header"><h3>Precursor Chain (Temporal Knowledge Graph)</h3></div>
               <div className="panel-body" style={{ padding: 0 }}>

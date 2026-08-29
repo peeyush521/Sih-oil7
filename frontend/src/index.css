@@ -801,3 +801,100 @@ body {
     font-size: 1rem;
   }
 }
+
+
+/* ── UI/UX Animations & Micro-Interactions ──────────────── */
+
+/* Fade in for tab content */
+.tab-content {
+  animation: fadeIn 0.3s ease;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Skeleton loading */
+.skeleton {
+  background: linear-gradient(90deg, var(--bg-surface2) 25%, rgba(255,255,255,0.05) 50%, var(--bg-surface2) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 6px;
+}
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* Activity feed item slide-in */
+.feed-item {
+  animation: slideInLeft 0.4s ease;
+}
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+/* Button hover glow */
+.btn.primary:hover:not(:disabled) {
+  box-shadow: 0 0 20px rgba(24, 198, 217, 0.4);
+}
+
+/* Panel hover lift */
+.surface-panel {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.surface-panel:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+}
+
+/* Tag hover */
+.tag {
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.tag:hover {
+  transform: scale(1.05);
+}
+
+/* Nav item hover glow */
+.nav-item:hover {
+  box-shadow: inset 0 0 20px rgba(24, 198, 217, 0.05);
+}
+
+/* Stat card number count-up glow */
+.stat-card .stat-value {
+  transition: text-shadow 0.3s ease;
+}
+.stat-card:hover .stat-value {
+  text-shadow: 0 0 20px currentColor;
+}
+
+/* Risk circle pulse on critical */
+.risk-circle.critical {
+  animation: criticalPulse 2s ease-in-out infinite;
+}
+@keyframes criticalPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.03); }
+}
+
+/* Input focus ring */
+input:focus, textarea:focus, select:focus {
+  border-color: var(--primary) !important;
+  box-shadow: 0 0 0 3px rgba(24, 198, 217, 0.15) !important;
+}
+
+/* Mobile auth responsive */
+@media (max-width: 768px) {
+  .auth-container {
+    flex-direction: column !important;
+  }
+  .auth-branding {
+    display: none !important;
+  }
+  .auth-form {
+    width: 100% !important;
+    border-left: none !important;
+  }
+}
