@@ -96,13 +96,31 @@ def save_state():
 
 
 def load_persisted_state():
-    """Load from MongoDB with JSON fallback."""
+    """Load from MongoDB with JSON fallback. Also rebuilds the knowledge graph."""
     global dataset_index, all_processed_reports
     reports = load_reports()
     if reports:
         all_processed_reports = reports
         dataset_index = len(all_processed_reports)
         print(f"[persist] Restored {len(all_processed_reports)} reports")
+        
+        # Rebuild knowledge graph from persisted reports
+        graph = get_graph_engine()
+        nlp = get_nlp_engine()
+        for r in all_processed_reports:
+            report_data = r.get("report", {})
+            entities = r.get("extracted_entities", {})
+            if report_data.get("id") and entities:
+                embedding = nlp.get_embedding(report_data.get("text", ""))
+                graph.add_report(
+                    report_data["id"],
+                    report_data.get("date", ""),
+                    report_data.get("text", ""),
+                    entities,
+                    embedding,
+                    report_data.get("action_status", "Closed")
+                )
+        print(f"[graph] Rebuilt graph with {graph.graph.number_of_nodes()} nodes, {graph.graph.number_of_edges()} edges")
 
 
 load_persisted_state()

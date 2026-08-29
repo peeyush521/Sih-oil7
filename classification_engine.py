@@ -10,10 +10,13 @@ CLASS_MAP = {
     "Slip/Fall": "Fall/Slip",
     "Fall": "Fall/Slip",
     "Chemical Spill": "Chemical/Gas Release",
+    "Chemical": "Chemical/Gas Release",
     "Explosion": "Chemical/Gas Release",
+    "Fire": "Chemical/Gas Release",
     "Burn": "Thermal/Burn",
     "Cut": "Cut/Abrasion",
     "Electrical Shock": "Electrical",
+    "Electrical": "Electrical",
     "Crush": "Mechanical/Crush",
     "Manual Tools": "Manual/Mechanical",
 }
