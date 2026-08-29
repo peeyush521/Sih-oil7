@@ -1,0 +1,9 @@
+[mongo] MongoDB unavailable (localhost:27017: [WinError 10061] No connection could be made because the target machine actively refused it (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms), Timeout: 3.0s, Topology Description: <TopologyDescription id: 6a91dc54807b6a0d09110294, topology_type: Unknown, servers: [<ServerDescription ('localhost', 27017) server_type: Unknown, rtt: None, error=AutoReconnect('localhost:27017: [WinError 10061] No connection could be made because the target machine actively refused it (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms)')>]>), using JSON fallback
+[persist] Restored 6 reports
+INFO:     127.0.0.1:60693 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60694 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60695 - "GET /assets/index-B2ha2fh1.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:60694 - "GET /assets/index-CmbsZNpt.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:60695 - "GET /api/analytics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60694 - "GET /api/state HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60694 - "GET /api/graph_data HTTP/1.1" 200 OK

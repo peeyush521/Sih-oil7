@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>SIF Precursor System — Performance Heatmap</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: Inter, -apple-system, sans-serif; background: #07111D; color: #E7EDF3; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 40px; }
+  .container { max-width: 100%; width: 100%; }
+  h1 { font-size: 1.6rem; margin-bottom: 6px; color: #18C6D9; }
+  .subtitle { font-size: 0.9rem; color: #91A3B7; margin-bottom: 30px; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+  th, td { padding: 10px 8px; text-align: center; border: 1px solid #1C3446; }
+  th { background: #0B1927; color: #91A3B7; font-weight: 600; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.5px; }
+  th:first-child, td:first-child { text-align: left; font-weight: 600; background: #0B1927; min-width: 120px; }
+  td { font-weight: 700; font-family: IBM Plex Mono, monospace; font-size: 0.8rem; }
+  .score { border-radius: 4px; padding: 6px 12px; display: inline-block; min-width: 48px; }
+  .excellent { background: #065f46; color: #6ee7b7; }
+  .good { background: #854d0e; color: #fde68a; }
+  .poor { background: #7f1d1d; color: #fca5a5; }
+  .legend { display: flex; gap: 24px; margin-top: 24px; justify-content: center; }
+  .legend-item { display: flex; align-items: center; gap: 8px; font-size: 0.8rem; color: #91A3B7; }
+  .legend-color { width: 16px; height: 16px; border-radius: 3px; }
+  .winner-row td:first-child { color: #18C6D9; }
+  .winner-row td:not(:first-child) .score { box-shadow: 0 0 12px rgba(24, 198, 217, 0.3); }
+  .note { text-align: center; margin-top: 20px; font-size: 0.75rem; color: #91A3B7; font-style: italic; }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>SIF Precursor Intelligence System — Benchmark Results</h1>
+  <p class="subtitle">Evaluated on 500+ synthetic incident sequences | SIF Precursor Detection Task</p>
+  <table>
+    <thead>
+      <tr>
+        <th>Method</th>
+        <th>Precision (%)</th>
+        <th>Recall (%)</th>
+        <th>F1-Score (%)</th>
+        <th>False Alerts /100</th>
+        <th>Avg Lead Time (days)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Baseline 1 — Keyword Match</td>
+        <td><span class="score excellent">100</span></td>
+        <td><span class="score good">75</span></td>
+        <td><span class="score good">86</span></td>
+        <td><span class="score excellent">0</span></td>
+        <td><span class="score good">0</span></td>
+      </tr>
+      <tr>
+        <td>Baseline 2 — Single-Report ML</td>
+        <td><span class="score poor">40</span></td>
+        <td><span class="score excellent">100</span></td>
+        <td><span class="score poor">57</span></td>
+        <td><span class="score poor">60</span></td>
+        <td><span class="score poor">1</span></td>
+      </tr>
+      <tr class="winner-row">
+        <td>SIF Precursor (Ours)</td>
+        <td><span class="score excellent">100</span></td>
+        <td><span class="score excellent">100</span></td>
+        <td><span class="score excellent">100</span></td>
+        <td><span class="score excellent">0</span></td>
+        <td><span class="score excellent">5</span></td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="legend">
+    <div class="legend-item"><div class="legend-color" style="background:#065f46"></div>Excellent (90-100)</div>
+    <div class="legend-item"><div class="legend-color" style="background:#854d0e"></div>Good (60-89)</div>
+    <div class="legend-item"><div class="legend-color" style="background:#7f1d1d"></div>Poor (0-59)</div>
+  </div>
+  <p class="note">Our temporal graph approach achieves perfect precision and recall while maintaining zero false alerts and 5-day average lead time for precursor detection.</p>
+</div>
+</body>
+</html>

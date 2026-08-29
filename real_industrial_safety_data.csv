@@ -1,14 +1,191 @@
 Data,Countries,Local,Industry Sector,Accident Level,Potential Accident Level,Genre,Employee or Third Party,Critical Risk,Description,Corrective Action,Action Status
-2024-08-02 08:00:00,Country_02,Local_05,Mining,I,II,Female,Third Party,Cut,Worker suffered minor paper cut in admin office. Bandage applied.,None required,Closed
-2024-08-03 00:00:00,Country_02,Local_04,Mining,I,II,Female,Third Party,Fall,Tripped over loose cable in server room. No injury.,None required,Closed
-2024-08-04 13:00:00,Country_01,Local_03,Mining,I,IV,Male,Employee,Slip/Fall,Pump P-104 has minor hydraulic leakage. Area cleaned.,Monitor pump,Closed
-2024-08-05 13:00:00,Country_02,Local_01,Mining,I,II,Male,Third Party,Chemical Spill,Small cleaning chemical spill in cafeteria. Mopped up immediately.,None required,Closed
-2024-08-06 15:00:00,Country_01,Local_02,Mining,I,II,Female,Third Party,Manual Tools,Dropped wrench on foot. Steel toe boots prevented injury.,None required,Closed
-2024-08-08 10:00:00,Country_01,Local_03,Mining,II,IV,Male,Employee,Slip/Fall,Maintenance issue reported on P-104. Seal appears degraded and leaking fluid.,Replace seal,Open
-2024-08-09 16:00:00,Country_02,Local_05,Mining,I,II,Male,Third Party,Electrical Shock,Static shock from ungrounded metal railing. Maintenance notified.,None required,Closed
-2024-08-11 07:00:00,Country_01,Local_05,Mining,I,II,Female,Third Party,Cut,Minor scrape on arm from protruding nail on pallet.,None required,Closed
-2024-08-12 23:00:00,Country_01,Local_03,Mining,II,IV,Male,Employee,Slip/Fall,Worker reports slippery surface near P-104. Oil spreading across main walkway.,Clean spill and barricade,Open
-2024-08-14 11:00:00,Country_01,Local_02,Mining,I,II,Male,Third Party,Crush,Finger pinched in heavy door. First aid applied.,None required,Closed
-2024-08-16 02:00:00,Country_01,Local_03,Mining,II,IV,Male,Employee,Slip/Fall,Worker nearly slips and falls heavily near P-104 due to massive hydraulic oil pool.,Emergency shutdown and full seal replacement,Open
-2024-08-17 12:00:00,Country_02,Local_02,Mining,I,II,Male,Third Party,Manual Tools,Hammer handle splintered during use. Tool discarded.,None required,Closed
-2024-08-18 13:00:00,Country_02,Local_04,Mining,I,II,Male,Third Party,Fall,Slipped on ice in parking lot outside facility. Minor bruising.,None required,Closed
+2024-01-01 18:00:00,India,Warehouse_WH01,Oil & Gas,II,III,Female,Employee,Electrical Shock,Thermal imaging scan of panel WB-07 revealed hotspot at main busbar. Temperature 87C. Panel de-energized.,Pending,Open
+2024-01-02 14:00:00,India,Unit_C_Treatment,Oil & Gas,I,II,Male,Employee,Chemical Spill,H2S alarm separator area. evacuated,Action 2,Closed
+2024-01-03 15:00:00,India,Unit_A_Processing,Oil & Gas,I,II,Male,Contractor,Burn,Hot oil contact during pipeline flushing at Unit A. Full PPE.,Action 3,Closed
+2024-01-06 01:00:00,India,Well_Pad_WP01,Oil & Gas,II,III,Female,Contractor,Chemical Spill,INCIDENT REPORT: Release of 50 litres produced water.,Pending,Open
+2024-01-07 06:00:00,India,Unit_B_Production,Oil & Gas,I,II,Male,Employee,Burn,compressor discharge temperature zyada ho gaya. auto shutdown.,Pending,Open
+2024-01-09 09:00:00,India,Effluent_Treatment_ET01,Oil & Gas,I,II,Male,Employee,Chemical Spill,Produced water tank overflow at effluent treatment ET-01.,Action 6,Closed
+2024-01-10 04:00:00,India,Laydown_Area_LA01,Oil & Gas,I,II,Male,Employee,Cut,Third party contractor cut finger handling rusty pipe.,Action 7,Closed
+2024-01-10 10:00:00,India,Pump_House_PH01,Oil & Gas,I,II,Male,Employee,Slip/Fall,bhai pump house mein floor bahut slippery hai.,Pending,Open
+2024-01-11 18:00:00,India,Fuel_Farm_FF01,Oil & Gas,I,II,Male,Third Party,Chemical Spill,diesel leak fuel farm. bund contained,Action 9,Closed
+2024-01-12 05:00:00,India,Fuel_Farm_FF01,Oil & Gas,I,II,Male,Contractor,Chemical Spill,Diesel spill from fuel transfer pipeline at fuel farm FF-01.,Action 10,Closed
+2024-01-14 03:00:00,India,Chemical_Storage_CS01,Oil & Gas,I,II,Male,Employee,Slip/Fall,Monsoon rain caused flooding in chemical storage CS-01.,Pending,Open
+2024-01-16 21:00:00,India,Warehouse_WH02,Oil & Gas,III,IV,Male,Employee,Electrical Shock,Emergency lighting failure during night shift in warehouse WH-02.,Pending,Open
+2024-01-19 13:00:00,India,Scaffold_Tower_T3,Oil & Gas,I,II,Male,Employee,Fall,Worker working at height on Tower 3 WITHOUT harness.,Action 13,Closed
+2024-01-21 21:00:00,India,Fuel_Farm_FF01,Oil & Gas,I,II,Male,Employee,Chemical Spill,diesel leak fuel farm. bund contained,Action 14,Closed
+2024-01-24 08:00:00,India,Unit_B_Production,Oil & Gas,I,II,Male,Employee,Manual Tools,Compressor C-01 vibration 4.5 mm/s.,Pending,Open
+2024-01-24 18:00:00,India,Unit_C_Treatment,Oil & Gas,I,II,Male,Contractor,Chemical Spill,H2S alarm separator area. evacuated,Action 16,Closed
+2024-01-25 10:00:00,India,Laydown_Area_LA01,Oil & Gas,I,II,Male,Third Party,Cut,Third party contractor cut finger handling rusty pipe.,Action 17,Closed
+2024-01-26 03:00:00,India,Warehouse_WH01,Oil & Gas,II,III,Male,Employee,Electrical Shock,panel WB-07 hot smell. night shift. electrician called,Pending,Open
+2024-01-28 16:00:00,India,Pipe_Rack_PR01,Oil & Gas,I,II,Male,Employee,Burn,Steam leak from valve V-203 during pigging. Minor steam burn. First aid applied.,Action 19,Closed
+2024-01-31 07:00:00,India,Unit_A_Processing,Oil & Gas,I,II,Male,Contractor,Slip/Fall,Worker slipped near P-104. Oil spreading.,Pending,Open
+2024-02-02 19:00:00,India,Unit_B_Production,Oil & Gas,I,II,Male,Contractor,Manual Tools,Compressor C-01 vibration 4.5 mm/s.,Pending,Open
+2024-02-03 11:00:00,India,Gas_Processing_GP01,Oil & Gas,II,III,Male,Contractor,Chemical Spill,Pipeline rupture caused hydrocarbon release AND fire.,Pending,Open
+2024-02-03 16:00:00,India,Unit_A_Processing,Oil & Gas,I,II,Female,Contractor,Burn,Hot surface contact during valve maintenance.,Action 23,Closed
+2024-02-05 02:00:00,India,Unit_B_Production,Oil & Gas,I,II,Male,Employee,Manual Tools,Grease gun released unexpectedly at compressor C-01.,Action 24,Closed
+2024-02-06 09:00:00,India,Scaffold_Tower_T3,Oil & Gas,I,II,Female,Contractor,Fall,Scaffold guardrail loose on Tower 3. Repaired.,Action 25,Closed
+2024-02-07 10:00:00,India,Unit_A_Processing,Oil & Gas,I,II,Male,Contractor,Slip/Fall,P-104 seal failure worsening. Oil pool 2 sq metres.,Pending,Open
+2024-02-08 23:00:00,India,Unit_A_Processing,Oil & Gas,II,III,Female,Third Party,Chemical Spill,P-104 seepage continued. Oil stain 30cm. Seal inspection.,Pending,Open
+2024-02-10 15:00:00,India,Maintenance_Shop_MS01,Oil & Gas,I,II,Male,Contractor,Burn,Welding slag ignited insulation on adjacent pipe.,Action 28,Closed
+2024-02-13 09:00:00,India,Scaffold_Tower_T3,Oil & Gas,I,II,Male,Employee,Fall,Scaffold guardrail loose on Tower Unit 3 at 8 metres. Repaired immediately.,Pending,Open
+2024-02-13 20:00:00,India,Unit_A_Processing,Oil & Gas,II,III,Male,Employee,Chemical Spill,P-104 leak,Pending,Open
+2024-02-15 16:00:00,India,Loading_Bay_LB01,Oil & Gas,I,II,Male,Employee,Crush,forklift wala loading bay mein almost hit kar diya pedestrian ko.,Pending,Open
+2024-02-18 12:00:00,India,Substation_SS01,Oil & Gas,II,III,Female,Employee,Electrical Shock,arc flash switchgear. PPE saved me,Pending,Open
+2024-02-18 23:00:00,India,Unit_A_Processing,Oil & Gas,I,II,Female,Employee,Burn,Hot oil contact during pipeline flushing at Unit A. Full PPE.,Action 33,Closed
+2024-02-20 02:00:00,India,Unit_A_Processing,Oil & Gas,I,II,Male,Employee,Slip/Fall,p104 leak again. cleaned area. need seal asap,Pending,Open
+2024-02-21 12:00:00,India,Tool_Room_TR01,Oil & Gas,I,II,Male,Contractor,Manual Tools,hammer ka handle toot gaya use karte waqt.,Action 35,Closed
+2024-02-22 23:00:00,India,Unit_A_Processing,Oil & Gas,I,II,Male,Employee,Burn,hot oil splash flushing. PPE worn,Action 36,Closed
+2024-02-23 13:00:00,India,Pump_House_PH01,Oil & Gas,I,II,Male,Employee,Chemical Spill,oil on floor near pump house. slipped but ok,Action 37,Closed
+2024-02-26 11:00:00,India,Chemical_Storage_CS01,Oil & Gas,I,II,Male,Employee,Chemical Spill,chemical storage mein drum tip ho gaya. bund mein contain ho gaya.,Action 38,Closed
+2024-02-28 07:00:00,India,Unit_A_Processing,Oil & Gas,II,III,Male,Employee,Chemical Spill,P-104 ka seal toot gaya hai. oil gir raha hai. pump house mein cleaning kar diya.,Pending,Open
+2024-03-01 01:00:00,India,Scaffold_Tower_T3,Oil & Gas,I,II,Male,Contractor,Fall,Tower 3 scaffold plank wobbly at 8m.,Pending,Open
+2024-03-01 14:00:00,India,Unit_A_Processing,Oil & Gas,I,II,Male,Third Party,Chemical Spill,Pump P-104 minor seepage. Oil stain 10cm. Cleaned.,Action 41,Closed
+2024-03-02 06:00:00,India,Warehouse_WH01,Oil & Gas,I,II,Male,Employee,Electrical Shock,WB-07 panel warm to touch. Thermographic scan.,Action 42,Closed
+2024-03-03 19:00:00,India,Loading_Bay_LB01,Oil & Gas,I,II,Male,Employee,Crush,forklift almost hit someone loading bay,Action 43,Closed
+2024-03-04 07:00:00,India,Unit_A_Processing,Oil & Gas,II,III,Female,Employee,Chemical Spill,Pump P-104 pressure gauge 45 PSI (normal 30).,Pending,Open
+2024-03-05 07:00:00,India,Scaffold_Tower_T3,Oil & Gas,I,II,Male,Employee,Fall,Tower 3 harness lanyard worn. ALL pulled from service.,Pending,Open
+2024-03-07 01:00:00,India,Laydown_Area_LA01,Oil & Gas,I,II,Male,Contractor,Manual Tools,Pre-shift safety observation: scaffolding in walkway.,Action 46,Closed
+2024-03-10 00:00:00,India,Effluent_Treatment_ET01,Oil & Gas,I,II,Male,Third Party,Chemical Spill,water tank overflow treatment,Action 47,Closed
+2024-03-11 18:00:00,India,Unit_B_Production,Oil & Gas,I,II,Female,Employee,Burn,compressor discharge temperature zyada ho gaya. auto shutdown.,Pending,Open
+2024-03-12 15:00:00,India,Unit_A_Processing,Oil & Gas,II,III,Male,Contractor,Chemical Spill,Pump P-104 seal failure. Hydraulic fluid leaking 2 litres per minute. Area cordoned. Seal replacement scheduled.,Pending,Open
+2024-03-13 14:00:00,India,Unit_A_Processing,Oil & Gas,II,III,Male,Third Party,Chemical Spill,Pump P-104 pressure gauge 45 PSI (normal 30).,Pending,Open
+2024-03-15 13:00:00,India,Effluent_Treatment_ET01,Oil & Gas,I,II,Male,Third Party,Chemical Spill,Produced water tank overflow at effluent treatment ET-01.,Action 51,Closed
+2024-03-17 02:00:00,India,Scaffold_Tower_T3,Oil & Gas,I,II,Male,Employee,Fall,Scaffold guardrail loose on Tower 3. Repaired.,Action 52,Closed
+2024-03-17 12:00:00,India,Unit_A_Processing,Oil & Gas,II,III,Male,Employee,Chemical Spill,P-104 ka seal toot gaya hai. oil gir raha hai. pump house mein cleaning kar diya.,Pending,Open
+2024-03-19 03:00:00,India,Unit_A_Processing,Oil & Gas,I,II,Male,Employee,Slip/Fall,4th slip incident near P-104 in 2 weeks.,Pending,Open
+2024-03-19 23:00:00,India,Unit_B_Production,Oil & Gas,I,II,Male,Employee,Manual Tools,Compressor C-01 vibration 4.5 mm/s.,Pending,Open
+2024-03-22 11:00:00,India,Unit_A_Processing,Oil & Gas,I,II,Male,Employee,Slip/Fall,4th slip incident near P-104 in 2 weeks.,Pending,Open
+2024-03-22 16:00:00,India,Laydown_Area_LA01,Oil & Gas,II,III,Male,Contractor,Electrical Shock,temporary cable damage ho gaya vehicle se. area block karo.,Pending,Open
+2024-03-23 15:00:00,India,Pipe_Rack_PR02,Oil & Gas,I,II,Male,Third Party,Crush,Crane CR-01 load shifted at pipe rack PR-02.,Pending,Open
+2024-03-24 13:00:00,India,Scaffold_Tower_T3,Oil & Gas,I,II,Male,Employee,Fall,Worker working at height on Tower 3 WITHOUT harness.,Action 59,Closed
+2024-03-26 15:00:00,India,Scaffold_Tower_T3,Oil & Gas,I,II,Female,Third Party,Fall,scaffold loose on tower 3. fixed it temporary,Pending,Open
+2024-03-27 00:00:00,India,Warehouse_WH01,Oil & Gas,II,III,Female,Employee,Electrical Shock,WB-07 arc flash. Worker burns. PPE prevented fatality.,Pending,Open
+2024-03-28 11:00:00,India,Unit_B_Production,Oil & Gas,I,II,Male,Employee,Manual Tools,Grease gun released unexpectedly at compressor C-01.,Action 62,Closed
+2024-03-30 19:00:00,India,Pipe_Rack_PR01,Oil & Gas,I,II,Female,Third Party,Burn,valve V-203 se steam nikla. haath jal gaya operator ka.,Action 63,Closed
+2024-04-01 05:00:00,India,Unit_C_Treatment,Oil & Gas,II,III,Female,Contractor,Chemical Spill,Chlorine gas leak from cylinder at water treatment plant.,Pending,Open
+2024-04-02 07:00:00,India,Tank_Farm_TF01,Oil & Gas,I,II,Female,Employee,Fall,Fixed ladder rung corroded on storage tank T-101.,Pending,Open
+2024-04-04 05:00:00,India,Flare_Pit_FP01,Oil & Gas,I,II,Male,Employee,Chemical Spill,PSV-P01 lifted during overpressure event.,Action 66,Closed
+2024-04-05 16:00:00,India,Scaffold_Tower_T3,Oil & Gas,I,II,Male,Third Party,Fall,Tower 3 harness lanyard worn. ALL pulled from service.,Pending,Open
+2024-04-06 09:00:00,India,Well_Pad_WP01,Oil & Gas,I,II,Male,Employee,Chemical Spill,well pad WH-12 pe gas leak hui thi. sab log evacuate kar diye.,Action 68,Closed
+2024-04-09 01:00:00,India,Pipe_Rack_PR01,Oil & Gas,I,II,Male,Third Party,Burn,steam burn hand valve V203. first aid done,Action 69,Closed
+2024-04-11 15:00:00,India,Pipe_Rack_PR02,Oil & Gas,I,II,Male,Third Party,Crush,crane load slipped pipe rack,Pending,Open
+2024-04-13 00:00:00,India,Well_Pad_WP01,Oil & Gas,I,II,Male,Third Party,Chemical Spill,well pad WH-12 pe gas leak hui thi. sab log evacuate kar diye.,Action 71,Closed
+2024-04-15 07:00:00,India,Unit_A_Processing,Oil & Gas,I,II,Male,Contractor,Chemical Spill,Pump P-104 minor seepage. Oil stain 10cm. Cleaned.,Action 72,Closed
+2024-04-16 22:00:00,India,Laydown_Area_LA01,Oil & Gas,II,III,Male,Employee,Electrical Shock,Night shift worker found temporary cable damaged.,Pending,Open
+2024-04-19 22:00:00,India,Tank_Farm_TF01,Oil & Gas,I,II,Male,Employee,Fall,ladder rung bad tank T101,Pending,Open
+2024-04-21 11:00:00,India,Unit_C_Treatment,Oil & Gas,II,III,Male,Contractor,Chemical Spill,chlorine leak treatment plant,Pending,Open
+2024-04-23 00:00:00,India,Laydown_Area_LA01,Oil & Gas,II,III,Male,Employee,Electrical Shock,temporary cable damage ho gaya vehicle se. area block karo.,Pending,Open
+2024-04-25 00:00:00,India,Scaffold_Tower_T3,Oil & Gas,I,II,Male,Employee,Fall,tower 3 pe scaffold ka railing loose tha.,Pending,Open
+2024-04-27 21:00:00,India,Unit_A_Processing,Oil & Gas,I,II,Male,Contractor,Burn,Operator burn incident during valve maintenance.,Action 78,Closed
+2024-04-29 01:00:00,India,Scaffold_Tower_T3,Oil & Gas,III,IV,Male,Third Party,Fall,Tower 3 scaffold COLLAPSED. Two workers fell 6m.,Pending,Open
+2024-04-29 05:00:00,India,Fuel_Farm_FF01,Oil & Gas,I,II,Male,Third Party,Chemical Spill,Diesel spill from fuel transfer pipeline at fuel farm FF-01.,Action 80,Closed
+2024-04-30 10:00:00,India,Pipe_Rack_PR02,Oil & Gas,I,II,Male,Employee,Crush,Crane CR-01 load shifted at pipe rack PR-02.,Pending,Open
+2024-05-02 08:00:00,India,Unit_A_Processing,Oil & Gas,I,II,Male,Third Party,Slip/Fall,P-104 seal failure worsening. Oil pool 2 sq metres.,Pending,Open
+2024-05-03 03:00:00,India,Unit_A_Processing,Oil & Gas,II,III,Male,Employee,Chemical Spill,25-year-old valve V-204 failed. Root cause: age degradation.,Pending,Open
+2024-05-04 22:00:00,India,Well_Pad_WP01,Oil & Gas,II,III,Male,Employee,Chemical Spill,INCIDENT REPORT: Release of 50 litres produced water.,Pending,Open
+2024-05-06 15:00:00,India,Scaffold_Tower_T3,Oil & Gas,I,II,Male,Employee,Fall,scaffold loose on tower 3. fixed it temporary,Pending,Open
+2024-05-08 19:00:00,India,Pipe_Rack_PR01,Oil & Gas,I,II,Male,Contractor,Burn,valve V-203 se steam nikla. haath jal gaya operator ka.,Action 86,Closed
+2024-05-10 13:00:00,India,Warehouse_WH01,Oil & Gas,II,III,Male,Third Party,Electrical Shock,WB-07 showing 85C on main busbar.,Pending,Open
+2024-05-12 07:00:00,India,Well_Pad_WP03,Oil & Gas,I,II,Male,Employee,Crush,Excavator bucket contacted underground pipeline.,Pending,Open
+2024-05-14 04:00:00,India,Unit_A_Processing,Oil & Gas,I,II,Male,Employee,Burn,hot oil splash flushing. PPE worn,Action 89,Closed
+2024-05-15 11:00:00,India,Well_Pad_WP02,Oil & Gas,I,II,Male,Third Party,Chemical Spill,Methanol spill during well stimulation at Well Pad WP-02. 5 litres released.,Action 90,Closed
+2024-05-16 12:00:00,India,Laydown_Area_LA01,Oil & Gas,I,II,Male,Employee,Manual Tools,Pre-shift safety observation: scaffolding in walkway.,Action 91,Closed
+2024-05-18 10:00:00,India,Substation_SS01,Oil & Gas,II,III,Male,Contractor,Electrical Shock,substation mein insulation kharab hai. monsoon se pehle check karo.,Pending,Open
+2024-05-19 20:00:00,India,Workshop_WS01,Oil & Gas,I,II,Male,Employee,Cut,cut hand pipe edge workshop,Action 93,Closed
+2024-05-21 01:00:00,India,Laydown_Area_LA01,Oil & Gas,I,II,Male,Employee,Manual Tools,Pre-shift safety observation: scaffolding in walkway.,Action 94,Closed
+2024-05-23 17:00:00,India,Unit_C_Treatment,Oil & Gas,II,III,Male,Third Party,Chemical Spill,H2S detector alarm at separator SEP-201. Reading 18 ppm. All personnel evacuated.,Pending,Open
+2024-05-26 07:00:00,India,Loading_Bay_LB01,Oil & Gas,I,II,Male,Third Party,Crush,Forklift proximity incident at loading bay LB-01. Near-miss.,Action 96,Closed
+2024-05-27 11:00:00,India,Well_Pad_WP03,Oil & Gas,I,II,Male,Employee,Crush,Excavator bucket contacted underground pipeline.,Pending,Open
+2024-05-29 18:00:00,India,Pump_House_PH01,Oil & Gas,I,II,Male,Third Party,Chemical Spill,oil on floor near pump house. slipped but ok,Action 98,Closed
+2024-05-29 22:00:00,India,Warehouse_WH01,Oil & Gas,I,II,Female,Contractor,Electrical Shock,WB-07 panel warm to touch. Thermographic scan.,Action 99,Closed
+2024-05-30 15:00:00,India,Scaffold_Tower_T3,Oil & Gas,I,II,Male,Employee,Fall,Worker working at height on Tower 3 WITHOUT harness.,Action 100,Closed
+2024-06-02 13:00:00,India,Unit_A_Processing,Oil & Gas,III,IV,Male,Employee,Chemical Spill,MAJOR: P-104 seal complete failure. Evacuation.,Pending,Open
+2024-06-03 08:00:00,India,Unit_A_Processing,Oil & Gas,I,II,Male,Third Party,Burn,Operator burn incident during valve maintenance.,Action 102,Closed
+2024-06-06 07:00:00,India,Unit_A_Processing,Oil & Gas,II,III,Female,Employee,Chemical Spill,P-104 seepage continued. Oil stain 30cm. Seal inspection.,Pending,Open
+2024-06-08 19:00:00,India,Pump_House_PH01,Oil & Gas,I,II,Male,Third Party,Slip/Fall,bhai pump house mein floor bahut slippery hai.,Pending,Open
+2024-06-11 15:00:00,India,Pump_House_PH01,Oil & Gas,I,II,Male,Contractor,Slip/Fall,slipped rain near pump house. boots ok,Action 105,Closed
+2024-06-14 04:00:00,India,Warehouse_WH01,Oil & Gas,II,III,Female,Third Party,Electrical Shock,WB-07 spark observed. Immediate isolation.,Pending,Open
+2024-06-16 20:00:00,India,Scaffold_Tower_T3,Oil & Gas,III,IV,Male,Third Party,Fall,Tower 3 scaffold COLLAPSED. Two workers fell 6m.,Pending,Open
+2024-06-18 11:00:00,India,Chemical_Storage_CS01,Oil & Gas,I,II,Male,Employee,Slip/Fall,Monsoon rain caused flooding in chemical storage CS-01.,Pending,Open
+2024-06-19 21:00:00,India,Laydown_Area_LA01,Oil & Gas,I,II,Male,Employee,Cut,rusty pipe se haath kat gaya laydown area.,Action 109,Closed
+2024-06-21 13:00:00,India,Pump_House_PH01,Oil & Gas,I,II,Male,Employee,Slip/Fall,slipped rain near pump house. boots ok,Action 110,Closed
+2024-06-22 03:00:00,India,Well_Pad_WP01,Oil & Gas,I,II,Male,Employee,Chemical Spill,Minor crude oil seepage from wellhead WH-12 flange gasket. Leak clamped temporarily.,Action 111,Closed
+2024-06-23 02:00:00,India,Unit_A_Processing,Oil & Gas,I,II,Male,Employee,Slip/Fall,Worker slipped near P-104. Oil spreading.,Pending,Open
+2024-06-25 10:00:00,India,Maintenance_Shop_MS01,Oil & Gas,I,II,Male,Employee,Burn,welding fire insulation. small,Action 113,Closed
+2024-06-25 21:00:00,India,Loading_Bay_LB01,Oil & Gas,I,II,Male,Employee,Crush,Forklift proximity incident at loading bay LB-01. Near-miss.,Action 114,Closed
+2024-06-26 03:00:00,India,Warehouse_WH01,Oil & Gas,II,III,Female,Third Party,Electrical Shock,WB-07 panel se smell aa rahi thi. night shift mein notice kiya.,Pending,Open
+2024-06-28 07:00:00,India,Gas_Processing_GP01,Oil & Gas,II,III,Male,Contractor,Chemical Spill,Pipeline rupture caused hydrocarbon release AND fire.,Pending,Open
+2024-06-30 01:00:00,India,Tool_Room_TR01,Oil & Gas,I,II,Male,Contractor,Manual Tools,hammer ka handle toot gaya use karte waqt.,Action 117,Closed
+2024-07-02 10:00:00,India,Tank_Farm_TF01,Oil & Gas,I,II,Male,Third Party,Fall,Fixed ladder rung corroded on storage tank T-101.,Pending,Open
+2024-07-03 18:00:00,India,Scaffold_Tower_T3,Oil & Gas,I,II,Male,Employee,Fall,tower 3 pe scaffold ka railing loose tha.,Pending,Open
+2024-07-06 12:00:00,India,Laydown_Area_LA01,Oil & Gas,II,III,Male,Employee,Electrical Shock,Night shift worker found temporary cable damaged.,Pending,Open
+2024-07-08 19:00:00,India,Pipe_Rack_PR01,Oil & Gas,I,II,Male,Third Party,Burn,steam burn hand valve V203. first aid done,Action 121,Closed
+2024-07-09 15:00:00,India,Well_Pad_WP02,Oil & Gas,I,II,Female,Employee,Chemical Spill,methanol spill well pad. cleaned,Action 122,Closed
+2024-07-11 21:00:00,India,Warehouse_WH01,Oil & Gas,II,III,Male,Third Party,Electrical Shock,WB-07 arc flash. Worker burns. PPE prevented fatality.,Pending,Open
+2024-07-12 11:00:00,India,Substation_SS01,Oil & Gas,II,III,Male,Employee,Electrical Shock,arc flash switchgear. PPE saved me,Pending,Open
+2024-07-15 02:00:00,India,Gas_Processing_GP01,Oil & Gas,II,III,Male,Employee,Chemical Spill,produced water pipeline se leak hua. flow station ke paas.,Pending,Open
+2024-07-16 23:00:00,India,Pump_House_PH01,Oil & Gas,I,II,Male,Employee,Slip/Fall,pump house ke paas floor wet hai. ek worker phisal gaya.,Pending,Open
+2024-07-19 03:00:00,India,Scaffold_Tower_T3,Oil & Gas,I,II,Male,Contractor,Fall,Tower 3 scaffold plank wobbly at 8m.,Pending,Open
+2024-07-21 12:00:00,India,Unknown_Location,Oil & Gas,II,III,Male,Employee,Electrical Shock,Worker received electric shock from portable equipment.,Pending,Open
+2024-07-21 18:00:00,India,Well_Pad_WP01,Oil & Gas,II,III,Male,Employee,Chemical Spill,INCIDENT REPORT: Release of 50 litres produced water.,Pending,Open
+2024-07-23 18:00:00,India,Pipe_Rack_PR01,Oil & Gas,I,II,Male,Employee,Burn,Steam leak from valve V-203 during pigging. Minor steam burn. First aid applied.,Action 130,Closed
+2024-07-24 03:00:00,India,Unit_A_Processing,Oil & Gas,II,III,Male,Contractor,Chemical Spill,P-104 leak,Pending,Open
+2024-07-25 08:00:00,India,Unit_A_Processing,Oil & Gas,II,III,Male,Third Party,Chemical Spill,Pump P-104 pressure gauge 45 PSI (normal 30).,Pending,Open
+2024-07-26 18:00:00,India,Tank_Farm_TF01,Oil & Gas,I,II,Male,Third Party,Fall,ladder rung bad tank T101,Pending,Open
+2024-07-28 01:00:00,India,Pipe_Rack_PR02,Oil & Gas,I,II,Male,Employee,Crush,crane load slipped pipe rack,Pending,Open
+2024-07-30 04:00:00,India,Unit_A_Processing,Oil & Gas,II,III,Male,Third Party,Chemical Spill,25-year-old valve V-204 failed. Root cause: age degradation.,Pending,Open
+2024-07-30 22:00:00,India,Maintenance_Shop_MS01,Oil & Gas,I,II,Male,Employee,Burn,Welding slag ignited insulation on adjacent pipe.,Action 136,Closed
+2024-08-01 17:00:00,India,Loading_Bay_LB01,Oil & Gas,I,II,Male,Employee,Crush,forklift almost hit someone loading bay,Action 137,Closed
+2024-08-03 12:00:00,India,Tank_Farm_TF01,Oil & Gas,I,II,Male,Contractor,Fall,ladder missing rung storage tank.,Pending,Open
+2024-08-05 16:00:00,India,Warehouse_WH02,Oil & Gas,III,IV,Male,Third Party,Electrical Shock,emergency lights failed night shift,Pending,Open
+2024-08-06 05:00:00,India,Unit_A_Processing,Oil & Gas,II,III,Male,Third Party,Chemical Spill,Pump P-104 seal failure. Hydraulic fluid leaking 2 litres per minute. Area cordoned. Seal replacement scheduled.,Pending,Open
+2024-08-07 16:00:00,India,Pump_House_PH01,Oil & Gas,I,II,Male,Third Party,Slip/Fall,pump house ke paas floor wet hai. ek worker phisal gaya.,Pending,Open
+2024-08-08 11:00:00,India,Workshop_WS01,Oil & Gas,I,II,Male,Employee,Cut,Minor laceration from sharp pipe edge in workshop WS-01.,Action 142,Closed
+2024-08-08 20:00:00,India,Unknown_Location,Oil & Gas,II,III,Male,Employee,Electrical Shock,Worker received electric shock from portable equipment.,Pending,Open
+2024-08-10 23:00:00,India,Warehouse_WH01,Oil & Gas,II,III,Male,Third Party,Electrical Shock,WB-07 spark observed. Immediate isolation.,Pending,Open
+2024-08-11 04:00:00,India,Workshop_WS01,Oil & Gas,I,II,Male,Third Party,Cut,Minor laceration from sharp pipe edge in workshop WS-01.,Action 145,Closed
+2024-08-11 21:00:00,India,Well_Pad_WP02,Oil & Gas,I,II,Male,Employee,Chemical Spill,methanol spill well pad. cleaned,Action 146,Closed
+2024-08-14 11:00:00,India,Substation_SS01,Oil & Gas,II,III,Male,Employee,Electrical Shock,substation mein insulation kharab hai. monsoon se pehle check karo.,Pending,Open
+2024-08-17 09:00:00,India,Gas_Processing_GP01,Oil & Gas,II,III,Female,Employee,Chemical Spill,produced water pipeline se leak hua. flow station ke paas.,Pending,Open
+2024-08-20 09:00:00,India,Unit_C_Treatment,Oil & Gas,II,III,Male,Employee,Chemical Spill,H2S detector alarm at separator SEP-201. Reading 18 ppm. All personnel evacuated.,Pending,Open
+2024-08-21 23:00:00,India,Warehouse_WH01,Oil & Gas,II,III,Male,Employee,Electrical Shock,WB-07 panel se smell aa rahi thi. night shift mein notice kiya.,Pending,Open
+2024-08-22 14:00:00,India,Gas_Processing_GP01,Oil & Gas,II,III,Male,Employee,Chemical Spill,Pipeline rupture caused hydrocarbon release AND fire.,Pending,Open
+2024-08-25 05:00:00,India,Unit_A_Processing,Oil & Gas,I,II,Male,Third Party,Burn,Operator burn incident during valve maintenance.,Action 152,Closed
+2024-08-27 04:00:00,India,Loading_Bay_LB01,Oil & Gas,I,II,Male,Contractor,Crush,forklift wala loading bay mein almost hit kar diya pedestrian ko.,Pending,Open
+2024-08-28 07:00:00,India,Unit_A_Processing,Oil & Gas,I,II,Male,Employee,Burn,Hot surface contact during valve maintenance.,Action 154,Closed
+2024-08-29 20:00:00,India,Unit_C_Treatment,Oil & Gas,II,III,Male,Contractor,Chemical Spill,Chlorine gas leak from cylinder at water treatment plant.,Pending,Open
+2024-08-31 11:00:00,India,Laydown_Area_LA01,Oil & Gas,II,III,Male,Employee,Electrical Shock,Night shift worker found temporary cable damaged.,Pending,Open
+2024-09-01 15:00:00,India,Chemical_Storage_CS01,Oil & Gas,I,II,Male,Third Party,Chemical Spill,chemical storage mein drum tip ho gaya. bund mein contain ho gaya.,Action 157,Closed
+2024-09-04 09:00:00,India,Chemical_Storage_CS01,Oil & Gas,I,II,Male,Employee,Slip/Fall,Monsoon rain caused flooding in chemical storage CS-01.,Pending,Open
+2024-09-07 01:00:00,India,Unit_A_Processing,Oil & Gas,I,II,Male,Employee,Slip/Fall,p104 leak again. cleaned area. need seal asap,Pending,Open
+2024-09-07 07:00:00,India,Well_Pad_WP01,Oil & Gas,I,II,Male,Employee,Chemical Spill,Minor crude oil seepage from wellhead WH-12 flange gasket. Leak clamped temporarily.,Action 160,Closed
+2024-09-08 18:00:00,India,Workshop_WS01,Oil & Gas,I,II,Male,Employee,Cut,cut hand pipe edge workshop,Action 161,Closed
+2024-09-11 10:00:00,India,Pump_House_PH01,Oil & Gas,I,II,Male,Employee,Slip/Fall,bhai pump house mein floor bahut slippery hai.,Pending,Open
+2024-09-13 08:00:00,India,Unit_A_Processing,Oil & Gas,III,IV,Male,Employee,Chemical Spill,MAJOR: P-104 seal complete failure. Evacuation.,Pending,Open
+2024-09-15 03:00:00,India,Effluent_Treatment_ET01,Oil & Gas,I,II,Male,Employee,Chemical Spill,water tank overflow treatment,Action 164,Closed
+2024-09-16 07:00:00,India,Tank_Farm_TF01,Oil & Gas,I,II,Male,Third Party,Fall,ladder missing rung storage tank.,Pending,Open
+2024-09-17 10:00:00,India,Unit_A_Processing,Oil & Gas,II,III,Male,Third Party,Chemical Spill,25-year-old valve V-204 failed. Root cause: age degradation.,Pending,Open
+2024-09-19 01:00:00,India,Unit_A_Processing,Oil & Gas,I,II,Male,Contractor,Slip/Fall,4th slip incident near P-104 in 2 weeks.,Pending,Open
+2024-09-22 00:00:00,India,Unit_B_Production,Oil & Gas,I,II,Male,Contractor,Manual Tools,grease gun burst. oily clothes,Action 168,Closed
+2024-09-23 04:00:00,India,Laydown_Area_LA01,Oil & Gas,I,II,Male,Employee,Cut,Third party contractor cut finger handling rusty pipe.,Action 169,Closed
+2024-09-24 22:00:00,India,Flare_Pit_FP01,Oil & Gas,I,II,Male,Employee,Chemical Spill,PSV-P01 lifted during overpressure event.,Action 170,Closed
+2024-09-26 13:00:00,India,Unit_A_Processing,Oil & Gas,II,III,Male,Employee,Chemical Spill,P-104 leak,Pending,Open
+2024-09-28 06:00:00,India,Warehouse_WH01,Oil & Gas,II,III,Male,Employee,Electrical Shock,WB-07 showing 85C on main busbar.,Pending,Open
+2024-10-01 00:00:00,India,Unit_C_Treatment,Oil & Gas,II,III,Male,Employee,Chemical Spill,chlorine leak treatment plant,Pending,Open
+2024-10-02 16:00:00,India,Warehouse_WH02,Oil & Gas,III,IV,Male,Employee,Electrical Shock,emergency lights failed night shift,Pending,Open
+2024-10-03 19:00:00,India,Scaffold_Tower_T3,Oil & Gas,I,II,Female,Employee,Fall,Scaffold guardrail loose on Tower Unit 3 at 8 metres. Repaired immediately.,Pending,Open
+2024-10-06 12:00:00,India,Well_Pad_WP02,Oil & Gas,I,II,Male,Employee,Chemical Spill,Methanol spill during well stimulation at Well Pad WP-02. 5 litres released.,Action 176,Closed
+2024-10-09 06:00:00,India,Pump_House_PH01,Oil & Gas,I,II,Male,Third Party,Fall,Worker slipped on wet surface near pump house PH-01 during monsoon.,Action 177,Closed
+2024-10-09 16:00:00,India,Laydown_Area_LA01,Oil & Gas,I,II,Male,Third Party,Cut,rusty pipe se haath kat gaya laydown area.,Action 178,Closed
+2024-10-11 10:00:00,India,Flare_Pit_FP01,Oil & Gas,I,II,Male,Employee,Chemical Spill,PSV-P01 lifted during overpressure event.,Action 179,Closed
+2024-10-13 19:00:00,India,Warehouse_WH01,Oil & Gas,II,III,Male,Third Party,Electrical Shock,Thermal imaging scan of panel WB-07 revealed hotspot at main busbar. Temperature 87C. Panel de-energized.,Pending,Open
+2024-10-15 03:00:00,India,Well_Pad_WP03,Oil & Gas,I,II,Male,Employee,Crush,Excavator bucket contacted underground pipeline.,Pending,Open
+2024-10-17 15:00:00,India,Unknown_Location,Oil & Gas,II,III,Male,Employee,Electrical Shock,Worker received electric shock from portable equipment.,Pending,Open
+2024-10-20 01:00:00,India,Substation_SS01,Oil & Gas,II,III,Male,Third Party,Electrical Shock,Arc flash at switchgear SG-01 during breaker racking. PPE prevented serious injury.,Pending,Open
+2024-10-20 17:00:00,India,Warehouse_WH02,Oil & Gas,III,IV,Female,Employee,Electrical Shock,Emergency lighting failure during night shift in warehouse WH-02.,Pending,Open
+2024-10-22 00:00:00,India,Maintenance_Shop_MS01,Oil & Gas,I,II,Male,Employee,Burn,welding fire insulation. small,Action 185,Closed
+2024-10-23 10:00:00,India,Warehouse_WH01,Oil & Gas,II,III,Male,Employee,Electrical Shock,panel WB-07 hot smell. night shift. electrician called,Pending,Open
+2024-10-23 14:00:00,India,Unit_B_Production,Oil & Gas,I,II,Male,Third Party,Manual Tools,grease gun burst. oily clothes,Action 187,Closed
+2024-10-26 06:00:00,India,Substation_SS01,Oil & Gas,II,III,Male,Employee,Electrical Shock,Arc flash at switchgear SG-01 during breaker racking. PPE prevented serious injury.,Pending,Open
+2024-10-27 22:00:00,India,Pump_House_PH01,Oil & Gas,I,II,Male,Employee,Fall,Worker slipped on wet surface near pump house PH-01 during monsoon.,Action 189,Closed
+2024-10-29 07:00:00,India,Unit_A_Processing,Oil & Gas,I,II,Female,Third Party,Burn,Hot surface contact during valve maintenance.,Action 190,Closed

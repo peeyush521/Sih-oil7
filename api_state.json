@@ -1,0 +1,639 @@
+{
+  "total_reports": 16,
+  "reports": [
+    {
+      "report": {
+        "id": "RPT-REAL-001",
+        "date": "2024-01-01 18:00:00",
+        "text": "Thermal imaging scan of panel WB-07 revealed hotspot at main busbar. Temperature 87C. Panel de-energized.",
+        "location": "Warehouse_WH01",
+        "action_status": "Open"
+      },
+      "report_class": "Electrical",
+      "extracted_entities": {
+        "equipment": [
+          "PANEL_WB07"
+        ],
+        "hazards": [],
+        "locations": [
+          "Warehouse_WH01"
+        ],
+        "severity": 1,
+        "urgency_score": 0
+      },
+      "risk_data": {
+        "score": 10,
+        "trajectory": "DECREASING",
+        "evidence": [],
+        "sif_category": "None",
+        "deltas": {}
+      },
+      "llm_explanation": "Risk is low.\n\nThis appears to be an isolated incident with a precursor score of 10. Routine logging is sufficient.",
+      "interventions": [
+        "Log report for routine review."
+      ],
+      "is_precursor": false
+    },
+    {
+      "report": {
+        "id": "RPT-REAL-002",
+        "date": "2024-01-02 14:00:00",
+        "text": "H2S alarm separator area. evacuated",
+        "location": "Unit_C_Treatment",
+        "action_status": "Closed"
+      },
+      "report_class": "Chemical/Gas Release",
+      "extracted_entities": {
+        "equipment": [
+          "SEPARATOR"
+        ],
+        "hazards": [],
+        "locations": [
+          "Unit_C_Treatment"
+        ],
+        "severity": 1,
+        "urgency_score": 0
+      },
+      "risk_data": {
+        "score": 10,
+        "trajectory": "DECREASING",
+        "evidence": [],
+        "sif_category": "None",
+        "deltas": {}
+      },
+      "llm_explanation": "Risk is low.\n\nThis appears to be an isolated incident with a precursor score of 10. Routine logging is sufficient.",
+      "interventions": [
+        "Log report for routine review."
+      ],
+      "is_precursor": false
+    },
+    {
+      "report": {
+        "id": "RPT-REAL-003",
+        "date": "2024-01-03 15:00:00",
+        "text": "Hot oil contact during pipeline flushing at Unit A. Full PPE.",
+        "location": "Unit_A_Processing",
+        "action_status": "Closed"
+      },
+      "report_class": "Thermal/Burn",
+      "extracted_entities": {
+        "equipment": [
+          "PIPELINE"
+        ],
+        "hazards": [
+          "OIL_LEAK"
+        ],
+        "locations": [
+          "Unit_A_Processing"
+        ],
+        "severity": 1,
+        "urgency_score": 0
+      },
+      "risk_data": {
+        "score": 20,
+        "trajectory": "DECREASING",
+        "evidence": [
+          "SIF Pathway detected (Loss of Control)"
+        ],
+        "sif_category": "Loss of Control",
+        "deltas": {
+          "SIF Pathway": 10
+        }
+      },
+      "llm_explanation": "Risk is low.\n\nThis appears to be an isolated incident with a precursor score of 20. Routine logging is sufficient.",
+      "interventions": [
+        "Log report for routine review."
+      ],
+      "is_precursor": false
+    },
+    {
+      "report": {
+        "id": "RPT-REAL-004",
+        "date": "2024-01-06 01:00:00",
+        "text": "INCIDENT REPORT: Release of 50 litres produced water.",
+        "location": "Well_Pad_WP01",
+        "action_status": "Open"
+      },
+      "report_class": "Chemical/Gas Release",
+      "extracted_entities": {
+        "equipment": [
+          "PRODUCED WATER"
+        ],
+        "hazards": [],
+        "locations": [
+          "Well_Pad_WP01"
+        ],
+        "severity": 1,
+        "urgency_score": 0
+      },
+      "risk_data": {
+        "score": 10,
+        "trajectory": "DECREASING",
+        "evidence": [],
+        "sif_category": "None",
+        "deltas": {}
+      },
+      "llm_explanation": "Risk is low.\n\nThis appears to be an isolated incident with a precursor score of 10. Routine logging is sufficient.",
+      "interventions": [
+        "Log report for routine review."
+      ],
+      "is_precursor": false
+    },
+    {
+      "report": {
+        "id": "RPT-REAL-005",
+        "date": "2024-01-07 06:00:00",
+        "text": "compressor discharge temperature zyada ho gaya. auto shutdown.",
+        "location": "Unit_B_Production",
+        "action_status": "Open"
+      },
+      "report_class": "Thermal/Burn",
+      "extracted_entities": {
+        "equipment": [
+          "COMPRESSOR"
+        ],
+        "hazards": [],
+        "locations": [
+          "Unit_B_Production"
+        ],
+        "severity": 3,
+        "urgency_score": 3
+      },
+      "risk_data": {
+        "score": 33,
+        "trajectory": "DECREASING",
+        "evidence": [],
+        "sif_category": "None",
+        "deltas": {
+          "Urgency Score": 3
+        }
+      },
+      "llm_explanation": "Risk is low.\n\nThis appears to be an isolated incident with a precursor score of 33. Routine logging is sufficient.",
+      "interventions": [
+        "Log report for routine review."
+      ],
+      "is_precursor": false
+    },
+    {
+      "report": {
+        "id": "RPT-REAL-006",
+        "date": "2024-01-09 09:00:00",
+        "text": "Produced water tank overflow at effluent treatment ET-01.",
+        "location": "Effluent_Treatment_ET01",
+        "action_status": "Closed"
+      },
+      "report_class": "Chemical/Gas Release",
+      "extracted_entities": {
+        "equipment": [
+          "PRODUCED WATER",
+          "TANK"
+        ],
+        "hazards": [],
+        "locations": [
+          "Effluent_Treatment_ET01"
+        ],
+        "severity": 1,
+        "urgency_score": 0
+      },
+      "risk_data": {
+        "score": 55,
+        "trajectory": "STABLE",
+        "evidence": [
+          "1 related events",
+          "Corrective action unresolved",
+          "Same equipment recurrence"
+        ],
+        "sif_category": "None",
+        "deltas": {
+          "Frequency": 5,
+          "Recency": 10,
+          "Semantic Similarity": 5,
+          "Unresolved Actions": 15,
+          "Equipment Recurrence": 10
+        }
+      },
+      "llm_explanation": "Risk is elevating for PRODUCED WATER. We detected 1 related events recently. Top contributors: Unresolved Actions (+15), Recency (+10). The precursor score is 55. Monitor closely and consider preventive action.",
+      "interventions": [
+        "Schedule maintenance check within 48 hours.",
+        "Monitor area for further hazards."
+      ],
+      "is_precursor": false
+    },
+    {
+      "report": {
+        "id": "RPT-REAL-007",
+        "date": "2024-01-10 04:00:00",
+        "text": "Third party contractor cut finger handling rusty pipe.",
+        "location": "Laydown_Area_LA01",
+        "action_status": "Closed"
+      },
+      "report_class": "Cut/Abrasion",
+      "extracted_entities": {
+        "equipment": [
+          "PIPE"
+        ],
+        "hazards": [
+          "CUT"
+        ],
+        "locations": [
+          "Laydown_Area_LA01"
+        ],
+        "severity": 1,
+        "urgency_score": 0
+      },
+      "risk_data": {
+        "score": 10,
+        "trajectory": "DECREASING",
+        "evidence": [],
+        "sif_category": "None",
+        "deltas": {}
+      },
+      "llm_explanation": "Risk is low.\n\nThis appears to be an isolated incident with a precursor score of 10. Routine logging is sufficient.",
+      "interventions": [
+        "Log report for routine review."
+      ],
+      "is_precursor": false
+    },
+    {
+      "report": {
+        "id": "RPT-REAL-008",
+        "date": "2024-01-10 10:00:00",
+        "text": "bhai pump house mein floor bahut slippery hai.",
+        "location": "Pump_House_PH01",
+        "action_status": "Open"
+      },
+      "report_class": "Fall/Slip",
+      "extracted_entities": {
+        "equipment": [],
+        "hazards": [
+          "SLIP_HAZARD"
+        ],
+        "locations": [
+          "Pump_House_PH01"
+        ],
+        "severity": 2,
+        "urgency_score": 0
+      },
+      "risk_data": {
+        "score": 30,
+        "trajectory": "DECREASING",
+        "evidence": [
+          "SIF Pathway detected (Exposure)"
+        ],
+        "sif_category": "Exposure",
+        "deltas": {
+          "SIF Pathway": 10
+        }
+      },
+      "llm_explanation": "Risk is low.\n\nThis appears to be an isolated incident with a precursor score of 30. Routine logging is sufficient.",
+      "interventions": [
+        "Log report for routine review."
+      ],
+      "is_precursor": false
+    },
+    {
+      "report": {
+        "id": "RPT-REAL-009",
+        "date": "2024-01-11 18:00:00",
+        "text": "diesel leak fuel farm. bund contained",
+        "location": "Fuel_Farm_FF01",
+        "action_status": "Closed"
+      },
+      "report_class": "Chemical/Gas Release",
+      "extracted_entities": {
+        "equipment": [
+          "BUND"
+        ],
+        "hazards": [
+          "OIL_LEAK"
+        ],
+        "locations": [
+          "Fuel_Farm_FF01"
+        ],
+        "severity": 1,
+        "urgency_score": 0
+      },
+      "risk_data": {
+        "score": 20,
+        "trajectory": "DECREASING",
+        "evidence": [
+          "SIF Pathway detected (Loss of Control)"
+        ],
+        "sif_category": "Loss of Control",
+        "deltas": {
+          "SIF Pathway": 10
+        }
+      },
+      "llm_explanation": "Risk is low.\n\nThis appears to be an isolated incident with a precursor score of 20. Routine logging is sufficient.",
+      "interventions": [
+        "Log report for routine review."
+      ],
+      "is_precursor": false
+    },
+    {
+      "report": {
+        "id": "RPT-REAL-010",
+        "date": "2024-01-12 05:00:00",
+        "text": "Diesel spill from fuel transfer pipeline at fuel farm FF-01.",
+        "location": "Fuel_Farm_FF01",
+        "action_status": "Closed"
+      },
+      "report_class": "Chemical/Gas Release",
+      "extracted_entities": {
+        "equipment": [
+          "PIPELINE"
+        ],
+        "hazards": [
+          "OIL_LEAK"
+        ],
+        "locations": [
+          "Fuel_Farm_FF01"
+        ],
+        "severity": 2,
+        "urgency_score": 0
+      },
+      "risk_data": {
+        "score": 85,
+        "trajectory": "ESCALATING",
+        "evidence": [
+          "2 related events",
+          "Severity increasing",
+          "Same equipment recurrence",
+          "Location recurrence",
+          "SIF Pathway detected (Loss of Control)"
+        ],
+        "sif_category": "Loss of Control",
+        "deltas": {
+          "Frequency": 10,
+          "Recency": 10,
+          "Severity Trend": 15,
+          "Semantic Similarity": 5,
+          "Equipment Recurrence": 10,
+          "Location Recurrence": 5,
+          "SIF Pathway": 10
+        }
+      },
+      "llm_explanation": "Why is PIPELINE high risk?\n\n2 related safety events have been recorded. Multiple reports involve the exact same equipment. Reported severity has escalated significantly. SIF Pathway detected (Loss of Control) \u2014 this indicates conditions that could lead to serious injury or fatality. The trajectory is ESCALATING \u2014 the pattern is worsening over time. These combined signals caused the precursor score to rise to 85. Immediate intervention required.",
+      "interventions": [
+        "Inspect PIPELINE immediately.",
+        "Restrict access to Fuel_Farm_FF01.",
+        "Verify floor contamination and clean up.",
+        "Close any previous unresolved corrective actions."
+      ],
+      "is_precursor": true
+    },
+    {
+      "report": {
+        "id": "RPT-REAL-011",
+        "date": "2024-01-14 03:00:00",
+        "text": "Monsoon rain caused flooding in chemical storage CS-01.",
+        "location": "Chemical_Storage_CS01",
+        "action_status": "Open"
+      },
+      "report_class": "Fall/Slip",
+      "extracted_entities": {
+        "equipment": [],
+        "hazards": [
+          "CHEMICAL_HAZARD"
+        ],
+        "locations": [
+          "Chemical_Storage_CS01"
+        ],
+        "severity": 1,
+        "urgency_score": 0
+      },
+      "risk_data": {
+        "score": 10,
+        "trajectory": "DECREASING",
+        "evidence": [],
+        "sif_category": "None",
+        "deltas": {}
+      },
+      "llm_explanation": "Risk is low.\n\nThis appears to be an isolated incident with a precursor score of 10. Routine logging is sufficient.",
+      "interventions": [
+        "Log report for routine review."
+      ],
+      "is_precursor": false
+    },
+    {
+      "report": {
+        "id": "RPT-REAL-012",
+        "date": "2024-01-16 21:00:00",
+        "text": "Emergency lighting failure during night shift in warehouse WH-02.",
+        "location": "Warehouse_WH02",
+        "action_status": "Open"
+      },
+      "report_class": "Electrical",
+      "extracted_entities": {
+        "equipment": [],
+        "hazards": [],
+        "locations": [
+          "Warehouse_WH01",
+          "Warehouse_WH02"
+        ],
+        "severity": 3,
+        "urgency_score": 3
+      },
+      "risk_data": {
+        "score": 88,
+        "trajectory": "ESCALATING",
+        "evidence": [
+          "1 related events",
+          "Severity increasing",
+          "Corrective action unresolved",
+          "Location recurrence"
+        ],
+        "sif_category": "None",
+        "deltas": {
+          "Frequency": 5,
+          "Recency": 10,
+          "Severity Trend": 15,
+          "Semantic Similarity": 5,
+          "Unresolved Actions": 15,
+          "Location Recurrence": 5,
+          "Urgency Score": 3
+        }
+      },
+      "llm_explanation": "Why is the area high risk?\n\n1 related safety events have been recorded. Reported severity has escalated significantly. The trajectory is ESCALATING \u2014 the pattern is worsening over time. These combined signals caused the precursor score to rise to 88. Immediate intervention required.",
+      "interventions": [
+        "Inspect the equipment immediately.",
+        "Restrict access to Warehouse_WH01, Warehouse_WH02.",
+        "Verify floor contamination and clean up.",
+        "Close any previous unresolved corrective actions."
+      ],
+      "is_precursor": true
+    },
+    {
+      "report": {
+        "id": "RPT-REAL-013",
+        "date": "2024-01-19 13:00:00",
+        "text": "Worker working at height on Tower 3 WITHOUT harness.",
+        "location": "Scaffold_Tower_T3",
+        "action_status": "Closed"
+      },
+      "report_class": "Fall/Slip",
+      "extracted_entities": {
+        "equipment": [
+          "HARNESS"
+        ],
+        "hazards": [],
+        "locations": [
+          "Scaffold_Tower_T3"
+        ],
+        "severity": 1,
+        "urgency_score": 0
+      },
+      "risk_data": {
+        "score": 10,
+        "trajectory": "DECREASING",
+        "evidence": [],
+        "sif_category": "None",
+        "deltas": {}
+      },
+      "llm_explanation": "Risk is low.\n\nThis appears to be an isolated incident with a precursor score of 10. Routine logging is sufficient.",
+      "interventions": [
+        "Log report for routine review."
+      ],
+      "is_precursor": false
+    },
+    {
+      "report": {
+        "id": "RPT-REAL-014",
+        "date": "2024-01-21 21:00:00",
+        "text": "diesel leak fuel farm. bund contained",
+        "location": "Fuel_Farm_FF01",
+        "action_status": "Closed"
+      },
+      "report_class": "Chemical/Gas Release",
+      "extracted_entities": {
+        "equipment": [
+          "BUND"
+        ],
+        "hazards": [
+          "OIL_LEAK"
+        ],
+        "locations": [
+          "Fuel_Farm_FF01"
+        ],
+        "severity": 1,
+        "urgency_score": 0
+      },
+      "risk_data": {
+        "score": 60,
+        "trajectory": "STABLE",
+        "evidence": [
+          "2 related events",
+          "Same equipment recurrence",
+          "Location recurrence",
+          "SIF Pathway detected (Loss of Control)"
+        ],
+        "sif_category": "Loss of Control",
+        "deltas": {
+          "Frequency": 10,
+          "Recency": 10,
+          "Semantic Similarity": 5,
+          "Equipment Recurrence": 10,
+          "Location Recurrence": 5,
+          "SIF Pathway": 10
+        }
+      },
+      "llm_explanation": "Risk is elevating for BUND. We detected 2 related events recently. Top contributors: Frequency (+10), Recency (+10). The precursor score is 60. Monitor closely and consider preventive action.",
+      "interventions": [
+        "Schedule maintenance check within 48 hours.",
+        "Monitor area for further hazards."
+      ],
+      "is_precursor": false
+    },
+    {
+      "report": {
+        "id": "RPT-REAL-015",
+        "date": "2024-01-24 08:00:00",
+        "text": "Compressor C-01 vibration 4.5 mm/s.",
+        "location": "Unit_B_Production",
+        "action_status": "Open"
+      },
+      "report_class": "Manual/Mechanical",
+      "extracted_entities": {
+        "equipment": [
+          "COMPRESSOR"
+        ],
+        "hazards": [
+          "VIBRATION_HAZARD"
+        ],
+        "locations": [
+          "Unit_B_Production"
+        ],
+        "severity": 1,
+        "urgency_score": 0
+      },
+      "risk_data": {
+        "score": 60,
+        "trajectory": "STABLE",
+        "evidence": [
+          "1 related events",
+          "Corrective action unresolved",
+          "Same equipment recurrence",
+          "Location recurrence"
+        ],
+        "sif_category": "None",
+        "deltas": {
+          "Frequency": 5,
+          "Recency": 10,
+          "Semantic Similarity": 5,
+          "Unresolved Actions": 15,
+          "Equipment Recurrence": 10,
+          "Location Recurrence": 5
+        }
+      },
+      "llm_explanation": "Risk is elevating for COMPRESSOR. We detected 1 related events recently. Top contributors: Unresolved Actions (+15), Recency (+10). The precursor score is 60. Monitor closely and consider preventive action.",
+      "interventions": [
+        "Schedule maintenance check within 48 hours.",
+        "Monitor area for further hazards."
+      ],
+      "is_precursor": false
+    },
+    {
+      "report": {
+        "id": "RPT-REAL-016",
+        "date": "2024-01-24 18:00:00",
+        "text": "H2S alarm separator area. evacuated",
+        "location": "Unit_C_Treatment",
+        "action_status": "Closed"
+      },
+      "report_class": "Chemical/Gas Release",
+      "extracted_entities": {
+        "equipment": [
+          "SEPARATOR"
+        ],
+        "hazards": [],
+        "locations": [
+          "Unit_C_Treatment"
+        ],
+        "severity": 1,
+        "urgency_score": 0
+      },
+      "risk_data": {
+        "score": 45,
+        "trajectory": "STABLE",
+        "evidence": [
+          "1 related events",
+          "Same equipment recurrence",
+          "Location recurrence"
+        ],
+        "sif_category": "None",
+        "deltas": {
+          "Frequency": 5,
+          "Recency": 10,
+          "Semantic Similarity": 5,
+          "Equipment Recurrence": 10,
+          "Location Recurrence": 5
+        }
+      },
+      "llm_explanation": "Risk is elevating for SEPARATOR. We detected 1 related events recently. Top contributors: Recency (+10), Equipment Recurrence (+10). The precursor score is 45. Monitor closely and consider preventive action.",
+      "interventions": [
+        "Log report for routine review."
+      ],
+      "is_precursor": false
+    }
+  ]
+}
