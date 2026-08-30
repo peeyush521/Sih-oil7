@@ -135,6 +135,8 @@ class ProcessResponse(BaseModel):
 
     report_class: str
 
+    classification: dict = {}
+
     extracted_entities: dict
 
     risk_data: dict
@@ -271,7 +273,7 @@ def submit_custom_report(request: CustomReportRequest):
 
         "date": date_str,
 
-        "text": request.text.strip(),
+        "text": cleaned_text,
 
         "location": "Custom_Input_Area"
 
@@ -325,7 +327,8 @@ def _process_report(report: dict) -> dict:
 
     classifier = get_classification_engine()
 
-    report_class = classifier.classify(report["text"])
+    classification = classifier.classify_with_confidence(report["text"])
+    report_class = classification["class"]
 
 
 
@@ -364,6 +367,8 @@ def _process_report(report: dict) -> dict:
         "report": report,
 
         "report_class": report_class,
+
+        "classification": classification,
 
         "extracted_entities": extracted_entities,
 

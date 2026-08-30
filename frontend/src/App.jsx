@@ -7,6 +7,7 @@ import Auth from './Auth';
 import { MapContainer, TileLayer, CircleMarker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import CytoscapeComponent from 'react-cytoscapejs';
+import EventGraphTab from './EventGraphTab';
 
 /* ── Typewriter ─────────────────────────────────────────── */
 const Typewriter = ({ text }) => {
@@ -748,6 +749,11 @@ function App() {
                           <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: 4, fontWeight: 600 }}>SIF Pathway Detected</div>
                           <div style={{ display: 'inline-block', padding: '6px 12px', background: 'rgba(239, 68, 68, 0.1)', border: '1px solid var(--critical)', borderRadius: '4px', color: 'var(--critical)', fontWeight: 'bold' }}>
                             {currentState.risk_data.sif_category}
+                          <div style={{ marginTop: 4, display: 'flex', gap: 2, justifyContent: 'center' }}>
+                            {[1,2,3,4,5].map(s => (
+                              <div key={s} style={{ width: 8, height: 8, borderRadius: '50%', background: s <= currentState.extracted_entities.severity ? (s >= 4 ? 'var(--critical)' : s >= 3 ? 'var(--warning)' : 'var(--safe)') : 'rgba(255,255,255,0.1)' }}></div>
+                            ))}
+                          </div>
                           </div>
                         </div>
                       )}
@@ -818,6 +824,49 @@ function App() {
                       {currentState.extracted_entities.hazards.map(e => <span key={e} className="tag hazard">{e.replace('_', ' ')}</span>)}
                       {currentState.extracted_entities.locations.map(e => <span key={e} className="tag location">{e}</span>)}
                     </div>
+                    {/* Classification Confidence */}
+                    {currentState.classification && (
+                      <div style={{ marginTop: 12, padding: '10px 12px', background: 'rgba(255,255,255,0.03)', borderRadius: 8, border: '1px solid rgba(255,255,255,0.06)' }}>
+                        <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: 6, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Classification Confidence</div>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
+                          <span style={{ fontSize: '1.4rem', fontWeight: 700, color: currentState.classification.confidence >= 60 ? 'var(--safe)' : currentState.classification.confidence >= 35 ? 'var(--warning)' : 'var(--critical)' }}>
+                            {currentState.classification.confidence}%
+                          </span>
+                          {currentState.classification.is_novel && (
+                            <span style={{ fontSize: '0.7rem', padding: '2px 8px', borderRadius: 10, background: 'rgba(239,68,68,0.2)', color: 'var(--critical)', fontWeight: 600 }}>NOVEL HAZARD</span>
+                          )}
+                        </div>
+                        {/* Top 3 classes */}
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+                          {Object.entries(currentState.classification.per_class || {}).slice(0, 3).map(([cls, prob]) => (
+                            <div key={cls} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                              <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', minWidth: 110, textAlign: 'right' }}>{cls}</div>
+                              <div style={{ flex: 1, height: 6, background: 'rgba(255,255,255,0.08)', borderRadius: 3, overflow: 'hidden' }}>
+                                <div style={{ height: '100%', width: `${prob}%`, background: prob === Object.values(currentState.classification.per_class || {})[0] ? 'var(--primary)' : 'rgba(255,255,255,0.15)', borderRadius: 3, transition: 'width 0.5s ease' }}></div>
+                              </div>
+                              <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', minWidth: 35 }}>{prob}%</div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                    {/* Severity + Shift + Quantities */}
+                    <div style={{ marginTop: 8, display: 'flex', flexWrap: 'wrap', gap: 6 }}>
+                      <span style={{ fontSize: '0.7rem', padding: '3px 8px', borderRadius: 10, fontWeight: 600, background: currentState.extracted_entities.severity >= 4 ? 'rgba(239,68,68,0.2)' : currentState.extracted_entities.severity >= 3 ? 'rgba(245,158,11,0.2)' : 'rgba(34,197,94,0.15)', color: currentState.extracted_entities.severity >= 4 ? 'var(--critical)' : currentState.extracted_entities.severity >= 3 ? 'var(--warning)' : 'var(--safe)' }}>
+                        Severity: {currentState.extracted_entities.severity}/5
+                      </span>
+                      {currentState.extracted_entities.shift_info?.is_night_shift && (
+                        <span style={{ fontSize: '0.7rem', padding: '3px 8px', borderRadius: 10, background: 'rgba(99,102,241,0.2)', color: '#818cf8', fontWeight: 600 }}>🌙 Night Shift</span>
+                      )}
+                      {currentState.extracted_entities.shift_info?.is_shift_change && (
+                        <span style={{ fontSize: '0.7rem', padding: '3px 8px', borderRadius: 10, background: 'rgba(168,85,247,0.2)', color: '#c084fc', fontWeight: 600 }}>🔄 Shift Change</span>
+                      )}
+                      {currentState.extracted_entities.quantities?.length > 0 && (
+                        <span style={{ fontSize: '0.7rem', padding: '3px 8px', borderRadius: 10, background: 'rgba(245,158,11,0.2)', color: 'var(--warning)', fontWeight: 600 }}>
+                          📊 {currentState.extracted_entities.quantities.map(q => q.raw).join(', ')}
+                        </span>
+                      )}
+                    </div>
                   </>
                 ) : <div className="empty-state">Waiting for next report...</div>}
               </div>
@@ -836,7 +885,7 @@ function App() {
                       <Typewriter text={currentState.llm_explanation} />
                     </div>
                     <div style={{ marginTop: 'auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.8rem', color: 'var(--text-muted)', paddingTop: '12px', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
-                      <div>Confidence: <span style={{ color: 'var(--safe)', fontWeight: 'bold' }}>94%</span></div>
+                      <div>Confidence: <span style={{ color: currentState.classification?.confidence >= 60 ? 'var(--safe)' : 'var(--warning)', fontWeight: 'bold' }}>{currentState.classification?.confidence || 94}%</span></div>
                       <div>{currentState.extracted_entities.hazards.length} related events</div>
                     </div>
                   </div>
@@ -974,66 +1023,7 @@ function App() {
 
                 {/* ═══ EVENT GRAPH TAB ═══ */}
         {activeTab === 'Event Graph' && (
-          <div className="dashboard-grid tab-content">
-            <div className="panel surface-panel col-span-3" style={{ height: 500 }}>
-              <div className="panel-header"><h3>Precursor Chain (Temporal Knowledge Graph)</h3></div>
-              <div className="panel-body" style={{ padding: 0 }}>
-                {graphElements.length > 0 ? (
-                  <CytoscapeComponent
-                    elements={graphElements}
-                    style={{ width: '100%', height: '100%' }}
-                    stylesheet={[
-                      { selector: 'node', style: { 'background-color': '#3b82f6', 'label': 'data(label)', 'color': '#fff', 'text-valign': 'center', 'text-outline-width': 2, 'text-outline-color': '#0f172a', 'font-size': '11px', 'width': 40, 'height': 40 } },
-                      { selector: 'node[type="Incident"]', style: { 'background-color': '#ef4444', 'shape': 'rectangle', 'width': 50, 'height': 30 } },
-                      { selector: 'node[type="Equipment"]', style: { 'background-color': '#3b82f6', 'shape': 'ellipse', 'width': 45, 'height': 45 } },
-                      { selector: 'node[type="Location"]', style: { 'background-color': '#10b981', 'shape': 'ellipse', 'width': 40, 'height': 40 } },
-                      { selector: 'node[type="Hazard"]', style: { 'background-color': '#f59e0b', 'shape': 'ellipse', 'width': 35, 'height': 35 } },
-                      { selector: 'edge', style: { 'width': 1.5, 'line-color': 'rgba(255,255,255,0.3)', 'target-arrow-color': 'rgba(255,255,255,0.3)', 'target-arrow-shape': 'triangle', 'curve-style': 'bezier', 'label': 'data(label)', 'font-size': '7px', 'color': '#94a3b8', 'text-rotation': 'autorotate', 'text-margin-y': -8 } }
-                    ]}
-                    layout={{ name: 'concentric', animate: true, padding: 50, minNodeSpacing: 80, concentric: function(node) { return node.degree(); }, levelWidth: function() { return 2; } }}
-                    cy={(cy) => { setCy(cy); }}
-                  />
-                ) : <div className="empty-state">No graph data yet — load some reports first</div>}
-              </div>
-            </div>
-            
-            {/* Graph Legend */}
-            <div className="panel surface-panel col-span-3">
-              <div className="panel-header"><h3>Graph Legend</h3></div>
-              <div className="panel-body" style={{ display: 'flex', gap: 24, flexWrap: 'wrap' }}>
-                {[
-                  ['🔴 Rectangle', 'Incident Reports', '#ef4444'],
-                  ['🔵 Hexagon', 'Equipment', '#3b82f6'],
-                  ['🟢 Diamond', 'Locations', '#10b981'],
-                  ['🟡 Triangle', 'Hazards', '#f59e0b'],
-                  ['→ Arrows', 'Relationships (INVOLVES, OCCURRED_AT, CAUSED_BY)', 'rgba(255,255,255,0.3)'],
-                ].map(([icon, desc, color]) => (
-                  <div key={desc} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                    <span style={{ fontSize: '0.85rem' }}>{icon}</span>
-                    <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>{desc}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-            
-            {/* Graph Stats */}
-            <div className="panel surface-panel col-span-3">
-              <div className="panel-header"><h3>Graph Statistics</h3></div>
-              <div className="panel-body" style={{ display: 'flex', gap: 24 }}>
-                {[
-                  ['Total Nodes', graphElements.filter(e => e.data && e.data.source === undefined).length, 'var(--primary)'],
-                  ['Total Edges', graphElements.filter(e => e.data && e.data.source !== undefined).length, 'var(--warning)'],
-                  ['Reports Loaded', stateData ? stateData.total_reports : 0, 'var(--safe)'],
-                  ['Precursors', stateData ? stateData.reports.filter(r => r.is_precursor).length : 0, 'var(--critical)'],
-                ].map(([label, value, color]) => (
-                  <div key={label} style={{ flex: 1, textAlign: 'center', padding: 20, background: 'var(--bg-surface2)', borderRadius: 8 }}>
-                    <div style={{ fontSize: '2.5rem', fontWeight: 800, color }}>{value}</div>
-                    <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginTop: 4 }}>{label}</div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
+          <EventGraphTab graphElements={graphElements} setCy={setCy} stateData={stateData} />
         )}
 
 {/* ═══ ANALYTICS TAB ═══ */}
