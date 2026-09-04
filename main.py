@@ -15,6 +15,7 @@ import io
 import os
 
 import json
+import threading
 
 import datetime
 
@@ -48,8 +49,22 @@ from data_loader import load_industrial_dataset
 from mongo_persistence import save_reports, load_reports, save_audit_log, get_audit_logs
 
 from alerts import send_precursor_alert
+from rag_engine import generate_rag_analysis
+from prediction_engine import predict_next_incidents, get_prediction_summary
+from image_detector import detect_hazards_from_image, get_detection_summary
+from realtime_alerts import create_precursor_alert, get_alert_history as get_alert_history_rt, send_sms_alert, alert_history
+from gnn_engine import get_gnn_engine
+from anomaly_detector import get_anomaly_detector
+from xai_engine import get_xai_engine
+from fatigue_engine import get_fatigue_engine
 from auth import signup, login, get_me, get_current_user, SignupRequest, LoginRequest
+from language_utils import detect_language, translate_hinglish, get_language_info
 
+
+class ActionUpdateRequest(BaseModel):
+    report_id: str
+    action: str  # "complete" or "delay"
+    note: str = ""
 
 
 app = FastAPI(title="SIF Precursor Intelligence System", version="1.0.0")
@@ -146,6 +161,8 @@ class ProcessResponse(BaseModel):
     interventions: list
 
     is_precursor: bool
+
+    rag_analysis: dict = None
 
 
 
@@ -267,15 +284,23 @@ def submit_custom_report(request: CustomReportRequest):
 
 
 
+    # Detect and translate Hindi/Hinglish
+    lang_info = get_language_info(request.text)
+    translated_text, was_translated = translate_hinglish(request.text)
+
     report = {
 
         "id": report_id,
 
         "date": date_str,
 
-        "text": cleaned_text,
+        "text": translated_text,
 
-        "location": "Custom_Input_Area"
+        "location": "Custom_Input_Area",
+
+        "language": lang_info,
+
+        "original_text": request.text
 
     }
 
@@ -297,105 +322,109 @@ def submit_custom_report(request: CustomReportRequest):
 
 
 
+def _fast_explanation(risk_data, equipment_list, related_reports):
+    """Generate a fast rule-based explanation (no API call)."""
+    score = risk_data.get("score", 0)
+    trajectory = risk_data.get("trajectory", "STABLE")
+    deltas = risk_data.get("deltas", {})
+    equip = equipment_list[0] if equipment_list else "this area"
+    n_related = len(related_reports)
+    
+    parts = []
+    if score >= 70:
+        parts.append(f"Risk is elevated for {equip}. We detected {n_related} related events recently.")
+    elif score >= 40:
+        parts.append(f"Moderate risk for {equip}. {n_related} related events found.")
+    else:
+        parts.append(f"Low risk for {equip}. Routine monitoring recommended.")
+    
+    if deltas:
+        top = sorted(deltas.items(), key=lambda x: x[1], reverse=True)[:2]
+        contrib = ", ".join(f"{k} (+{v})" for k, v in top)
+        parts.append(f"Top contributors: {contrib}.")
+    
+    parts.append(f"The precursor score is {score}.")
+    
+    if score >= 70:
+        parts.append("Monitor closely and consider preventive action.")
+    elif score >= 40:
+        parts.append("Continue monitoring for changes.")
+    else:
+        parts.append("No immediate action required.")
+    
+    return " ".join(parts)
+
+
+def _generate_llm_in_background(report_id, risk_data, equipment_list, related_reports):
+    """Background thread: generates LLM explanation and stores it."""
+    try:
+        explanation = generate_llm_explanation(risk_data, equipment_list, related_reports)
+        # Find and update the stored report
+        for r in all_processed_reports:
+            if r["report"]["id"] == report_id:
+                r["llm_explanation"] = explanation
+                break
+    except Exception:
+        pass
+
+
 def _process_report(report: dict) -> dict:
-
-    """Core processing pipeline â€” shared between load and custom reports."""
-
+    """Core processing pipeline - optimized for speed."""
     nlp = get_nlp_engine()
-
     graph = get_graph_engine()
-
-
 
     extracted_entities = nlp.extract_entities(report["text"])
 
-
-
     # Inject structured location
-
     if report.get("location") and report["location"] not in extracted_entities["locations"]:
-
         extracted_entities["locations"].append(report["location"])
-
-
 
     embedding = nlp.get_embedding(report["text"])
 
-
-
     # Classification
-
     classifier = get_classification_engine()
-
     classification = classifier.classify_with_confidence(report["text"])
     report_class = classification["class"]
 
-
-
     graph.add_report(
-
         report["id"], report["date"], report["text"],
-
         extracted_entities, embedding, report.get("action_status", "Closed")
-
     )
-
-
 
     related_reports = graph.get_related_reports(report["id"], nlp)
-
     risk_data = calculate_risk(report["id"], graph.reports[report["id"]], related_reports)
-
     interventions = get_intervention_recommendation(risk_data, extracted_entities)
-
-
-
-    llm_explanation = generate_llm_explanation(
-
-        risk_data, extracted_entities.get("equipment", []), related_reports
-
-    )
-
-
 
     is_precursor = risk_data["score"] >= 70
 
-
+    # Fast template explanation (no API call)
+    llm_explanation = _fast_explanation(risk_data, extracted_entities.get("equipment", []), related_reports)
 
     result = {
-
         "report": report,
-
         "report_class": report_class,
-
         "classification": classification,
-
         "extracted_entities": extracted_entities,
-
         "risk_data": risk_data,
-
         "llm_explanation": llm_explanation,
-
         "interventions": interventions,
-
-        "is_precursor": is_precursor
-
+        "is_precursor": is_precursor,
+        "language": report.get("language", get_language_info(report.get("original_text", report.get("text", ""))))
     }
 
+    # Generate real LLM explanation in background thread
+    threading.Thread(
+        target=_generate_llm_in_background,
+        args=(report["id"], risk_data, extracted_entities.get("equipment", []), related_reports),
+        daemon=True
+    ).start()
 
-
-    # Send email alert if precursor detected
-
+    # Store alert in history AND send email if precursor detected
     if is_precursor:
-
+        create_precursor_alert(report, risk_data, extracted_entities)
         send_precursor_alert(report, risk_data, extracted_entities)
 
-
-
     return result
-
-
-
 @app.get("/api/graph_data")
 
 def get_graph_data():
@@ -458,26 +487,101 @@ def simulate_intervention(intervention_type: str):
 
     latest_risk = all_processed_reports[-1]["risk_data"]["score"]
 
-
-
     if intervention_type == "delay":
-
         return {"risk_score": min(latest_risk + 10, 100), "trajectory": "ESCALATING"}
-
     elif intervention_type == "resolve_action":
-
         return {"risk_score": max(latest_risk - 25, 10), "trajectory": "DECREASING"}
-
     elif intervention_type == "inspect":
-
         return {"risk_score": max(latest_risk - 36, 10), "trajectory": "DECREASING"}
-
     elif intervention_type == "replace":
-
         return {"risk_score": max(latest_risk - 69, 5), "trajectory": "DECREASING"}
-
     return {"risk_score": latest_risk, "trajectory": "STABLE"}
 
+
+
+@app.post("/api/report_action")
+def report_action(req: ActionUpdateRequest):
+    """Mark a report as completed or delayed with a response note."""
+    target = None
+    for r in all_processed_reports:
+        if r["report"]["id"] == req.report_id:
+            target = r
+            break
+    if not target:
+        raise HTTPException(status_code=404, detail="Report not found")
+
+    if req.action == "complete":
+        target["report"]["action_status"] = "Closed"
+        target["response"] = {"status": "completed", "note": req.note, "timestamp": datetime.datetime.now().isoformat()}
+        # Recalculate risk after action
+        nlp = get_nlp_engine()
+        graph = get_graph_engine()
+        related = graph.get_related_reports(req.report_id, nlp)
+        new_risk = calculate_risk(req.report_id, graph.reports[req.report_id], related)
+        target["risk_data"] = new_risk
+        target["is_precursor"] = new_risk["score"] >= 70
+    elif req.action == "delay":
+        target["report"]["action_status"] = "Open"
+        target["response"] = {"status": "delayed", "note": req.note, "timestamp": datetime.datetime.now().isoformat()}
+        # Risk increases when delayed
+        new_score = min(target["risk_data"]["score"] + 10, 100)
+        target["risk_data"]["score"] = new_score
+        target["risk_data"]["trajectory"] = "ESCALATING"
+        target["is_precursor"] = new_score >= 70
+    else:
+        raise HTTPException(status_code=400, detail="Action must be 'complete' or 'delay'")
+
+    save_state()
+    return {
+        "report_id": req.report_id,
+        "action": req.action,
+        "response": target["response"],
+        "risk_data": target["risk_data"],
+        "is_precursor": target["is_precursor"],
+        "message": f"Report {req.report_id} marked as {req.action}. " + (
+            "Risk decreased after corrective action." if req.action == "complete" else
+            "Risk increased — action was delayed."
+        )
+    }
+
+
+
+class TranslateRequest(BaseModel):
+    text: str
+
+
+@app.post("/api/translate")
+def translate_report(req: TranslateRequest):
+    """Translate Hinglish/Hindi report to English for non-Hindi speakers."""
+    text = req.text.strip()
+    if not text:
+        raise HTTPException(status_code=400, detail="No text provided")
+
+    lang_info = get_language_info(text)
+
+    # Try Gemini for natural translation
+    gemini_translation = None
+    if lang_info["is_multilingual"] and google_genai and os.getenv("GEMINI_API_KEY"):
+        try:
+            client = google_genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
+            prompt = "Translate this Hindi/Hinglish safety report to clear, professional English. Keep the technical safety terminology accurate. Only output the translation, nothing else. Text: " + text
+            resp = client.models.generate_content(model="gemini-2.5-flash", contents=prompt)
+            gemini_translation = resp.text.strip() if resp.text else None
+        except Exception as e:
+            import sys
+            print(f"Gemini translate error: {type(e).__name__}: {e}", file=sys.stderr, flush=True)
+
+    # Fallback to dictionary-based translation
+    dict_translation, _ = translate_hinglish(text)
+
+    final_translation = gemini_translation or dict_translation
+
+    return {
+        "original": text,
+        "translation": final_translation,
+        "method": "Gemini AI" if gemini_translation else "Dictionary",
+        "source_language": lang_info["detected_language"],
+    }
 
 
 @app.get("/api/export")
@@ -831,6 +935,114 @@ def get_precursor_patterns():
         patterns.append({"type": "Severity Escalation", "trend": "increasing", "recent_severities": severities, "severity": "HIGH"})
     
     return {"patterns": patterns, "total_patterns": len(patterns)}
+
+# --- RAG Root Cause Analysis Endpoint ---
+@app.get("/api/rag_analysis/{report_id}")
+def get_rag_analysis(report_id: str):
+    report_data = None
+    for r in all_processed_reports:
+        if r["report"]["id"] == report_id:
+            report_data = r
+            break
+    if not report_data:
+        raise HTTPException(status_code=404, detail="Report not found")
+    nlp = get_nlp_engine()
+    graph = get_graph_engine()
+    related = graph.get_related_reports(report_id, nlp)
+    analysis = generate_rag_analysis(
+        report_data["report"]["text"],
+        report_data.get("classification", {"class": report_data.get("report_class", "Unknown"), "confidence": 0}),
+        report_data["extracted_entities"], report_data["risk_data"], related, graph
+    )
+    return analysis
+
+# --- Time-Series Prediction Endpoint ---
+@app.get("/api/predictions")
+def get_predictions():
+    preds = predict_next_incidents(all_processed_reports)
+    summary = get_prediction_summary(preds["predictions"])
+    preds["summary"] = summary
+    return preds
+
+# --- Image Hazard Detection Endpoint ---
+@app.post("/api/detect_hazards")
+async def detect_image_hazards(file: UploadFile = File(...)):
+    content_bytes = await file.read()
+    if len(content_bytes) > 10000000:
+        raise HTTPException(status_code=400, detail="File too large")
+    result = detect_hazards_from_image(content_bytes, file.filename or "unknown.jpg")
+    result["summary"] = get_detection_summary(result)
+    return result
+
+# --- Alert History Endpoint ---
+@app.get("/api/alerts")
+def get_alerts():
+    return get_alert_history_rt()
+
+# --- Alert Acknowledge Endpoint ---
+@app.post("/api/alerts/{alert_index}/acknowledge")
+def acknowledge_alert(alert_index: int):
+    if 0 <= alert_index < len(alert_history):
+        alert_history[alert_index]['acknowledged'] = True
+        alert_history[alert_index]['acknowledged_at'] = datetime.now().isoformat()
+        return {"status": "acknowledged", "alert_index": alert_index}
+    raise HTTPException(status_code=404, detail="Alert not found")
+
+# --- Alert Dismiss Endpoint ---
+@app.post("/api/alerts/{alert_index}/dismiss")
+def dismiss_alert(alert_index: int):
+    if 0 <= alert_index < len(alert_history):
+        alert_history[alert_index]['dismissed'] = True
+        alert_history[alert_index]['dismissed_at'] = datetime.now().isoformat()
+        return {"status": "dismissed", "alert_index": alert_index}
+    raise HTTPException(status_code=404, detail="Alert not found")
+
+# --- GNN Precursor Detection Endpoint ---
+@app.get("/api/gnn_analysis")
+def get_gnn_analysis():
+    gnn = get_gnn_engine()
+    gnn.build_graph(all_processed_reports)
+    return gnn.get_gnn_analysis()
+
+# --- Anomaly Detection Endpoint ---
+@app.get("/api/anomalies")
+def get_anomalies():
+    detector = get_anomaly_detector()
+    detector.fit(all_processed_reports)
+    return detector.detect_anomalies(all_processed_reports)
+
+# --- XAI Explainability Endpoint ---
+@app.get("/api/xai/{report_id}")
+def get_xai_explanation(report_id: str):
+    report_data = None
+    for r in all_processed_reports:
+        if r["report"]["id"] == report_id:
+            report_data = r
+            break
+    if not report_data:
+        raise HTTPException(status_code=404, detail="Report not found")
+    xai = get_xai_engine()
+    nlp = get_nlp_engine()
+    classifier = get_classification_engine()
+    classification = report_data.get("classification", {})
+    risk_explanation = xai.explain_risk_score(report_data["risk_data"], report_data["extracted_entities"], [])
+    classification_explanation = xai.explain_classification(report_data["report"]["text"], classification, nlp, classifier)
+    novelty_explanation = None
+    if classification.get("is_novel"):
+        novelty_explanation = xai.explain_novel_hazard(report_data["report"]["text"], classification, report_data["extracted_entities"])
+    return {
+        "risk_explanation": risk_explanation,
+        "classification_explanation": classification_explanation,
+        "novelty_explanation": novelty_explanation,
+        "report_id": report_id,
+        "report_text": report_data["report"]["text"],
+    }
+
+# --- Fatigue Risk Endpoint ---
+@app.get("/api/fatigue")
+def get_fatigue_analysis():
+    engine = get_fatigue_engine()
+    return engine.get_crew_fatigue_dashboard(all_processed_reports)
 
 # --- Benchmark endpoint ---
 @app.get("/api/benchmark")

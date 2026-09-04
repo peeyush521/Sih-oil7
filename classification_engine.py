@@ -1,8 +1,8 @@
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
 from sklearn.pipeline import make_pipeline
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import accuracy_score
+from sklearn.model_selection import train_test_split, cross_val_score
+from sklearn.metrics import accuracy_score, precision_recall_fscore_support, classification_report, confusion_matrix
 import numpy as np
 from data_loader import load_industrial_dataset
 
@@ -61,7 +61,41 @@ class ClassificationEngine:
         # Evaluate on held-out test set
         y_pred = self.model.predict(X_test)
         self.test_accuracy = accuracy_score(y_test, y_pred)
+
+        # Full classification report with precision/recall/F1 per class
+        self.labels = sorted(set(y_all))
+        report_text = classification_report(y_test, y_pred, target_names=self.labels, output_dict=True)
+        self.classification_report_dict = {}
+        for label in self.labels:
+            self.classification_report_dict[label] = {
+                'precision': round(report_text[label]['precision'], 3),
+                'recall': round(report_text[label]['recall'], 3),
+                'f1-score': round(report_text[label]['f1-score'], 3),
+                'support': int(report_text[label]['support']),
+            }
+        self.classification_report_dict['accuracy'] = round(report_text['accuracy'], 3)
+        self.classification_report_dict['macro avg'] = {
+            'precision': round(report_text['macro avg']['precision'], 3),
+            'recall': round(report_text['macro avg']['recall'], 3),
+            'f1-score': round(report_text['macro avg']['f1-score'], 3),
+        }
+
+        # Confusion matrix
+        self.confusion_matrix = confusion_matrix(y_test, y_pred, labels=self.labels)
+
+        # Macro averages
+        p, r, f1, _ = precision_recall_fscore_support(y_test, y_pred, average='macro', zero_division=0)
+        self.precision_macro = p
+        self.recall_macro = r
+        self.f1_macro = f1
+
+        # Cross-validation scores
+        self.cv_scores = cross_val_score(self.model, X_all, y_all, cv=min(5, len(set(y_all))), scoring='f1_macro')
+        self.train_size = len(X_train)
+        self.test_size = len(X_test)
+
         print(f"[classifier] Trained on {len(X_train)} reports, test accuracy: {self.test_accuracy*100:.1f}%")
+        print(f"[classifier] Precision: {self.precision_macro*100:.1f}%, Recall: {self.recall_macro*100:.1f}%, F1: {self.f1_macro*100:.1f}%")
         print(f"[classifier] Classes: {sorted(set(y_all))}")
 
         # Re-train on full data for deployment
@@ -101,11 +135,22 @@ class ClassificationEngine:
         }
 
     def get_metrics(self) -> dict:
-        """Return training metrics for benchmark display."""
+        """Return full ML evaluation metrics for benchmark display."""
         return {
             "test_accuracy": round(self.test_accuracy * 100, 1),
             "num_classes": len(set(CLASS_MAP.values())),
             "class_mapping": CLASS_MAP,
+            "labels": self.labels,
+            "classification_report": self.classification_report_dict,
+            "confusion_matrix": self.confusion_matrix.tolist(),
+            "precision_macro": round(self.precision_macro * 100, 1),
+            "recall_macro": round(self.recall_macro * 100, 1),
+            "f1_macro": round(self.f1_macro * 100, 1),
+            "train_size": self.train_size,
+            "test_size": self.test_size,
+            "cv_scores": [round(s * 100, 1) for s in self.cv_scores],
+            "cv_mean": round(float(np.mean(self.cv_scores)) * 100, 1),
+            "cv_std": round(float(np.std(self.cv_scores)) * 100, 1),
         }
 
 

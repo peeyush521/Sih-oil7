@@ -22,3 +22,19 @@ benchmark_data.json
 classifier_metrics.json
 report_data.json
 __pycache__/
+
+# Temp scripts and generated files
+_decode.js
+_fix.cjs
+_gen.py
+_jsx_lines.txt
+_write_gen.cjs
+~$*
+frontend/src/_*.txt
+frontend/src/_*.js
+frontend/src/write.*.cjs
+frontend/src/part2.cjs
+frontend/gen_aiengines.py
+.freebuffserver.log*
+
+create_ppt.py

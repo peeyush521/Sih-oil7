@@ -8,6 +8,7 @@ import { MapContainer, TileLayer, CircleMarker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import CytoscapeComponent from 'react-cytoscapejs';
 import EventGraphTab from './EventGraphTab';
+import AIEnginesTab from './AIEnginesTab';
 
 /* ── Typewriter ─────────────────────────────────────────── */
 const Typewriter = ({ text }) => {
@@ -227,6 +228,73 @@ const ChatWidget = () => {
 
 
 
+/* ── Translate Button ─────────────────────────────────── */
+const TranslateButton = ({ text, language }) => {
+  const [showTranslation, setShowTranslation] = useState(false);
+  const [translation, setTranslation] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [method, setMethod] = useState('');
+
+  if (!language || !language.is_multilingual) return null;
+
+  const handleTranslate = async () => {
+    if (showTranslation) {
+      setShowTranslation(false);
+      return;
+    }
+    if (translation) {
+      setShowTranslation(true);
+      return;
+    }
+    setLoading(true);
+    try {
+      const res = await fetch('/api/translate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text })
+      });
+      const data = await res.json();
+      setTranslation(data.translation);
+      setMethod(data.method);
+      setShowTranslation(true);
+    } catch (e) {
+      setTranslation('Translation unavailable.');
+      setShowTranslation(true);
+    }
+    setLoading(false);
+  };
+
+  return (
+    <span style={{ display: 'inline-block', marginLeft: 6 }}>
+      <button
+        onClick={handleTranslate}
+        disabled={loading}
+        style={{
+          padding: '2px 8px', borderRadius: 10, fontSize: '0.7rem', fontWeight: 600,
+          background: showTranslation ? 'rgba(34,197,94,0.2)' : 'rgba(24,198,217,0.15)',
+          color: showTranslation ? '#22c55e' : '#18c6d9',
+          border: `1px solid ${showTranslation ? 'rgba(34,197,94,0.3)' : 'rgba(24,198,217,0.3)'}`,
+          cursor: 'pointer', transition: 'all 0.2s ease'
+        }}
+      >
+        {loading ? '⏳ Translating...' : showTranslation ? '✅ Hide Translation' : '🌐 Translate to English'}
+      </button>
+      {showTranslation && translation && (
+        <div style={{
+          marginTop: 6, padding: '8px 12px', borderRadius: 8,
+          background: 'rgba(34,197,94,0.08)', border: '1px solid rgba(34,197,94,0.2)',
+          fontSize: '0.8rem', color: '#a3e635', fontStyle: 'italic', lineHeight: 1.5
+        }}>
+          <div style={{ fontSize: '0.65rem', color: 'var(--text-muted)', marginBottom: 4, fontStyle: 'normal' }}>
+            🌐 English Translation <span style={{ color: '#18c6d9' }}>({method})</span>:
+          </div>
+          {translation}
+        </div>
+      )}
+    </span>
+  );
+};
+
 /* ── Activity Feed ───────────────────────────────────────── */
 const ActivityFeed = ({ reports }) => {
   const [feed, setFeed] = useState([])
@@ -436,6 +504,7 @@ function App() {
   const [graphElements, setGraphElements] = useState([]);
   const [processing, setProcessing] = useState(false);
   const [simResults, setSimResults] = useState("Select an intervention to see predicted risk trajectory.");
+  const [actionResponse, setActionResponse] = useState(null);
   const [cy, setCy] = useState(null);
   const [activeTab, setActiveTab] = useState('Dashboard');
   const [customText, setCustomText] = useState('');
@@ -546,9 +615,9 @@ function App() {
       if (!res.ok) { if (res.status === 400) alert("All reports processed — simulation complete"); return; }
       const data = await res.json();
       setCurrentState(data);
-      await loadState();
-      await loadAnalytics();
       setSimResults("Select an intervention to see predicted risk trajectory.");
+      // Load state and analytics in parallel for speed
+      await Promise.all([loadState(), loadAnalytics()]);
     } catch (e) { console.error(e); }
     finally { setProcessing(false); }
   };
@@ -597,6 +666,26 @@ function App() {
     } catch (e) { console.error(e); }
   };
 
+  const markReportAction = async (reportId, action, note) => {
+    try {
+      const res = await fetch('/api/report_action', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ report_id: reportId, action, note: note || '' })
+      });
+      if (!res.ok) throw new Error('Failed');
+      const data = await res.json();
+      setCurrentState(prev => prev ? { ...prev, risk_data: data.risk_data, is_precursor: data.is_precursor, report: { ...prev.report, action_status: action === 'complete' ? 'Closed' : 'Open' } } : prev);
+      setActionResponse(data);
+      await Promise.all([loadState(), loadAnalytics()]);
+      // Auto-load next report after 2 seconds so user sees the response
+      setTimeout(() => {
+        setActionResponse(null);
+        processNext();
+      }, 2000);
+    } catch (e) { alert('Failed to update report'); }
+  };
+
   let precursors = 0, unresolved = 0;
   if (stateData && stateData.reports) {
     (stateData && stateData.reports ? stateData.reports : []).forEach(r => {
@@ -638,6 +727,7 @@ function App() {
           <a href="#" className={`nav-item ${activeTab === 'Reports' ? 'active' : ''}`} onClick={(e) => handleNavClick(e, 'Reports', 'incident-timeline')}>▤ Reports</a>
           <a href="#" className={`nav-item ${activeTab === 'Analytics' ? 'active' : ''}`} onClick={(e) => { handleNavClick(e, 'Analytics', 'analytics-panel'); loadAnalytics(); }}>📊 Analytics</a>
           <a href="#" className={`nav-item ${activeTab === 'Event Graph' ? 'active' : ''}`} onClick={(e) => handleNavClick(e, 'Event Graph', 'precursor-chain-panel')}>◇ Event Graph</a>
+          <a href="#" className={"nav-item " + (activeTab === "AI Engines" ? "active" : "")} onClick={(e) => handleNavClick(e, "AI Engines", null)}>🧠 AI Engines</a>
         </div>
 
         {/* User Info */}
@@ -798,10 +888,29 @@ function App() {
                 </div>
                 <div style={{ marginTop: 'auto', paddingTop: 16, borderTop: '1px solid var(--border)' }}>
                   <div style={{ display: 'flex', gap: '8px' }}>
-                    <button className="btn secondary" style={{ flex: 1, padding: '10px', fontSize: '0.85rem' }} onClick={() => simulateIntervention('delay')} disabled={!currentState}>Delay action</button>
-                    <button className="btn safe" style={{ flex: 1, padding: '10px', fontSize: '0.85rem' }} onClick={() => simulateIntervention('resolve_action')} disabled={!currentState}>✓ Mark complete</button>
+                    <button className="btn secondary" style={{ flex: 1, padding: '10px', fontSize: '0.85rem' }} onClick={() => { if (currentState) markReportAction(currentState.report.id, 'delay', 'Action deferred by operator'); }} disabled={!currentState}>⏳ Delay</button>
+                    <button className="btn safe" style={{ flex: 1, padding: '10px', fontSize: '0.85rem' }} onClick={() => { if (currentState) markReportAction(currentState.report.id, 'complete', 'Corrective action completed'); }} disabled={!currentState}>✓ Mark complete</button>
                   </div>
-                  {simResults !== "Select an intervention to see predicted risk trajectory." && (
+                  {/* Action Response */}
+                  {actionResponse && (
+                    <div style={{ marginTop: 10, padding: '10px 12px', borderRadius: 8, background: actionResponse.action === 'complete' ? 'rgba(34,197,94,0.12)' : 'rgba(239,68,68,0.12)', border: `1px solid ${actionResponse.action === 'complete' ? 'rgba(34,197,94,0.3)' : 'rgba(239,68,68,0.3)'}`, transition: 'all 0.3s ease' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 6 }}>
+                        <span style={{ fontSize: '1rem' }}>{actionResponse.action === 'complete' ? '✅' : '⏳'}</span>
+                        <span style={{ fontSize: '0.8rem', fontWeight: 700, color: actionResponse.action === 'complete' ? 'var(--safe)' : 'var(--critical)' }}>
+                          {actionResponse.action === 'complete' ? 'ACTION COMPLETED' : 'ACTION DELAYED'}
+                        </span>
+                      </div>
+                      <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', lineHeight: 1.4 }}>{actionResponse.message}</div>
+                      <div style={{ marginTop: 6, display: 'flex', alignItems: 'center', gap: 6 }}>
+                        <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>New risk:</span>
+                        <span style={{ fontSize: '0.9rem', fontWeight: 700, color: actionResponse.risk_data?.score >= 70 ? 'var(--critical)' : actionResponse.risk_data?.score >= 40 ? 'var(--warning)' : 'var(--safe)' }}>{actionResponse.risk_data?.score}/100</span>
+                        <span style={{ fontSize: '0.7rem', color: actionResponse.risk_data?.trajectory === 'ESCALATING' ? 'var(--critical)' : 'var(--safe)' }}>
+                          {actionResponse.risk_data?.trajectory === 'ESCALATING' ? '↗' : actionResponse.risk_data?.trajectory === 'DECREASING' ? '↘' : '→'}
+                        </span>
+                      </div>
+                    </div>
+                  )}
+                  {simResults !== "Select an intervention to see predicted risk trajectory." && !actionResponse && (
                     <div style={{ marginTop: 12, textAlign: 'center', background: 'var(--bg-surface2)', padding: '8px', borderRadius: '4px' }}>{simResults}</div>
                   )}
                 </div>
@@ -823,6 +932,12 @@ function App() {
                       {currentState.extracted_entities.equipment.map(e => <span key={e} className="tag equipment">{e}</span>)}
                       {currentState.extracted_entities.hazards.map(e => <span key={e} className="tag hazard">{e.replace('_', ' ')}</span>)}
                       {currentState.extracted_entities.locations.map(e => <span key={e} className="tag location">{e}</span>)}
+                      {currentState.language && currentState.language.is_multilingual && (
+                        <span style={{ display: 'inline-block', padding: '3px 8px', borderRadius: 10, fontSize: '0.7rem', fontWeight: 600, background: 'rgba(168,85,247,0.2)', color: '#c084fc', marginLeft: 4 }}>
+                          {currentState.language.detected_language === 'hinglish' ? '🇮🇳 Hinglish' : '🇮🇳 Hindi'} detected
+                        </span>
+                      )}
+                      <TranslateButton text={currentState.report.text} language={currentState.language} />
                     </div>
                     {/* Classification Confidence */}
                     {currentState.classification && (
@@ -953,8 +1068,20 @@ function App() {
                   <div className="timeline">
                     {(stateData && stateData.reports ? stateData.reports.slice().reverse() : []).map(r => (
                       <div key={r.report.id} className={`timeline-item ${r.is_precursor ? 'precursor' : ''}`}>
-                        <div className="timeline-date">{new Date(r.report.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })} - {r.report.id}</div>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                          <div className="timeline-date">{new Date(r.report.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })} - {r.report.id}</div>
+                          {r.response && (
+                            <span style={{ fontSize: '0.65rem', fontWeight: 700, padding: '2px 8px', borderRadius: 8, background: r.response.status === 'completed' ? 'rgba(34,197,94,0.15)' : 'rgba(239,68,68,0.15)', color: r.response.status === 'completed' ? 'var(--safe)' : 'var(--critical)' }}>
+                              {r.response.status === 'completed' ? '✅ Resolved' : '⏳ Delayed'}
+                            </span>
+                          )}
+                        </div>
                         <div style={{ fontSize: '0.9rem' }}>{r.report.text}</div>
+                          {r.language && r.language.is_multilingual && (
+                            <div style={{ marginTop: 6 }}>
+                              <TranslateButton text={r.report.text} language={r.language} />
+                            </div>
+                          )}
                       </div>
                     ))}
                   </div>
@@ -995,11 +1122,18 @@ function App() {
                               border: `1px solid ${r.risk_data.score >= 70 ? 'var(--critical)' : r.risk_data.score >= 40 ? 'var(--warning)' : 'var(--safe)'}`
                             }}>{r.risk_data.score}/100</span>
                             {r.is_precursor && <span style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--critical)' }}>PRECURSOR</span>}
+                            {/* Action status badge */}
+                            {r.response && (
+                              <span style={{ fontSize: '0.7rem', fontWeight: 700, padding: '3px 10px', borderRadius: 12, background: r.response.status === 'completed' ? 'rgba(34,197,94,0.15)' : 'rgba(239,68,68,0.15)', color: r.response.status === 'completed' ? 'var(--safe)' : 'var(--critical)', border: `1px solid ${r.response.status === 'completed' ? 'rgba(34,197,94,0.3)' : 'rgba(239,68,68,0.3)'}` }}>
+                                {r.response.status === 'completed' ? '✅ RESOLVED' : '⏳ DELAYED'}
+                              </span>
+                            )}
                           </div>
                         </div>
                         <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginBottom: 8, fontStyle: 'italic' }}>
                           "{r.report.text}"
                         </div>
+                        <TranslateButton text={r.report.text} language={r.language} />
                         <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginBottom: 8 }}>
                           {r.extracted_entities.equipment.map(e => <span key={e} className="tag equipment">{e}</span>)}
                           {r.extracted_entities.hazards.map(e => <span key={e} className="tag hazard">{e.replace('_', ' ')}</span>)}
@@ -1027,7 +1161,13 @@ function App() {
         )}
 
 {/* ═══ ANALYTICS TAB ═══ */}
-        {activeTab === 'Analytics' && (
+        
+        {activeTab === 'AI Engines' && (
+          <div className="tab-content" style={{padding: '0 24px 24px'}}>
+            <AIEnginesTab />
+          </div>
+        )}
+{activeTab === 'Analytics' && (
           <div className="dashboard-grid" id="analytics-panel">
             {/* Risk Trend Sparkline */}
             <div className="panel surface-panel col-span-3">
