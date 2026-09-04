@@ -13,16 +13,23 @@ An enterprise-grade AI platform that detects escalating safety incident patterns
 | **NLP Entity Extraction** | 230 Oil India domain terms — equipment, hazards, locations, Hindi-mixed reports |
 | **ML Classification** | TF-IDF + Logistic Regression — 97.4% accuracy on unseen test data |
 | **Temporal Knowledge Graph** | NetworkX graph linking incidents, equipment, locations over time |
-| **9-Factor Risk Engine** | Frequency, recency, severity trend, SIF pathway, urgency, and more |
-| **AI Explanations** | Google Gemini generates natural-language "Why Now?" briefings |
+| **14-Factor Risk Engine** | Frequency, recency, severity trend, SIF pathway, cross-equipment correlation, time decay |
+| **9 AI Engine Modules** | Predictions, Anomalies, GNN, Fatigue, RAG, Explainability, Alerts, ML Metrics, vs Manual |
+| **SHAP/LIME Explainability** | Horizontal bar charts showing which words and factors drove each classification |
+| **Hindi/Hinglish Support** | Auto-detect + Gemini AI translation - field workers write in Hinglish, officers read in English |
+| **AI Explanations** | Google Gemini generates natural-language "Why Now?" briefings (background thread for speed) |
+| **Interactive Chatbot** | Gemini-powered safety assistant with quick questions |
+| **Real-Time Alerts** | CRITICAL/WARNING alerts with acknowledge/dismiss workflow |
 | **Interactive Chatbot** | Gemini-powered safety assistant with quick questions |
 | **Facility Heatmap** | Leaflet.js map of Oil India's Duliajan facility locations |
 | **Risk Trajectory Chart** | Chart.js time-series of risk score escalation |
 | **Knowledge Graph Viz** | Cytoscape.js interactive graph of precursor chains |
 | **PDF/Excel Upload** | Ingest safety reports from uploaded documents |
 | **Email Alerts** | Automatic precursor alerts via SMTP |
+| **PDF Report Export** | Professional Oil India-branded PDF with timeline, risk scores, and graph visualization |
 | **MongoDB Persistence** | Survives server restarts (with JSON fallback) |
 | **Spring Boot Auth** | JWT + RBAC for production deployment |
+| **Animated Government UI** | Gradient borders, pulsing risk circles, floating particles, Government of India branding |
 
 ---
 
@@ -259,16 +266,21 @@ Sih-oil7/
 ├── main.py                          # FastAPI backend (all endpoints)
 ├── nlp_engine.py                    # spaCy NER + SentenceTransformers + 230 domain terms
 ├── classification_engine.py         # TF-IDF + Logistic Regression (97.4% accuracy)
-├── graph_engine.py                  # NetworkX temporal knowledge graph
-├── risk_engine.py                   # 9-factor deterministic risk scoring
-├── llm_engine.py                    # Google Gemini API with template fallback
+├── risk_engine.py                   # 14-factor risk scoring with time decay
 ├── data_loader.py                   # 190-report dataset + CSV loader
 ├── alerts.py                        # Email precursor alerts (SMTP)
 ├── pdf_generator.py                 # PDF report export
+├── realtime_alerts.py               # In-memory alert history with severity
+├── language_utils.py                # Hindi/Hinglish detection + translation
+├── xai_engine.py                    # SHAP/LIME-style explainability
+├── rag_engine.py                    # RAG root cause analysis (Gemini + retrieval)
+├── anomaly_detector.py              # Isolation Forest anomaly detection
+├── gnn_engine.py                    # Graph Neural Network precursor detection
+├── prediction_engine.py             # Time-series incident prediction
+├── fatigue_engine.py                # Crew fatigue risk analysis
+├── image_detector.py                # CLIP-based hazard image detection
 ├── mongo_persistence.py             # MongoDB persistence (JSON fallback)
 ├── benchmark.py                     # 500-sequence controlled benchmark
-├── classifier_metrics.json          # Pre-computed classifier metrics
-├── benchmark_data.json              # Pre-computed benchmark comparison
 ├── real_industrial_safety_data.csv  # 190-report dataset
 ├── requirements.txt                 # Python dependencies
 ├── Dockerfile                       # Docker build config
@@ -276,13 +288,15 @@ Sih-oil7/
 ├── .env                             # Environment variables (GEMINI_API_KEY)
 ├── frontend/
 │   ├── src/
-│   │   ├── App.jsx                  # React dashboard (4 tabs)
-│   │   └── index.css                # Industrial dark-theme UI
+│   │   ├── App.jsx                  # React dashboard with animated government UI
+│   │   ├── AIEnginesTab.jsx         # 9 AI engine views (predictions, alerts, metrics)
+│   │   └── index.css                # Animated gradient borders, floating particles
 │   ├── dist/                        # Production build (served by FastAPI)
 │   ├── package.json                 # Frontend dependencies
 │   └── vite.config.js               # Vite configuration
 ├── sif-auth/                        # Spring Boot auth service (Java)
 │   └── src/main/java/com/sih/auth/  # JWT, RBAC, Audit
+├── SIH26165_SAFEGUARD_AI_Presentation.pptx  # 12-slide SIH presentation
 ├── PITCH_DECK.md                    # Presentation script
 ├── SPRING_BOOT_AUTH.md              # Java auth implementation guide
 └── README.md                        # This file
@@ -305,6 +319,10 @@ Sih-oil7/
 | `/api/chat` | POST | Chatbot: ask questions about safety data (JSON: `{"question": "..."}`) |
 | `/api/duplicates` | GET | Detect similar/duplicate reports |
 | `/api/precursor_patterns` | GET | Advanced precursor pattern analysis |
+| `/api/alerts` | GET | All alerts with severity, equipment, SIF pathway |
+| `/api/alerts/{id}/acknowledge` | POST | Acknowledge an alert |
+| `/api/alerts/{id}/dismiss` | POST | Dismiss an alert |
+| `/api/translate` | POST | Translate Hindi/Hinglish to English (Gemini AI) |
 | `/api/simulate` | POST | Simulate intervention impact |
 | `/api/export` | GET | Export all reports as JSON |
 | `/api/export/pdf` | GET | Export PDF safety report |
@@ -355,13 +373,17 @@ The system ships with **190 industrial safety reports** covering Oil India's Dul
 
 ### "Is this real AI or just if-else rules?"
 
-**Five AI layers:**
+**Nine AI engine modules:**
 
 1. **spaCy NER** — Pre-trained transformer extracts entities from free text (230 domain terms)
 2. **Sentence Transformers** — Converts reports to 384-dim vectors for semantic similarity
 3. **Scikit-Learn Classifier** — TF-IDF + Logistic Regression trained on 190 reports with 80/20 split (97.4% accuracy)
-4. **9-Factor Risk Engine** — Composite scoring based on safety science research
-5. **Google Gemini** — Generates natural language explanations from structured risk data
+4. **14-Factor Risk Engine** — Composite scoring with time decay and cross-equipment correlation
+5. **Isolation Forest** — Anomaly detection for never-seen-before hazard patterns
+6. **Graph Neural Network** — Precursor detection using relational data
+7. **SHAP/LIME Explainability** — Feature contribution charts showing which words/factors drove decisions
+8. **RAG Root Cause Analysis** — Gemini + historical incident retrieval for natural-language root cause
+9. **Google Gemini** — Generates natural language explanations, translations, and chatbot responses
 
 ### "How does it handle unseen data?"
 
@@ -395,10 +417,10 @@ cd sif-auth
 
 | Role | Focus | Stack |
 |---|---|---|
-| **NLP Engineers (2)** | Entity extraction, classification, data | Python, spaCy, scikit-learn |
-| **Graph + Risk (2)** | Knowledge graph, risk scoring, precursors | Python, NetworkX |
-| **Backend + AI (1)** | FastAPI, Gemini integration, persistence | Python, FastAPI, MongoDB |
-| **Frontend + Auth (1)** | Dashboard, heatmap, chatbot, auth | React, Leaflet, Cytoscape.js, Java |
+| **NLP Engineers (2)** | Entity extraction, classification, Hindi support | Python, spaCy, scikit-learn |
+| **Graph + Risk (2)** | Knowledge graph, 14-factor risk, GNN | Python, NetworkX, anomaly detection |
+| **Backend + AI (1)** | FastAPI, Gemini, RAG, XAI, alerts | Python, FastAPI, Gemini, SHAP/LIME |
+| **Frontend + Auth (1)** | Animated dashboard, 9 AI views, chatbot | React, Tailwind, Cytoscape.js, Chart.js |
 
 ---
 
